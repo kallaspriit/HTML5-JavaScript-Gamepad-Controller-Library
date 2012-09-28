@@ -218,7 +218,10 @@ Gamepad.prototype._fire = function(event, data) {
 };
 
 Gamepad.prototype._resolvePlatform = function() {
-	if (typeof(navigator.webkitGamepads) != 'undefined') {
+	if (
+		typeof(navigator.webkitGamepads) != 'undefined'
+		|| typeof(navigator.webkitGetGamepads) != 'undefined'
+	) {
 		return Gamepad.Platform.WEBKIT;
 	} else {
 		return Gamepad.Platform.FIREFOX;
@@ -406,12 +409,22 @@ Gamepad.prototype._update = function() {
 };
 
 Gamepad.prototype._updateWebkit = function() {
-	if (navigator.webkitGamepads.length != this.gamepads.length) {
+	var gamepads;
+	
+	if (typeof(navigator.webkitGamepads) == 'object') {
+		gamepads = navigator.webkitGamepads;
+	} else if (typeof(navigator.webkitGetGamepads) == 'function') {
+		gamepads = navigator.webkitGetGamepads();
+	} else {
+		return; // should not happen
+	}
+	
+	if (gamepads.length != this.gamepads.length) {
 		var gamepad,
 			i;
 		
-		for (i = 0; i < navigator.webkitGamepads.length; i++) {
-			gamepad = navigator.webkitGamepads[i];
+		for (i = 0; i < gamepads.length; i++) {
+			gamepad = gamepads[i];
 			
 			if (
 				typeof(gamepad) != 'undefined'
@@ -424,7 +437,7 @@ Gamepad.prototype._updateWebkit = function() {
 		for (i = 0; i < this.gamepads.length; i++) {
 			if (
 				typeof(this.gamepads[i]) != 'undefined'
-				&& typeof(navigator.webkitGamepads[i]) == 'undefined'
+				&& typeof(gamepads[i]) == 'undefined'
 			) {
 				this._disconnect(this.gamepads[i]);
 			}
