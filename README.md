@@ -7,6 +7,7 @@ HTML5-JavaScript-Gamepad-Controller-Library
 * Very easy to add mappings to new controllers.
 * Simple event-based system.
 * Minimal working example provided.
+* Includes jQuery just for demo simplicity, does not depend on it in any way.
 
 Changelog
 ---------
