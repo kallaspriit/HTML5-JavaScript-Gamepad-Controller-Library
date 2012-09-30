@@ -1,3 +1,32 @@
+/**
+ * Copyright 2012 Priit Kallas <kallaspriit@gmail.com>
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining
+ * a copy of this software and associated documentation files (the
+ * "Software"), to deal in the Software without restriction, including
+ * without limitation the rights to use, copy, modify, merge, publish,
+ * distribute, sublicense, and/or sell copies of the Software, and to
+ * permit persons to whom the Software is furnished to do so, subject to
+ * the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be
+ * included in all copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+ * LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+ * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+ * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
+
+/**
+ * Provides simple interface and multi-platform support for the gamepad API.
+ * 
+ * You can change the deadzone and maximizeThreshold parameters to suit your
+ * taste but the defaults should generally work fine.
+ */
 Gamepad = function() {
 	this.gamepads = [];
 	this.listeners = {};
@@ -6,12 +35,18 @@ Gamepad = function() {
 	this.maximizeThreshold = 0.97;
 };
 
+/**
+ * List of supported platforms.
+ */
 Gamepad.Platform = {
 	UNSUPPORTED: 'unsupported',
 	WEBKIT: 'webkit',
 	FIREFOX: 'firefox'
 };
 
+/**
+ * List of supported controller types.
+ */
 Gamepad.Type = {
 	PLAYSTATION: 'playstation',
 	LOGITECH: 'logitech',
@@ -19,6 +54,12 @@ Gamepad.Type = {
 	UNSUPPORTED: 'unsupported'
 };
 
+/**
+ * List of events you can expect from the library.
+ * 
+ * CONNECTED, DISCONNECTED and UNSUPPORTED events include the gamepad in
+ * question and tick provides the list of all connected gamepads.
+ */
 Gamepad.Event = {
 	CONNECTED: 'connected',
 	DISCONNECTED: 'disconnected',
@@ -26,6 +67,13 @@ Gamepad.Event = {
 	UNSUPPORTED: 'unsupported'
 };
 
+/**
+ * Mapping of various gamepads on different platforms too unify their buttons
+ * and axes.
+ * 
+ * The mapping can be either a simple number of the button/axes or a function
+ * that gets the gamepad as first parameter and the gamepad class as second.
+ */
 Gamepad.Mapping = {
 	PLAYSTATION_FIREFOX: {
 		buttons: {
@@ -168,6 +216,11 @@ Gamepad.Mapping = {
 	}
 }
 
+/**
+ * Initializes the gamepad.
+ * 
+ * You usually want to bind to the events first and then initialize it.
+ */
 Gamepad.prototype.init = function() {
 	this.platform = this._resolvePlatform();
 	
@@ -195,18 +248,38 @@ Gamepad.prototype.init = function() {
 	return true;
 };
 
+/**
+ * Binds a listener to a gamepad event.
+ * 
+ * @param {string} event Event to bind to, one of Gamepad.Event..
+ * @param {function} listener Listener to call when given event occurs
+ * @return {Gamepad} Returns self
+ */
 Gamepad.prototype.bind = function(event, listener) {
 	if (typeof(this.listeners[event]) == 'undefined') {
 		this.listeners[event] = [];
 	}
 	
 	this.listeners[event].push(listener);
+	
+	return this;
 };
 
+/**
+ * Returns the number of connected gamepads.
+ * 
+ * @return {number}
+ */
 Gamepad.prototype.count = function() {
 	return this.gamepads.length;
 };
 
+/**
+ * Fires an internal event with given data.
+ * 
+ * @param {string} Event to fire, one of Gamepad.Event..
+ * @param {any} data Data to pass to the listener
+ */
 Gamepad.prototype._fire = function(event, data) {
 	if (typeof(this.listeners[event]) == 'undefined') {
 		return;
@@ -217,6 +290,11 @@ Gamepad.prototype._fire = function(event, data) {
 	}
 };
 
+/**
+ * Resolves platform.
+ * 
+ * @return {string} One of Gamepad.Platform..
+ */
 Gamepad.prototype._resolvePlatform = function() {
 	if (
 		typeof(navigator.webkitGamepads) != 'undefined'
@@ -228,10 +306,16 @@ Gamepad.prototype._resolvePlatform = function() {
 	}
 };
 
+/**
+ * Sets up webkit platform.
+ */
 Gamepad.prototype._setupWebkit = function() {
 
 };
 
+/**
+ * Sets up filefox platform.
+ */
 Gamepad.prototype._setupFirefox = function() {
 	var self = this;
 	
@@ -243,6 +327,12 @@ Gamepad.prototype._setupFirefox = function() {
 	});
 };
 
+/**
+ * Returns mapping for given type.
+ * 
+ * @param {string} type One of Gamepad.Type..
+ * @return {object} Mapping or null if not supported
+ */
 Gamepad.prototype._getMapping = function(type) {
 	switch (type) {
 		case Gamepad.Type.PLAYSTATION:
@@ -250,6 +340,8 @@ Gamepad.prototype._getMapping = function(type) {
 				return Gamepad.Mapping.PLAYSTATION_FIREFOX;
 			} else if (this.platform == Gamepad.Platform.WEBKIT) {
 				return Gamepad.Mapping.PLAYSTATION_WEBKIT;
+			} else {
+				return null;
 			}
 		break;
 		
@@ -258,6 +350,8 @@ Gamepad.prototype._getMapping = function(type) {
 				return Gamepad.Mapping.LOGITECH_FIREFOX;
 			} else if (this.platform == Gamepad.Platform.WEBKIT) {
 				return Gamepad.Mapping.LOGITECH_WEBKIT;
+			} else {
+				return null;
 			}
 		break;
 		
@@ -269,6 +363,12 @@ Gamepad.prototype._getMapping = function(type) {
 	return null;
 };
 
+/**
+ * Registers given gamepad.
+ * 
+ * @param {object} gamepad Gamepad to connect to
+ * @return {boolean} Was connecting the gamepad successful
+ */
 Gamepad.prototype._connect = function(gamepad) {
 	gamepad.type = this._resolveControllerType(gamepad.id);
 	
@@ -305,6 +405,11 @@ Gamepad.prototype._connect = function(gamepad) {
 	return true;
 };
 
+/**
+ * Disconnects from given gamepad.
+ * 
+ * @param {object} gamepad Gamepad to disconnect
+ */
 Gamepad.prototype._disconnect = function(gamepad) {
 	var newGamepads = [];
 	
@@ -323,6 +428,12 @@ Gamepad.prototype._disconnect = function(gamepad) {
 	this._fire(Gamepad.Event.DISCONNECTED, gamepad);
 };
 
+/**
+ * Resolves controller type from its id.
+ * 
+ * @param {string} id Controller id
+ * @return {string} Controller type, one of Gamepad.Type..
+ */
 Gamepad.prototype._resolveControllerType = function(id) {
 	id = id.toLowerCase();
 	
@@ -340,6 +451,9 @@ Gamepad.prototype._resolveControllerType = function(id) {
 	}
 };
 
+/**
+ * Updates the controllers, triggering TICK events.
+ */
 Gamepad.prototype._update = function() {
 	var self = this,
 		controlName,
@@ -408,6 +522,9 @@ Gamepad.prototype._update = function() {
 	});
 };
 
+/**
+ * Updates webkit platform gamepads.
+ */
 Gamepad.prototype._updateWebkit = function() {
 	var gamepads;
 	
@@ -445,11 +562,22 @@ Gamepad.prototype._updateWebkit = function() {
 	}
 };
 
+/**
+ * Updates firefox platform gamepads.
+ */
 Gamepad.prototype._updateFirefox = function() {
 	
 };
 
-
+/**
+ * Applies deadzone and maximization.
+ * 
+ * You can change the thresholds via deadzone and maximizeThreshold members.
+ * 
+ * @param {number} value Value to modify
+ * @param {number} deadzone Deadzone to apply
+ * @param {number} maximizeThreshold From which value to maximize value
+ */
 Gamepad.prototype._applyDeadzoneMaximize = function(
 	value,
 	deadzone,
