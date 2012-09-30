@@ -16,12 +16,14 @@ HTML5-JavaScript-Gamepad-Controller-Library
 How to use
 ----------
 * Include the library.
-
-`<script src="gamepad.js"></script>`
+```javascript
+	<script src="gamepad.js"></script>
+```
 
 * Create an instance of the Gamepad class.
-
-`var gamepad = new Gamepad();`
+```javascript
+	var gamepad = new Gamepad();`
+```
 
 * Bind to the events
 ```javascript
@@ -54,4 +56,5 @@ How to use
 
 Changelog
 ---------
+30.09.2012 - Removed included jQuery, commented the code, added minimized version, updated readme
 28.09.2012 - Updated the library to work with Chrome 22+, still works with version 21 too.
