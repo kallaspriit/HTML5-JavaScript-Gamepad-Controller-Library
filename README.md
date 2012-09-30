@@ -24,7 +24,7 @@ How to use
 `var gamepad = new Gamepad();`
 
 * Bind to the events
-
+```javascript
 	gamepad.bind(Gamepad.Event.CONNECTED, function(device) {
 		// a new gamepad connected
 	});
@@ -40,12 +40,14 @@ How to use
 	gamepad.bind(Gamepad.Event.TICK, function(gamepads) {
 		// gamepads were updated (around 60 times a second)
 	});
+```
 
 * Initilize the gamepads
-
+```javascript
 	if (!gamepad.init()) {
 		// Your browser does not support gamepads, get the latest Google Chrome or Firefox
 	}
+```
 
 * Try the working example in index.html for more tips
 
