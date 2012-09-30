@@ -16,7 +16,7 @@ HTML5-JavaScript-Gamepad-Controller-Library
 How to use
 ----------
 1. Include the library.
-	<script src="gamepad.js"></script>
+`<script src="gamepad.js"></script>`
 
 2. Create an instance of the Gamepad class.
 	var gamepad = new Gamepad();
