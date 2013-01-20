@@ -171,6 +171,8 @@ Gamepad.Mapping = {
 			Y: 3,
 			LB: 4,
 			RB: 5,
+			LB2: 6,
+			RB2: 7,
 			LEFT_STICK: 10,
 			RIGHT_STICK: 11,
 			START: 9,
