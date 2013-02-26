@@ -59,12 +59,17 @@ Gamepad.Type = {
  * 
  * CONNECTED, DISCONNECTED and UNSUPPORTED events include the gamepad in
  * question and tick provides the list of all connected gamepads.
+ *
+ * BUTTON_DOWN and BUTTON_UP events provide an alternative to polling button states
+ *
  */
 Gamepad.Event = {
 	CONNECTED: 'connected',
 	DISCONNECTED: 'disconnected',
 	TICK: 'tick',
-	UNSUPPORTED: 'unsupported'
+	UNSUPPORTED: 'unsupported',
+	BUTTON_DOWN: 'buttonDown',
+	BUTTON_UP: 'buttonUp'
 };
 
 /**
@@ -390,16 +395,19 @@ Gamepad.prototype._connect = function(gamepad) {
 		return false;
 	}
 	
+	gamepad.prevState = {} //copy not reference
 	gamepad.state = {};
 	
 	var key;
 	
 	for (key in gamepad.mapping.buttons) {
 		gamepad.state[key] = 0;
+		gamepad.prevState[key] = 0;
 	}
 	
 	for (key in gamepad.mapping.axes) {
 		gamepad.state[key] = 0;
+		gamepad.prevState[key] = 0;
 	}
 	
 	this.gamepads[gamepad.index] = gamepad;
@@ -483,6 +491,9 @@ Gamepad.prototype._update = function() {
 		for (controlName in this.gamepads[i].mapping.buttons) {
 			mapping = this.gamepads[i].mapping.buttons[controlName];
 			
+			//save previous state
+			this.gamepads[i].prevState[controlName] = this.gamepads[i].state[controlName];
+				
 			if (typeof(mapping) == 'function') {
 				this.gamepads[i].state[controlName] = mapping(
 					this.gamepads[i],
@@ -493,6 +504,19 @@ Gamepad.prototype._update = function() {
 
 				if (typeof(this.gamepads[i].buttons[mapping]) != 'undefined') {
 					this.gamepads[i].state[controlName] = value;
+				}
+			}
+			
+			//fire up or down events as an alternative to polling
+			if(this.gamepads[i].prevState[controlName] != this.gamepads[i].state[controlName])
+			{
+				if(this.gamepads[i].state[controlName] == 1)
+				{
+					this._fire(Gamepad.Event.BUTTON_DOWN, {gamepadIndex:i, control:controlName} );
+				}
+				else
+				{
+					this._fire(Gamepad.Event.BUTTON_UP, {gamepadIndex:i, control:controlName} );
 				}
 			}
 		}

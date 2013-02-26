@@ -63,9 +63,19 @@
 				for (control in gamepads[i].state) {
 					value = gamepads[i].state[control];
 					
+					
+					
 					$('#state-' + gamepads[i].index + '-' + control + '').html(value);
 				}
 			}
+		});
+
+		gamepad.bind(Gamepad.Event.BUTTON_DOWN, function(data) {
+			console.log('pad index:' + data.gamepadIndex + ' button:' + data.control + ' down');
+		});
+		
+		gamepad.bind(Gamepad.Event.BUTTON_UP, function(data) {
+			console.log('pad index:' + data.gamepadIndex + ' button:' + data.control + ' up');
 		});
 
 		if (!gamepad.init()) {
