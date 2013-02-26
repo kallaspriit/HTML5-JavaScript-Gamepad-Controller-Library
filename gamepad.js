@@ -60,8 +60,7 @@ Gamepad.Type = {
  * CONNECTED, DISCONNECTED and UNSUPPORTED events include the gamepad in
  * question and tick provides the list of all connected gamepads.
  *
- * BUTTON_DOWN and BUTTON_UP events provide an alternative to polling button states
- *
+ * BUTTON_DOWN and BUTTON_UP events provide an alternative to polling button states at each tick.
  */
 Gamepad.Event = {
 	CONNECTED: 'connected',
@@ -395,7 +394,7 @@ Gamepad.prototype._connect = function(gamepad) {
 		return false;
 	}
 	
-	gamepad.prevState = {} //copy not reference
+	gamepad.prevState = {};
 	gamepad.state = {};
 	
 	var key;
@@ -423,13 +422,14 @@ Gamepad.prototype._connect = function(gamepad) {
  * @param {object} gamepad Gamepad to disconnect
  */
 Gamepad.prototype._disconnect = function(gamepad) {
-	var newGamepads = [];
+	var newGamepads = [],
+		i;
 	
 	if (typeof(this.gamepads[gamepad.index]) != 'undefined') {
 		delete this.gamepads[gamepad.index];
 	}
 	
-	for (var i = 0; i < this.gamepads.length; i++) {
+	for (i = 0; i < this.gamepads.length; i++) {
 		if (typeof(this.gamepads[i]) != 'undefined') {
 			newGamepads[i] = this.gamepads[i];
 		}
@@ -490,8 +490,7 @@ Gamepad.prototype._update = function() {
 		
 		for (controlName in this.gamepads[i].mapping.buttons) {
 			mapping = this.gamepads[i].mapping.buttons[controlName];
-			
-			//save previous state
+
 			this.gamepads[i].prevState[controlName] = this.gamepads[i].state[controlName];
 				
 			if (typeof(mapping) == 'function') {
@@ -506,17 +505,12 @@ Gamepad.prototype._update = function() {
 					this.gamepads[i].state[controlName] = value;
 				}
 			}
-			
-			//fire up or down events as an alternative to polling
-			if(this.gamepads[i].prevState[controlName] != this.gamepads[i].state[controlName])
-			{
-				if(this.gamepads[i].state[controlName] == 1)
-				{
-					this._fire(Gamepad.Event.BUTTON_DOWN, {gamepadIndex:i, control:controlName} );
-				}
-				else
-				{
-					this._fire(Gamepad.Event.BUTTON_UP, {gamepadIndex:i, control:controlName} );
+
+			if(this.gamepads[i].prevState[controlName] != this.gamepads[i].state[controlName]) {
+				if(this.gamepads[i].state[controlName] == 1) {
+					this._fire(Gamepad.Event.BUTTON_DOWN, {gamepadIndex: i, control: controlName} );
+				} else {
+					this._fire(Gamepad.Event.BUTTON_UP, {gamepadIndex: i, control: controlName} );
 				}
 			}
 		}
