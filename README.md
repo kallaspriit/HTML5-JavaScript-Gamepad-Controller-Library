@@ -56,6 +56,6 @@ How to use
 
 Changelog
 ---------
-26.02.2013 - Improved mappings, pulled support for button up/down events by #lonewolfwilliams
-30.09.2012 - Removed included jQuery, commented the code, added minimized version, updated readme
-28.09.2012 - Updated the library to work with Chrome 22+, still works with version 21 too.
+* 26.02.2013 - Improved mappings, pulled support for button up/down events by #lonewolfwilliams
+* 30.09.2012 - Removed included jQuery, commented the code, added minimized version, updated readme
+* 28.09.2012 - Updated the library to work with Chrome 22+, still works with version 21 too.
