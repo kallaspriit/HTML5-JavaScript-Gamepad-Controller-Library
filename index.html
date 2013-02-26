@@ -21,13 +21,16 @@
 			
 			var mainWrap = $('#gamepad-' + device.index),
 				statesWrap,
+				logWrap,
 				control,
 				value;
 			
-			mainWrap.append('<ul id="states-' + device.index + '"></ul>');
-			
+			mainWrap.append('<strong>State</strong><ul id="states-' + device.index + '"></ul>');
+			mainWrap.append('<strong>Events</strong><ul id="log-' + device.index + '"></ul>');
+
 			statesWrap = $('#states-' + device.index)
-			
+			logWrap = $('#log-' + device.index)
+
 			for (control in device.state) {
 				value = device.state[control];
 				
@@ -62,20 +65,22 @@
 				
 				for (control in gamepads[i].state) {
 					value = gamepads[i].state[control];
-					
-					
-					
+
 					$('#state-' + gamepads[i].index + '-' + control + '').html(value);
 				}
 			}
 		});
 
-		gamepad.bind(Gamepad.Event.BUTTON_DOWN, function(data) {
-			console.log('pad index:' + data.gamepadIndex + ' button:' + data.control + ' down');
+		gamepad.bind(Gamepad.Event.BUTTON_DOWN, function(e) {
+			$('#log-' + e.gamepad.index).append('<li>' + e.control + ' [' + e.mapping + '] down</li>');
 		});
 		
-		gamepad.bind(Gamepad.Event.BUTTON_UP, function(data) {
-			console.log('pad index:' + data.gamepadIndex + ' button:' + data.control + ' up');
+		gamepad.bind(Gamepad.Event.BUTTON_UP, function(e) {
+			$('#log-' + e.gamepad.index).append('<li>' + e.control + ' [' + e.mapping + '] up</li>');
+		});
+
+		gamepad.bind(Gamepad.Event.AXIS_CHANGED, function(e) {
+			$('#log-' + e.gamepad.index).append('<li>' + e.axis + ' [' + e.mapping + '] changed to ' + e.value + '</li>');
 		});
 
 		if (!gamepad.init()) {

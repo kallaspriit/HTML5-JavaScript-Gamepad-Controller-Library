@@ -21,13 +21,16 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+(function(window) {
+'use strict';
+
 /**
  * Provides simple interface and multi-platform support for the gamepad API.
  * 
  * You can change the deadzone and maximizeThreshold parameters to suit your
  * taste but the defaults should generally work fine.
  */
-Gamepad = function() {
+var Gamepad = function() {
 	this.gamepads = [];
 	this.listeners = {};
 	this.platform = null;
@@ -61,14 +64,17 @@ Gamepad.Type = {
  * question and tick provides the list of all connected gamepads.
  *
  * BUTTON_DOWN and BUTTON_UP events provide an alternative to polling button states at each tick.
+ *
+ * AXIS_CHANGED is called if a value of some specific axis changes.
  */
 Gamepad.Event = {
 	CONNECTED: 'connected',
 	DISCONNECTED: 'disconnected',
 	TICK: 'tick',
 	UNSUPPORTED: 'unsupported',
-	BUTTON_DOWN: 'buttonDown',
-	BUTTON_UP: 'buttonUp'
+	BUTTON_DOWN: 'button-down',
+	BUTTON_UP: 'button-up',
+	AXIS_CHANGED: 'axis-changed'
 };
 
 /**
@@ -222,7 +228,7 @@ Gamepad.Mapping = {
 			RIGHT_STICK_Y: 3
 		}
 	}
-}
+};
 
 /**
  * Initializes the gamepad.
@@ -243,10 +249,9 @@ Gamepad.prototype.init = function() {
 		
 		case Gamepad.Platform.UNSUPPORTED:
 			return false;
-		break;
 	}
 	
-	if (typeof(window.requestAnimationFrame) == 'undefined') {
+	if (typeof(window.requestAnimationFrame) === 'undefined') {
 		window.requestAnimationFrame = window.webkitRequestAnimationFrame
 			|| window.mozRequestAnimationFrame;
 	}
@@ -259,12 +264,12 @@ Gamepad.prototype.init = function() {
 /**
  * Binds a listener to a gamepad event.
  * 
- * @param {string} event Event to bind to, one of Gamepad.Event..
- * @param {function} listener Listener to call when given event occurs
+ * @param {String} event Event to bind to, one of Gamepad.Event..
+ * @param {Function} listener Listener to call when given event occurs
  * @return {Gamepad} Returns self
  */
 Gamepad.prototype.bind = function(event, listener) {
-	if (typeof(this.listeners[event]) == 'undefined') {
+	if (typeof(this.listeners[event]) === 'undefined') {
 		this.listeners[event] = [];
 	}
 	
@@ -276,7 +281,7 @@ Gamepad.prototype.bind = function(event, listener) {
 /**
  * Returns the number of connected gamepads.
  * 
- * @return {number}
+ * @return {Number}
  */
 Gamepad.prototype.count = function() {
 	return this.gamepads.length;
@@ -285,11 +290,11 @@ Gamepad.prototype.count = function() {
 /**
  * Fires an internal event with given data.
  * 
- * @param {string} Event to fire, one of Gamepad.Event..
- * @param {any} data Data to pass to the listener
+ * @param {String} Event to fire, one of Gamepad.Event..
+ * @param {*} data Data to pass to the listener
  */
 Gamepad.prototype._fire = function(event, data) {
-	if (typeof(this.listeners[event]) == 'undefined') {
+	if (typeof(this.listeners[event]) === 'undefined') {
 		return;
 	}
 	
@@ -301,12 +306,12 @@ Gamepad.prototype._fire = function(event, data) {
 /**
  * Resolves platform.
  * 
- * @return {string} One of Gamepad.Platform..
+ * @return {String} One of Gamepad.Platform..
  */
 Gamepad.prototype._resolvePlatform = function() {
 	if (
-		typeof(navigator.webkitGamepads) != 'undefined'
-		|| typeof(navigator.webkitGetGamepads) != 'undefined'
+		typeof(window.navigator.webkitGamepads) !== 'undefined'
+		|| typeof(window.navigator.webkitGetGamepads) !== 'undefined'
 	) {
 		return Gamepad.Platform.WEBKIT;
 	} else {
@@ -338,15 +343,15 @@ Gamepad.prototype._setupFirefox = function() {
 /**
  * Returns mapping for given type.
  * 
- * @param {string} type One of Gamepad.Type..
- * @return {object} Mapping or null if not supported
+ * @param {String} type One of Gamepad.Type..
+ * @return {Object|null} Mapping or null if not supported
  */
 Gamepad.prototype._getMapping = function(type) {
 	switch (type) {
 		case Gamepad.Type.PLAYSTATION:
-			if (this.platform == Gamepad.Platform.FIREFOX) {
+			if (this.platform === Gamepad.Platform.FIREFOX) {
 				return Gamepad.Mapping.PLAYSTATION_FIREFOX;
-			} else if (this.platform == Gamepad.Platform.WEBKIT) {
+			} else if (this.platform === Gamepad.Platform.WEBKIT) {
 				return Gamepad.Mapping.PLAYSTATION_WEBKIT;
 			} else {
 				return null;
@@ -354,9 +359,9 @@ Gamepad.prototype._getMapping = function(type) {
 		break;
 		
 		case Gamepad.Type.LOGITECH:
-			if (this.platform == Gamepad.Platform.FIREFOX) {
+			if (this.platform === Gamepad.Platform.FIREFOX) {
 				return Gamepad.Mapping.LOGITECH_FIREFOX;
-			} else if (this.platform == Gamepad.Platform.WEBKIT) {
+			} else if (this.platform === Gamepad.Platform.WEBKIT) {
 				return Gamepad.Mapping.LOGITECH_WEBKIT;
 			} else {
 				return null;
@@ -365,7 +370,6 @@ Gamepad.prototype._getMapping = function(type) {
 		
 		case Gamepad.Type.XBOX:
 			return Gamepad.Mapping.XBOX;
-		break;
 	}
 	
 	return null;
@@ -374,13 +378,13 @@ Gamepad.prototype._getMapping = function(type) {
 /**
  * Registers given gamepad.
  * 
- * @param {object} gamepad Gamepad to connect to
- * @return {boolean} Was connecting the gamepad successful
+ * @param {Object} gamepad Gamepad to connect to
+ * @return {Boolean} Was connecting the gamepad successful
  */
 Gamepad.prototype._connect = function(gamepad) {
 	gamepad.type = this._resolveControllerType(gamepad.id);
 	
-	if (gamepad.type == Gamepad.Type.UNSUPPORTED) {
+	if (gamepad.type === Gamepad.Type.UNSUPPORTED) {
 		this._fire(Gamepad.Event.UNSUPPORTED, gamepad);
 		
 		return false;
@@ -388,25 +392,26 @@ Gamepad.prototype._connect = function(gamepad) {
 	
 	gamepad.mapping = this._getMapping(gamepad.type);
 	
-	if (gamepad.mapping == null) {
+	if (gamepad.mapping === null) {
 		this._fire(Gamepad.Event.UNSUPPORTED, gamepad);
 		
 		return false;
 	}
 	
-	gamepad.prevState = {};
+	gamepad.lastState = {};
 	gamepad.state = {};
 	
-	var key;
+	var key,
+		axis;
 	
 	for (key in gamepad.mapping.buttons) {
 		gamepad.state[key] = 0;
-		gamepad.prevState[key] = 0;
+		gamepad.lastState[key] = 0;
 	}
 	
-	for (key in gamepad.mapping.axes) {
-		gamepad.state[key] = 0;
-		gamepad.prevState[key] = 0;
+	for (axis in gamepad.mapping.axes) {
+		gamepad.state[axis] = 0;
+		gamepad.lastState[axis] = 0;
 	}
 	
 	this.gamepads[gamepad.index] = gamepad;
@@ -419,18 +424,18 @@ Gamepad.prototype._connect = function(gamepad) {
 /**
  * Disconnects from given gamepad.
  * 
- * @param {object} gamepad Gamepad to disconnect
+ * @param {Object} gamepad Gamepad to disconnect
  */
 Gamepad.prototype._disconnect = function(gamepad) {
 	var newGamepads = [],
 		i;
 	
-	if (typeof(this.gamepads[gamepad.index]) != 'undefined') {
+	if (typeof(this.gamepads[gamepad.index]) !== 'undefined') {
 		delete this.gamepads[gamepad.index];
 	}
 	
 	for (i = 0; i < this.gamepads.length; i++) {
-		if (typeof(this.gamepads[i]) != 'undefined') {
+		if (typeof(this.gamepads[i]) !== 'undefined') {
 			newGamepads[i] = this.gamepads[i];
 		}
 	}
@@ -443,20 +448,20 @@ Gamepad.prototype._disconnect = function(gamepad) {
 /**
  * Resolves controller type from its id.
  * 
- * @param {string} id Controller id
- * @return {string} Controller type, one of Gamepad.Type..
+ * @param {String} id Controller id
+ * @return {String} Controller type, one of Gamepad.Type
  */
 Gamepad.prototype._resolveControllerType = function(id) {
 	id = id.toLowerCase();
 	
-	if (id.indexOf('playstation') != -1) {
+	if (id.indexOf('playstation') !== -1) {
 		return Gamepad.Type.PLAYSTATION;
 	} else if (
-		id.indexOf('logitech') != -1
-		|| id.indexOf('wireless gamepad') != -1
+		id.indexOf('logitech') !== -1
+		|| id.indexOf('wireless gamepad') !== -1
 	) {
 		return Gamepad.Type.LOGITECH;
-	} else if (id.indexOf('xbox') != -1) {
+	} else if (id.indexOf('xbox') !== -1) {
 		return Gamepad.Type.XBOX;
 	} else {
 		return Gamepad.Type.UNSUPPORTED;
@@ -469,6 +474,7 @@ Gamepad.prototype._resolveControllerType = function(id) {
 Gamepad.prototype._update = function() {
 	var self = this,
 		controlName,
+		isDown,
 		mapping,
 		value,
 		i;
@@ -484,42 +490,68 @@ Gamepad.prototype._update = function() {
 	}
 	
 	for (i = 0; i < this.gamepads.length; i++) {
-		if (typeof(this.gamepads[i]) == 'undefined') {
+		if (typeof(this.gamepads[i]) === 'undefined') {
 			continue;
 		}
 		
 		for (controlName in this.gamepads[i].mapping.buttons) {
 			mapping = this.gamepads[i].mapping.buttons[controlName];
-
-			this.gamepads[i].prevState[controlName] = this.gamepads[i].state[controlName];
 				
-			if (typeof(mapping) == 'function') {
-				this.gamepads[i].state[controlName] = mapping(
+			if (typeof(mapping) === 'function') {
+				value = mapping(
 					this.gamepads[i],
 					this
 				);
 			} else {
 				value = this.gamepads[i].buttons[mapping];
+			}
 
-				if (typeof(this.gamepads[i].buttons[mapping]) != 'undefined') {
-					this.gamepads[i].state[controlName] = value;
+			isDown = value > 0.5 ? 1 : 0;
+
+			this.gamepads[i].state[controlName] = value;
+
+			if (isDown !== this.gamepads[i].lastState[controlName]) {
+				if (value > 0.5) {
+					this._fire(
+						Gamepad.Event.BUTTON_DOWN,
+						{
+							gamepad: this.gamepads[i],
+							mapping: mapping,
+							control: controlName
+						}
+					);
+				} else if (value < 0.5) {
+					this._fire(
+						Gamepad.Event.BUTTON_UP,
+						{
+							gamepad: this.gamepads[i],
+							mapping: mapping,
+							control: controlName
+						}
+					);
+				}
+
+				if (value !== 0 && value !== 1) {
+					this._fire(
+						Gamepad.Event.AXIS_CHANGED,
+						{
+							gamepad: this.gamepads[i],
+							mapping: mapping,
+							axis: controlName,
+							value: value
+						}
+					);
 				}
 			}
 
-			if(this.gamepads[i].prevState[controlName] != this.gamepads[i].state[controlName]) {
-				if(this.gamepads[i].state[controlName] == 1) {
-					this._fire(Gamepad.Event.BUTTON_DOWN, {gamepadIndex: i, control: controlName} );
-				} else {
-					this._fire(Gamepad.Event.BUTTON_UP, {gamepadIndex: i, control: controlName} );
-				}
-			}
+			this.gamepads[i].lastState[controlName] = isDown;
 		}
 		
 		for (controlName in this.gamepads[i].mapping.axes) {
 			mapping = this.gamepads[i].mapping.axes[controlName];
 			
-			if (typeof(mapping) == 'function') {
-				this.gamepads[i].state[controlName] = mapping(
+			if (typeof(mapping) === 'function') {
+				value = mapping(
 					this.gamepads[i],
 					this
 				);
@@ -527,11 +559,23 @@ Gamepad.prototype._update = function() {
 				value = this._applyDeadzoneMaximize(
 					this.gamepads[i].axes[mapping]
 				);
-				
-				if (typeof(this.gamepads[i].axes[mapping]) != 'undefined') {
-					this.gamepads[i].state[controlName] = value;
-				}
 			}
+
+			this.gamepads[i].state[controlName] = value;
+
+			if (value !== this.gamepads[i].lastState[controlName]) {
+				this._fire(
+					Gamepad.Event.AXIS_CHANGED,
+					{
+						gamepad: this.gamepads[i],
+						mapping: mapping,
+						axis: controlName,
+						value: value
+					}
+				);
+			}
+
+			this.gamepads[i].lastState[controlName] = value;
 		}
 	}
 	
@@ -550,15 +594,15 @@ Gamepad.prototype._update = function() {
 Gamepad.prototype._updateWebkit = function() {
 	var gamepads;
 	
-	if (typeof(navigator.webkitGamepads) == 'object') {
-		gamepads = navigator.webkitGamepads;
-	} else if (typeof(navigator.webkitGetGamepads) == 'function') {
-		gamepads = navigator.webkitGetGamepads();
+	if (typeof(window.navigator.webkitGamepads) === 'object') {
+		gamepads = window.navigator.webkitGamepads;
+	} else if (typeof(window.navigator.webkitGetGamepads) === 'function') {
+		gamepads = window.navigator.webkitGetGamepads();
 	} else {
 		return; // should not happen
 	}
 	
-	if (gamepads.length != this.gamepads.length) {
+	if (gamepads.length !== this.gamepads.length) {
 		var gamepad,
 			i;
 		
@@ -566,8 +610,8 @@ Gamepad.prototype._updateWebkit = function() {
 			gamepad = gamepads[i];
 			
 			if (
-				typeof(gamepad) != 'undefined'
-				&& typeof(this.gamepads[gamepad.index]) == 'undefined'
+				typeof(gamepad) !== 'undefined'
+				&& typeof(this.gamepads[gamepad.index]) === 'undefined'
 			) {
 				this._connect(gamepad);
 			}
@@ -575,8 +619,8 @@ Gamepad.prototype._updateWebkit = function() {
 		
 		for (i = 0; i < this.gamepads.length; i++) {
 			if (
-				typeof(this.gamepads[i]) != 'undefined'
-				&& typeof(gamepads[i]) == 'undefined'
+				typeof(this.gamepads[i]) !== 'undefined'
+				&& typeof(gamepads[i]) === 'undefined'
 			) {
 				this._disconnect(this.gamepads[i]);
 			}
@@ -605,10 +649,10 @@ Gamepad.prototype._applyDeadzoneMaximize = function(
 	deadzone,
 	maximizeThreshold
 ) {
-	deadzone = typeof(deadzone) != 'undefined'
+	deadzone = typeof(deadzone) !== 'undefined'
 		? deadzone
 		: this.deadzone;
-	maximizeThreshold = typeof(maximizeThreshold) != 'undefined'
+	maximizeThreshold = typeof(maximizeThreshold) !== 'undefined'
 		? maximizeThreshold
 		: this.maximizeThreshold;
 	
@@ -628,3 +672,7 @@ Gamepad.prototype._applyDeadzoneMaximize = function(
 	
 	return value;
 };
+
+window.Gamepad = Gamepad;
+
+})(window);
