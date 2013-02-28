@@ -39,6 +39,18 @@ How to use
 		// an unsupported gamepad connected (add new mapping)
 	});
 
+	gamepad.bind(Gamepad.Event.BUTTON_DOWN, function(e) {
+		// e.control of gamepad e.gamepad pressed down
+	});
+	
+	gamepad.bind(Gamepad.Event.BUTTON_UP, function(e) {
+		// e.control of gamepad e.gamepad released
+	});
+
+	gamepad.bind(Gamepad.Event.AXIS_CHANGED, function(e) {
+		// e.axis changed to value e.value for gamepad e.gamepad
+	});
+
 	gamepad.bind(Gamepad.Event.TICK, function(gamepads) {
 		// gamepads were updated (around 60 times a second)
 	});

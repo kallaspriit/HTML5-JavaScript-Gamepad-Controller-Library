@@ -290,7 +290,7 @@ Gamepad.prototype.count = function() {
 /**
  * Fires an internal event with given data.
  * 
- * @param {String} Event to fire, one of Gamepad.Event..
+ * @param {String} event Event to fire, one of Gamepad.Event..
  * @param {*} data Data to pass to the listener
  */
 Gamepad.prototype._fire = function(event, data) {
@@ -397,9 +397,10 @@ Gamepad.prototype._connect = function(gamepad) {
 		
 		return false;
 	}
-	
-	gamepad.lastState = {};
+
 	gamepad.state = {};
+	gamepad.lastState = {};
+	gamepad.downButtons = [];
 	
 	var key,
 		axis;
@@ -475,9 +476,11 @@ Gamepad.prototype._update = function() {
 	var self = this,
 		controlName,
 		isDown,
+		lastDown,
+		downBtnIndex,
 		mapping,
 		value,
-		i;
+		i, j;
 	
 	switch (this.platform) {
 		case Gamepad.Platform.WEBKIT:
@@ -506,11 +509,21 @@ Gamepad.prototype._update = function() {
 				value = this.gamepads[i].buttons[mapping];
 			}
 
-			isDown = value > 0.5 ? 1 : 0;
+			isDown = value > 0.5 ? true : false;
+			lastDown = false;
+
+			for (j = 0; j < this.gamepads[i].downButtons.length; j++) {
+				if (this.gamepads[i].downButtons[j] === controlName) {
+					lastDown = true;
+					downBtnIndex = i;
+
+					break;
+				}
+			}
 
 			this.gamepads[i].state[controlName] = value;
 
-			if (isDown !== this.gamepads[i].lastState[controlName]) {
+			if (isDown !== lastDown) {
 				if (value > 0.5) {
 					this._fire(
 						Gamepad.Event.BUTTON_DOWN,
@@ -520,6 +533,8 @@ Gamepad.prototype._update = function() {
 							control: controlName
 						}
 					);
+
+					this.gamepads[i].downButtons.push(controlName);
 				} else if (value < 0.5) {
 					this._fire(
 						Gamepad.Event.BUTTON_UP,
@@ -529,22 +544,24 @@ Gamepad.prototype._update = function() {
 							control: controlName
 						}
 					);
-				}
 
-				if (value !== 0 && value !== 1) {
-					this._fire(
-						Gamepad.Event.AXIS_CHANGED,
-						{
-							gamepad: this.gamepads[i],
-							mapping: mapping,
-							axis: controlName,
-							value: value
-						}
-					);
+					this.gamepads[i].downButtons.splice(downBtnIndex, 1);
 				}
 			}
 
-			this.gamepads[i].lastState[controlName] = isDown;
+			if (value !== 0 && value !== 1 && value !== this.gamepads[i].lastState[controlName]) {
+				this._fire(
+					Gamepad.Event.AXIS_CHANGED,
+					{
+						gamepad: this.gamepads[i],
+						mapping: mapping,
+						axis: controlName,
+						value: value
+					}
+				);
+			}
+
+			this.gamepads[i].lastState[controlName] = value;
 		}
 		
 		for (controlName in this.gamepads[i].mapping.axes) {
@@ -641,8 +658,8 @@ Gamepad.prototype._updateFirefox = function() {
  * You can change the thresholds via deadzone and maximizeThreshold members.
  * 
  * @param {number} value Value to modify
- * @param {number} deadzone Deadzone to apply
- * @param {number} maximizeThreshold From which value to maximize value
+ * @param {number} [deadzone] Deadzone to apply
+ * @param {number} [maximizeThreshold] From which value to maximize value
  */
 Gamepad.prototype._applyDeadzoneMaximize = function(
 	value,
