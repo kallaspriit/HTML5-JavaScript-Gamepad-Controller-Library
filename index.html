@@ -1,0 +1,116 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>HTML5 Javascript Gamepad Controller Library by kallaspriit</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>HTML5 Javascript Gamepad Controller Library</h1>
+        <p>Library for accessing gamepads &amp; joysticks in modern browsers.</p>
+
+        <p class="view"><a href="https://github.com/kallaspriit/HTML5-JavaScript-Gamepad-Controller-Library">View the Project on GitHub <small>kallaspriit/HTML5-JavaScript-Gamepad-Controller-Library</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/kallaspriit/HTML5-JavaScript-Gamepad-Controller-Library/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/kallaspriit/HTML5-JavaScript-Gamepad-Controller-Library/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/kallaspriit/HTML5-JavaScript-Gamepad-Controller-Library">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>HTML5-JavaScript-Gamepad-Controller-Library</h1>
+
+<p><strong>Library for accessing gamepads in modern browsers.</strong></p>
+
+<ul>
+<li>Works on latest Firefox and Google Chrome.</li>
+<li>Very easy to add mappings to new controllers.</li>
+<li>Lightweight.</li>
+<li>Includes settings for deadzone and maximization.</li>
+<li>Simple event-based system.</li>
+<li>Minimal working example provided.</li>
+<li>Does not depend on any other library.</li>
+<li>Includes minimized version.</li>
+</ul><h2>How to use</h2>
+
+<ul>
+<li>
+<p>Include the library.</p>
+
+<div class="highlight"><pre><span class="o">&lt;</span><span class="nx">script</span> <span class="nx">src</span><span class="o">=</span><span class="s2">"gamepad.js"</span><span class="o">&gt;&lt;</span><span class="err">/script&gt;</span>
+</pre></div>
+</li>
+<li>
+<p>Create an instance of the Gamepad class.</p>
+
+<div class="highlight"><pre><span class="kd">var</span> <span class="nx">gamepad</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Gamepad</span><span class="p">();</span><span class="err">`</span>
+</pre></div>
+</li>
+<li>
+<p>Bind to the events</p>
+
+<div class="highlight"><pre><span class="nx">gamepad</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="nx">Gamepad</span><span class="p">.</span><span class="nx">Event</span><span class="p">.</span><span class="nx">CONNECTED</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">device</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// a new gamepad connected</span>
+<span class="p">});</span>
+
+<span class="nx">gamepad</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="nx">Gamepad</span><span class="p">.</span><span class="nx">Event</span><span class="p">.</span><span class="nx">DISCONNECTED</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">device</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// gamepad disconnected</span>
+<span class="p">});</span>
+
+<span class="nx">gamepad</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="nx">Gamepad</span><span class="p">.</span><span class="nx">Event</span><span class="p">.</span><span class="nx">UNSUPPORTED</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">device</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// an unsupported gamepad connected (add new mapping)</span>
+<span class="p">});</span>
+
+<span class="nx">gamepad</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="nx">Gamepad</span><span class="p">.</span><span class="nx">Event</span><span class="p">.</span><span class="nx">BUTTON_DOWN</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// e.control of gamepad e.gamepad pressed down</span>
+<span class="p">});</span>
+
+<span class="nx">gamepad</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="nx">Gamepad</span><span class="p">.</span><span class="nx">Event</span><span class="p">.</span><span class="nx">BUTTON_UP</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// e.control of gamepad e.gamepad released</span>
+<span class="p">});</span>
+
+<span class="nx">gamepad</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="nx">Gamepad</span><span class="p">.</span><span class="nx">Event</span><span class="p">.</span><span class="nx">AXIS_CHANGED</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// e.axis changed to value e.value for gamepad e.gamepad</span>
+<span class="p">});</span>
+
+<span class="nx">gamepad</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="nx">Gamepad</span><span class="p">.</span><span class="nx">Event</span><span class="p">.</span><span class="nx">TICK</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">gamepads</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// gamepads were updated (around 60 times a second)</span>
+<span class="p">});</span>
+</pre></div>
+</li>
+<li>
+<p>Initilize the gamepads</p>
+
+<div class="highlight"><pre><span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">gamepad</span><span class="p">.</span><span class="nx">init</span><span class="p">())</span> <span class="p">{</span>
+    <span class="c1">// Your browser does not support gamepads, get the latest Google Chrome or Firefox</span>
+<span class="p">}</span>
+</pre></div>
+</li>
+<li><p>Try the working example in index.html for more tips</p></li>
+</ul><h2>Changelog</h2>
+
+<ul>
+<li>26.02.2013 - Improved mappings, pulled support for button up/down events by #lonewolfwilliams</li>
+<li>30.09.2012 - Removed included jQuery, commented the code, added minimized version, updated readme</li>
+<li>28.09.2012 - Updated the library to work with Chrome 22+, still works with version 21 too.</li>
+</ul>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/kallaspriit">kallaspriit</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
