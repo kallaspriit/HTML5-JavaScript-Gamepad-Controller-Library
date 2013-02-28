@@ -11,11 +11,13 @@
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+	<script src="https://raw.github.com/kallaspriit/HTML5-JavaScript-Gamepad-Controller-Library/master/gamepad.js"></script>
   </head>
   <body>
     <div class="wrapper">
       <header>
-        <h1>HTML5 Javascript Gamepad Controller Library</h1>
+        <h1>HTML5 Gamepad</h1>
         <p>Library for accessing gamepads &amp; joysticks in modern browsers.</p>
 
         <p class="view"><a href="https://github.com/kallaspriit/HTML5-JavaScript-Gamepad-Controller-Library">View the Project on GitHub <small>kallaspriit/HTML5-JavaScript-Gamepad-Controller-Library</small></a></p>
@@ -28,9 +30,9 @@
         </ul>
       </header>
       <section>
-        <h1>HTML5-JavaScript-Gamepad-Controller-Library</h1>
+        <h1>HTML5 Javascript Gamepad Controller Library</h1>
 
-<p><strong>Library for accessing gamepads in modern browsers.</strong></p>
+<h2>Features</h2>
 
 <ul>
 <li>Works on latest Firefox and Google Chrome.</li>
@@ -97,12 +99,94 @@
 </pre></div>
 </li>
 <li><p>Try the working example in index.html for more tips</p></li>
-</ul><h2>Changelog</h2>
+</ul>
 
-<ul>
-<li>26.02.2013 - Improved mappings, pulled support for button up/down events by #lonewolfwilliams</li>
-<li>30.09.2012 - Removed included jQuery, commented the code, added minimized version, updated readme</li>
-<li>28.09.2012 - Updated the library to work with Chrome 22+, still works with version 21 too.</li>
+<h2>Example</h2>
+
+<ul id="gamepads"></ul>
+<p id="connect-notice">Connect your controller and press any button.</p>
+
+<script>
+
+$(document).ready(function() {
+	var gamepad = new Gamepad();
+
+	gamepad.bind(Gamepad.Event.CONNECTED, function(device) {
+		console.log('Connected', device);
+
+		$('#gamepads').append('<li id="gamepad-' + device.index + '"><h1>Gamepad #' + device.index + ': ' + device.id + ' (' + device.type + ')</h1></li>');
+		
+		var mainWrap = $('#gamepad-' + device.index),
+			statesWrap,
+			logWrap,
+			control,
+			value;
+		
+		mainWrap.append('<strong>State</strong><ul id="states-' + device.index + '"></ul>');
+		mainWrap.append('<strong>Events</strong><ul id="log-' + device.index + '"></ul>');
+
+		statesWrap = $('#states-' + device.index)
+		logWrap = $('#log-' + device.index)
+
+		for (control in device.state) {
+			value = device.state[control];
+			
+			statesWrap.append('<li>' + control + ': <span id="state-' + device.index + '-' + control + '">' + value + '</span></li>');
+		}
+		
+		$('#connect-notice').hide();
+	});
+
+	gamepad.bind(Gamepad.Event.DISCONNECTED, function(device) {
+		console.log('Disconnected', device);
+		
+		$('#gamepad-' + device.index).remove();
+		
+		if (gamepad.count() == 0) {
+			$('#connect-notice').show();
+		}
+	});
+
+	gamepad.bind(Gamepad.Event.UNSUPPORTED, function(device) {
+		console.log('Unsupported controller connected', device);
+	});
+
+	gamepad.bind(Gamepad.Event.TICK, function(gamepads) {
+		var wrap,
+			control,
+			value,
+			i;
+		
+		for (i = 0; i < gamepads.length; i++) {
+			wrap = $('#gamepad-' + i);
+			
+			for (control in gamepads[i].state) {
+				value = gamepads[i].state[control];
+
+				$('#state-' + gamepads[i].index + '-' + control + '').html(value);
+			}
+		}
+	});
+
+	gamepad.bind(Gamepad.Event.BUTTON_DOWN, function(e) {
+		$('#log-' + e.gamepad.index).append('<li>' + e.control + ' [' + e.mapping + '] down</li>');
+	});
+	
+	gamepad.bind(Gamepad.Event.BUTTON_UP, function(e) {
+		$('#log-' + e.gamepad.index).append('<li>' + e.control + ' [' + e.mapping + '] up</li>');
+	});
+
+	gamepad.bind(Gamepad.Event.AXIS_CHANGED, function(e) {
+		$('#log-' + e.gamepad.index).append('<li>' + e.axis + ' [' + e.mapping + '] changed to ' + e.value + '</li>');
+	});
+
+	if (!gamepad.init()) {
+		alert('Your browser does not support gamepads, get the latest Google Chrome or Firefox.');
+	}
+});
+
+</script>
+
 </ul>
       </section>
       <footer>
