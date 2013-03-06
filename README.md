@@ -3,11 +3,12 @@ HTML5-JavaScript-Gamepad-Controller-Library
 
 **Library for accessing gamepads in modern browsers.**
 
-* Works on latest Firefox and Google Chrome.
+* Works with modern browsers and has mappings to many controllers.
 * Very easy to add mappings to new controllers.
 * Lightweight.
 * Includes settings for deadzone and maximization.
 * Simple event-based system.
+* Includes state change events.
 * Minimal working example provided.
 * Does not depend on any other library.
 * Includes minimized version.
@@ -22,7 +23,7 @@ How to use
 
 * Create an instance of the Gamepad class.
 ```javascript
-	var gamepad = new Gamepad();`
+	var gamepad = new Gamepad();
 ```
 
 * Bind to the events
@@ -64,10 +65,3 @@ How to use
 ```
 
 * Try the working example in index.html for more tips
-
-
-Changelog
----------
-* 26.02.2013 - Improved mappings, pulled support for button up/down events by #lonewolfwilliams
-* 30.09.2012 - Removed included jQuery, commented the code, added minimized version, updated readme
-* 28.09.2012 - Updated the library to work with Chrome 22+, still works with version 21 too.
