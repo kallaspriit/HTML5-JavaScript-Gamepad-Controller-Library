@@ -220,7 +220,7 @@ Gamepad.Mapping = {
 			DPAD_DOWN: 13,
 			DPAD_LEFT: 14,
 			DPAD_RIGHT: 15,
-      XBOX: 16
+      HOME: 16
 		},
 		axes: {
 			LEFT_STICK_X: 0,
