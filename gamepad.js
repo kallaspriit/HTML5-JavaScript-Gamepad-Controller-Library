@@ -219,7 +219,8 @@ Gamepad.Mapping = {
 			DPAD_UP: 12,
 			DPAD_DOWN: 13,
 			DPAD_LEFT: 14,
-			DPAD_RIGHT: 15
+			DPAD_RIGHT: 15,
+      XBOX: 16
 		},
 		axes: {
 			LEFT_STICK_X: 0,
@@ -462,7 +463,7 @@ Gamepad.prototype._resolveControllerType = function(id) {
 		|| id.indexOf('wireless gamepad') !== -1
 	) {
 		return Gamepad.Type.LOGITECH;
-	} else if (id.indexOf('xbox') !== -1) {
+	} else if (id.indexOf('xbox') !== -1 || id.indexOf('360') !== -1) {
 		return Gamepad.Type.XBOX;
 	} else {
 		return Gamepad.Type.UNSUPPORTED;
