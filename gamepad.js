@@ -280,6 +280,19 @@ Gamepad.prototype.bind = function(event, listener) {
 };
 
 /**
+ * Removes all listeners from a gamepad event.
+ * 
+ * @param {String} event Event to bind to, one of Gamepad.Event..
+ * @param {Function} listener Listener to call when given event occurs
+ * @return {Gamepad} Returns self
+ */
+Gamepad.prototype.unbind = function(event) {
+	this.listeners[event] = [];
+		
+	return this;
+};
+
+/**
  * Returns the number of connected gamepads.
  * 
  * @return {Number}
