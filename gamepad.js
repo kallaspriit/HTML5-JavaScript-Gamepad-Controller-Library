@@ -628,7 +628,8 @@ Gamepad.prototype._updateWebkit = function() {
 			gamepad = gamepads[i];
 			
 			if (
-				typeof(gamepad) !== 'undefined'
+				gamepad !== null
+				&& typeof(gamepad) !== 'undefined'
 				&& typeof(this.gamepads[gamepad.index]) === 'undefined'
 			) {
 				this._connect(gamepad);
@@ -637,7 +638,8 @@ Gamepad.prototype._updateWebkit = function() {
 		
 		for (i = 0; i < this.gamepads.length; i++) {
 			if (
-				typeof(this.gamepads[i]) !== 'undefined'
+				this.gamepads[i] !== null
+				&& typeof(this.gamepads[i]) !== 'undefined'
 				&& typeof(gamepads[i]) === 'undefined'
 			) {
 				this._disconnect(this.gamepads[i]);
