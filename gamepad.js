@@ -54,7 +54,7 @@ Gamepad.Type = {
 	PLAYSTATION: 'playstation',
 	LOGITECH: 'logitech',
 	XBOX: 'xbox',
-	UNSUPPORTED: 'unsupported'
+	UNSUPPORTED: 'unsupported' // replace this with 'xbox' or 'logitech' to default to some configuration
 };
 
 /**
@@ -238,27 +238,27 @@ Gamepad.Mapping = {
  */
 Gamepad.prototype.init = function() {
 	this.platform = this._resolvePlatform();
-	
+
 	switch (this.platform) {
 		case Gamepad.Platform.WEBKIT:
 			this._setupWebkit();
 		break;
-		
+
 		case Gamepad.Platform.FIREFOX:
 			this._setupFirefox();
 		break;
-		
+
 		case Gamepad.Platform.UNSUPPORTED:
 			return false;
 	}
-	
+
 	if (typeof(window.requestAnimationFrame) === 'undefined') {
 		window.requestAnimationFrame = window.webkitRequestAnimationFrame
 			|| window.mozRequestAnimationFrame;
 	}
-	
+
 	this._update();
-	
+
 	return true;
 };
 
@@ -273,10 +273,47 @@ Gamepad.prototype.bind = function(event, listener) {
 	if (typeof(this.listeners[event]) === 'undefined') {
 		this.listeners[event] = [];
 	}
-	
+
 	this.listeners[event].push(listener);
-	
+
 	return this;
+};
+
+/**
+ * Removes listener of given type.
+ *
+ * If no type is given, all listeners are removed. If no listener is given, all
+ * listeners of given type are removed.
+ *
+ * @param {String} [type] Type of listener to remove
+ * @param {Function} [listener] The listener function to remove
+ */
+Gamepad.prototype.unbind = function(type, listener) {
+	if (typeof(type) === 'undefined') {
+		this.listeners = {};
+
+		return;
+	}
+
+	if (typeof(listener) === 'undefined') {
+		this.listeners[type] = [];
+
+		return;
+	}
+
+	if (typeof(this.listeners[type]) === 'undefined') {
+		return false;
+	}
+
+	for (var i = 0; i < this.listeners[type].length; i++) {
+		if (this.listeners[type][i] === listener) {
+			this.listeners[type].splice(i, 1);
+
+			return true;
+		}
+	}
+
+	return false;
 };
 
 /**
@@ -298,7 +335,7 @@ Gamepad.prototype._fire = function(event, data) {
 	if (typeof(this.listeners[event]) === 'undefined') {
 		return;
 	}
-	
+
 	for (var i = 0; i < this.listeners[event].length; i++) {
 		this.listeners[event][i].apply(this.listeners[event][i], [data]);
 	}
@@ -332,7 +369,7 @@ Gamepad.prototype._setupWebkit = function() {
  */
 Gamepad.prototype._setupFirefox = function() {
 	var self = this;
-	
+
 	window.addEventListener('MozGamepadConnected', function(e) {
 		self._connect(e.gamepad);
 	});
@@ -358,7 +395,7 @@ Gamepad.prototype._getMapping = function(type) {
 				return null;
 			}
 		break;
-		
+
 		case Gamepad.Type.LOGITECH:
 			if (this.platform === Gamepad.Platform.FIREFOX) {
 				return Gamepad.Mapping.LOGITECH_FIREFOX;
@@ -368,11 +405,11 @@ Gamepad.prototype._getMapping = function(type) {
 				return null;
 			}
 		break;
-		
+
 		case Gamepad.Type.XBOX:
 			return Gamepad.Mapping.XBOX;
 	}
-	
+
 	return null;
 };
 
@@ -384,42 +421,42 @@ Gamepad.prototype._getMapping = function(type) {
  */
 Gamepad.prototype._connect = function(gamepad) {
 	gamepad.type = this._resolveControllerType(gamepad.id);
-	
+
 	if (gamepad.type === Gamepad.Type.UNSUPPORTED) {
 		this._fire(Gamepad.Event.UNSUPPORTED, gamepad);
-		
+
 		return false;
 	}
-	
+
 	gamepad.mapping = this._getMapping(gamepad.type);
-	
+
 	if (gamepad.mapping === null) {
 		this._fire(Gamepad.Event.UNSUPPORTED, gamepad);
-		
+
 		return false;
 	}
 
 	gamepad.state = {};
 	gamepad.lastState = {};
 	gamepad.downButtons = [];
-	
+
 	var key,
 		axis;
-	
+
 	for (key in gamepad.mapping.buttons) {
 		gamepad.state[key] = 0;
 		gamepad.lastState[key] = 0;
 	}
-	
+
 	for (axis in gamepad.mapping.axes) {
 		gamepad.state[axis] = 0;
 		gamepad.lastState[axis] = 0;
 	}
-	
+
 	this.gamepads[gamepad.index] = gamepad;
-	
+
 	this._fire(Gamepad.Event.CONNECTED, gamepad);
-	
+
 	return true;
 };
 
@@ -431,19 +468,19 @@ Gamepad.prototype._connect = function(gamepad) {
 Gamepad.prototype._disconnect = function(gamepad) {
 	var newGamepads = [],
 		i;
-	
+
 	if (typeof(this.gamepads[gamepad.index]) !== 'undefined') {
 		delete this.gamepads[gamepad.index];
 	}
-	
+
 	for (i = 0; i < this.gamepads.length; i++) {
 		if (typeof(this.gamepads[i]) !== 'undefined') {
 			newGamepads[i] = this.gamepads[i];
 		}
 	}
-	
+
 	this.gamepads = newGamepads;
-	
+
 	this._fire(Gamepad.Event.DISCONNECTED, gamepad);
 };
 
@@ -455,7 +492,7 @@ Gamepad.prototype._disconnect = function(gamepad) {
  */
 Gamepad.prototype._resolveControllerType = function(id) {
 	id = id.toLowerCase();
-	
+
 	if (id.indexOf('playstation') !== -1) {
 		return Gamepad.Type.PLAYSTATION;
 	} else if (
@@ -482,25 +519,25 @@ Gamepad.prototype._update = function() {
 		mapping,
 		value,
 		i, j;
-	
+
 	switch (this.platform) {
 		case Gamepad.Platform.WEBKIT:
 			this._updateWebkit();
 		break;
-		
+
 		case Gamepad.Platform.FIREFOX:
 			this._updateFirefox();
 		break;
 	}
-	
+
 	for (i = 0; i < this.gamepads.length; i++) {
 		if (typeof(this.gamepads[i]) === 'undefined') {
 			continue;
 		}
-		
+
 		for (controlName in this.gamepads[i].mapping.buttons) {
 			mapping = this.gamepads[i].mapping.buttons[controlName];
-				
+
 			if (typeof(mapping) === 'function') {
 				value = mapping(
 					this.gamepads[i],
@@ -564,10 +601,10 @@ Gamepad.prototype._update = function() {
 
 			this.gamepads[i].lastState[controlName] = value;
 		}
-		
+
 		for (controlName in this.gamepads[i].mapping.axes) {
 			mapping = this.gamepads[i].mapping.axes[controlName];
-			
+
 			if (typeof(mapping) === 'function') {
 				value = mapping(
 					this.gamepads[i],
@@ -596,11 +633,11 @@ Gamepad.prototype._update = function() {
 			this.gamepads[i].lastState[controlName] = value;
 		}
 	}
-	
+
 	if (this.gamepads.length > 0) {
 		this._fire(Gamepad.Event.TICK, this.gamepads);
 	}
-	
+
 	window.requestAnimationFrame(function() {
 		self._update();
 	});
@@ -611,7 +648,7 @@ Gamepad.prototype._update = function() {
  */
 Gamepad.prototype._updateWebkit = function() {
 	var gamepads;
-	
+
 	if (typeof(window.navigator.webkitGamepads) === 'object') {
 		gamepads = window.navigator.webkitGamepads;
 	} else if (typeof(window.navigator.webkitGetGamepads) === 'function') {
@@ -619,14 +656,14 @@ Gamepad.prototype._updateWebkit = function() {
 	} else {
 		return; // should not happen
 	}
-	
+
 	if (gamepads.length !== this.gamepads.length) {
 		var gamepad,
 			i;
-		
+
 		for (i = 0; i < gamepads.length; i++) {
 			gamepad = gamepads[i];
-			
+
 			if (
 				gamepad !== null
 				&& typeof(gamepad) !== 'undefined'
@@ -635,7 +672,7 @@ Gamepad.prototype._updateWebkit = function() {
 				this._connect(gamepad);
 			}
 		}
-		
+
 		for (i = 0; i < this.gamepads.length; i++) {
 			if (
 				this.gamepads[i] !== null
@@ -651,9 +688,7 @@ Gamepad.prototype._updateWebkit = function() {
 /**
  * Updates firefox platform gamepads.
  */
-Gamepad.prototype._updateFirefox = function() {
-	
-};
+Gamepad.prototype._updateFirefox = function() {};
 
 /**
  * Applies deadzone and maximization.
@@ -675,7 +710,7 @@ Gamepad.prototype._applyDeadzoneMaximize = function(
 	maximizeThreshold = typeof(maximizeThreshold) !== 'undefined'
 		? maximizeThreshold
 		: this.maximizeThreshold;
-	
+
 	if (value >= 0) {
 		if (value < deadzone) {
 			value = 0;
@@ -689,7 +724,7 @@ Gamepad.prototype._applyDeadzoneMaximize = function(
 			value = -1;
 		}
 	}
-	
+
 	return value;
 };
 
