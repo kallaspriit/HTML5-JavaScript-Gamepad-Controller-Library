@@ -66,8 +66,15 @@ How to use
 
 * Try the working example in index.html for more tips
 
-
-Documentation
+Development
 ----------
-The library is documented according to [yuidoc](http://yui.github.io/yuidoc/) conventions and it can be regenerated using
-```yuidoc -o doc -x *.min.js .```
+
+The library is built using [grunt](http://gruntjs.com/) and [node.js](http://www.nodejs.org/).
+Have them installed according to their installation guidelines.
+
+The build sequence consists of the following tasks:
+* 'format', executing js-beautify (according to .jsbeautifyrc) and jshint (according to .jshintrc)
+* 'compile', executing UglifyJS2
+* 'document', using [yuidoc](http://yui.github.io/yuidoc/)
+
+The default grunt task executes them in the given order.
