@@ -69,5 +69,5 @@ How to use
 
 Documentation
 ----------
-The library is documented according to ![yuidoc](http://yui.github.io/yuidoc/) conventions and it can be regenerated using
+The library is documented according to [yuidoc](http://yui.github.io/yuidoc/) conventions and it can be regenerated using
 ```yuidoc -o doc -x *.min.js .```
