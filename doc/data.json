@@ -1,5 +1,10 @@
 {
-    "project": {},
+    "project": {
+        "name": "HTML5-JavaScript-Gamepad-Controller-Library",
+        "description": "Library for accessing gamepads in modern browsers.",
+        "version": "0.0.1",
+        "url": "https://github.com/kallaspriit/HTML5-JavaScript-Gamepad-Controller-Library"
+    },
     "files": {
         "gamepad.js": {
             "name": "gamepad.js",
@@ -41,13 +46,14 @@
             "file": "gamepad.js",
             "line": 27,
             "description": "Provides simple interface and multi-platform support for the gamepad API.\n\nYou can change the deadzone and maximizeThreshold parameters to suit your\ntaste but the defaults should generally work fine.",
-            "is_constructor": 1
+            "is_constructor": 1,
+            "author": "Priit Kallas <kallaspriit@gmail.com>"
         }
     },
     "classitems": [
         {
             "file": "gamepad.js",
-            "line": 45,
+            "line": 46,
             "description": "List of supported platforms.",
             "itemtype": "property",
             "name": "Platform",
@@ -73,7 +79,7 @@
         },
         {
             "file": "gamepad.js",
-            "line": 59,
+            "line": 60,
             "description": "List of supported controller types.",
             "itemtype": "property",
             "name": "Type",
@@ -104,7 +110,7 @@
         },
         {
             "file": "gamepad.js",
-            "line": 86,
+            "line": 87,
             "description": "Triggered when a new controller connects.",
             "itemtype": "event",
             "name": "connected",
@@ -120,7 +126,7 @@
         },
         {
             "file": "gamepad.js",
-            "line": 94,
+            "line": 95,
             "description": "Called when an unsupported controller connects.",
             "itemtype": "event",
             "name": "unsupported",
@@ -136,7 +142,7 @@
         },
         {
             "file": "gamepad.js",
-            "line": 102,
+            "line": 103,
             "description": "Triggered when a controller disconnects.",
             "itemtype": "event",
             "name": "disconnected",
@@ -152,7 +158,7 @@
         },
         {
             "file": "gamepad.js",
-            "line": 110,
+            "line": 111,
             "description": "Called regularly with the latest controllers info.",
             "itemtype": "event",
             "name": "tick",
@@ -168,7 +174,7 @@
         },
         {
             "file": "gamepad.js",
-            "line": 118,
+            "line": 119,
             "description": "Called when a gamepad button is pressed down.",
             "itemtype": "event",
             "name": "button-down",
@@ -201,7 +207,7 @@
         },
         {
             "file": "gamepad.js",
-            "line": 129,
+            "line": 130,
             "description": "Called when a gamepad button is released.",
             "itemtype": "event",
             "name": "button-up",
@@ -234,7 +240,7 @@
         },
         {
             "file": "gamepad.js",
-            "line": 140,
+            "line": 141,
             "description": "Called when gamepad axis value changed.",
             "itemtype": "event",
             "name": "axis-changed",
@@ -272,7 +278,7 @@
         },
         {
             "file": "gamepad.js",
-            "line": 153,
+            "line": 154,
             "description": "Mapping of various gamepads on different platforms too unify their buttons\nand axes.\n\nThe mapping can be either a simple number of the button/axes or a function\nthat gets the gamepad as first parameter and the gamepad class as second.",
             "itemtype": "property",
             "name": "Mapping",
@@ -281,7 +287,7 @@
         },
         {
             "file": "gamepad.js",
-            "line": 309,
+            "line": 311,
             "description": "Initializes the gamepad.\n\nYou usually want to bind to the events first and then initialize it.",
             "itemtype": "method",
             "name": "init",
@@ -290,7 +296,7 @@
         },
         {
             "file": "gamepad.js",
-            "line": 341,
+            "line": 343,
             "description": "Binds a listener to a gamepad event.",
             "itemtype": "method",
             "name": "bind",
@@ -315,7 +321,7 @@
         },
         {
             "file": "gamepad.js",
-            "line": 359,
+            "line": 361,
             "description": "Removes listener of given type.\n\nIf no type is given, all listeners are removed. If no listener is given, all\nlisteners of given type are removed.",
             "itemtype": "method",
             "name": "unbind",
@@ -342,7 +348,7 @@
         },
         {
             "file": "gamepad.js",
-            "line": 398,
+            "line": 400,
             "description": "Returns the number of connected gamepads.",
             "itemtype": "method",
             "name": "count",
@@ -355,7 +361,7 @@
         },
         {
             "file": "gamepad.js",
-            "line": 408,
+            "line": 410,
             "description": "Fires an internal event with given data.",
             "itemtype": "method",
             "name": "_fire",
@@ -378,7 +384,7 @@
         },
         {
             "file": "gamepad.js",
-            "line": 426,
+            "line": 428,
             "description": "Resolves platform.",
             "itemtype": "method",
             "name": "_resolvePlatform",
@@ -393,7 +399,7 @@
         },
         {
             "file": "gamepad.js",
-            "line": 444,
+            "line": 446,
             "description": "Sets up webkit platform.",
             "itemtype": "method",
             "name": "_setupWebkit",
@@ -404,7 +410,7 @@
         },
         {
             "file": "gamepad.js",
-            "line": 452,
+            "line": 454,
             "description": "Sets up Firefox platform.",
             "itemtype": "method",
             "name": "_setupFirefox",
@@ -415,7 +421,7 @@
         },
         {
             "file": "gamepad.js",
-            "line": 469,
+            "line": 471,
             "description": "Returns mapping for given type.",
             "itemtype": "method",
             "name": "_getMapping",
@@ -437,7 +443,7 @@
         },
         {
             "file": "gamepad.js",
-            "line": 506,
+            "line": 508,
             "description": "Registers given gamepad.",
             "itemtype": "method",
             "name": "_connect",
@@ -459,7 +465,7 @@
         },
         {
             "file": "gamepad.js",
-            "line": 555,
+            "line": 557,
             "description": "Disconnects from given gamepad.",
             "itemtype": "method",
             "name": "_disconnect",
@@ -477,7 +483,7 @@
         },
         {
             "file": "gamepad.js",
-            "line": 581,
+            "line": 583,
             "description": "Resolves controller type from its id.",
             "itemtype": "method",
             "name": "_resolveControllerType",
@@ -499,7 +505,7 @@
         },
         {
             "file": "gamepad.js",
-            "line": 606,
+            "line": 607,
             "description": "Updates the controllers, triggering TICK events.",
             "itemtype": "method",
             "name": "_update",
@@ -510,7 +516,7 @@
         },
         {
             "file": "gamepad.js",
-            "line": 745,
+            "line": 742,
             "description": "Updates webkit platform gamepads.",
             "itemtype": "method",
             "name": "_updateWebkit",
@@ -521,7 +527,7 @@
         },
         {
             "file": "gamepad.js",
-            "line": 790,
+            "line": 785,
             "description": "Updates firefox platform gamepads.",
             "itemtype": "method",
             "name": "_updateFirefox",
@@ -532,7 +538,7 @@
         },
         {
             "file": "gamepad.js",
-            "line": 798,
+            "line": 793,
             "description": "Applies deadzone and maximization.\n\nYou can change the thresholds via deadzone and maximizeThreshold members.",
             "itemtype": "method",
             "name": "_applyDeadzoneMaximize",
