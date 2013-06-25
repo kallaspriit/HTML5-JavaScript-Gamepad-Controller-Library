@@ -65,3 +65,9 @@ How to use
 ```
 
 * Try the working example in index.html for more tips
+
+
+Documentation
+----------
+The library is documented according to ![yuidoc](http://yui.github.io/yuidoc/) conventions and it can be regenerated using
+```yuidoc -o doc -x *.min.js .```

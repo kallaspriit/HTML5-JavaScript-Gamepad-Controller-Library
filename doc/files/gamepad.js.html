@@ -1,9 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>gamepad.js</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            
+                <h1><img src="../assets/css/logo.png" title=""></h1>
+            
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: </em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="../classes/Gamepad.html">Gamepad</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+                <li><a href="../modules/Gamepad.html">Gamepad</a></li>
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: gamepad.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
 /*
- * Copyright 2012 Priit Kallas <kallaspriit@gmail.com>
+ * Copyright 2012 Priit Kallas &lt;kallaspriit@gmail.com&gt;
  *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
- * "Software"), to deal in the Software without restriction, including
+ * &quot;Software&quot;), to deal in the Software without restriction, including
  * without limitation the rights to use, copy, modify, merge, publish,
  * distribute, sublicense, and/or sell copies of the Software, and to
  * permit persons to whom the Software is furnished to do so, subject to
@@ -12,7 +102,7 @@
  * The above copyright notice and this permission notice shall be
  * included in all copies or substantial portions of the Software.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ * THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND,
  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
  * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
@@ -22,7 +112,7 @@
  */
 
 (function(window) {
-'use strict';
+&#x27;use strict&#x27;;
 
 /**
  * Provides simple interface and multi-platform support for the gamepad API.
@@ -33,7 +123,6 @@
  * @class Gamepad
  * @constructor
  * @module Gamepad
- * @author Priit Kallas <kallaspriit@gmail.com>
  */
 var Gamepad = function() {
 	this.gamepads = [];
@@ -52,9 +141,9 @@ var Gamepad = function() {
  * @param {String} Platform.FIREFOX Firefox platform
  */
 Gamepad.Platform = {
-	UNSUPPORTED: 'unsupported',
-	WEBKIT: 'webkit',
-	FIREFOX: 'firefox'
+	UNSUPPORTED: &#x27;unsupported&#x27;,
+	WEBKIT: &#x27;webkit&#x27;,
+	FIREFOX: &#x27;firefox&#x27;
 };
 
 /**
@@ -67,10 +156,10 @@ Gamepad.Platform = {
  * @param {String} Type.UNSUPPORTED Unsupported controller
  */
 Gamepad.Type = {
-	PLAYSTATION: 'playstation',
-	LOGITECH: 'logitech',
-	XBOX: 'xbox',
-	UNSUPPORTED: 'unsupported' // replace this with 'xbox' or 'logitech' to default to some configuration
+	PLAYSTATION: &#x27;playstation&#x27;,
+	LOGITECH: &#x27;logitech&#x27;,
+	XBOX: &#x27;xbox&#x27;,
+	UNSUPPORTED: &#x27;unsupported&#x27; // replace this with &#x27;xbox&#x27; or &#x27;logitech&#x27; to default to some configuration
 };
 
 /*
@@ -90,7 +179,7 @@ Gamepad.Event = {
 	 * @event connected
 	 * @param {Object} device
 	 */
-	CONNECTED: 'connected',
+	CONNECTED: &#x27;connected&#x27;,
 
 	/**
 	 * Called when an unsupported controller connects.
@@ -98,7 +187,7 @@ Gamepad.Event = {
 	 * @event unsupported
 	 * @param {Object} device
 	 */
-	UNSUPPORTED: 'unsupported',
+	UNSUPPORTED: &#x27;unsupported&#x27;,
 
 	/**
 	 * Triggered when a controller disconnects.
@@ -106,7 +195,7 @@ Gamepad.Event = {
 	 * @event disconnected
 	 * @param {Object} device
 	 */
-	DISCONNECTED: 'disconnected',
+	DISCONNECTED: &#x27;disconnected&#x27;,
 
 	/**
 	 * Called regularly with the latest controllers info.
@@ -114,7 +203,7 @@ Gamepad.Event = {
 	 * @event tick
 	 * @param {Array} gamepads
 	 */
-	TICK: 'tick',
+	TICK: &#x27;tick&#x27;,
 
 	/**
 	 * Called when a gamepad button is pressed down.
@@ -125,7 +214,7 @@ Gamepad.Event = {
 	 * @param {Object} event.mapping Gamepad mapping
 	 * @param {String} event.control Control name
 	 */
-	BUTTON_DOWN: 'button-down',
+	BUTTON_DOWN: &#x27;button-down&#x27;,
 
 	/**
 	 * Called when a gamepad button is released.
@@ -136,7 +225,7 @@ Gamepad.Event = {
 	 * @param {Object} event.mapping Gamepad mapping
 	 * @param {String} event.control Control name
 	 */
-	BUTTON_UP: 'button-up',
+	BUTTON_UP: &#x27;button-up&#x27;,
 
 	/**
 	 * Called when gamepad axis value changed.
@@ -148,7 +237,7 @@ Gamepad.Event = {
 	 * @param {String} event.axis Axis name
 	 * @param {Number} event.value New axis value
 	 */
-	AXIS_CHANGED: 'axis-changed'
+	AXIS_CHANGED: &#x27;axis-changed&#x27;
 };
 
 /**
@@ -236,14 +325,14 @@ Gamepad.Mapping = {
 			RIGHT_STICK_X: 3,
 			RIGHT_STICK_Y: 4,
 			LEFT_TRIGGER: function(gamepad, manager) {
-				if (gamepad.axes[2] > 0) {
+				if (gamepad.axes[2] &gt; 0) {
 					return manager._applyDeadzoneMaximize(gamepad.axes[2]);
 				} else {
 					return 0;
 				}
 			},
 			RIGHT_TRIGGER: function(gamepad, manager) {
-				if (gamepad.axes[2] < 0) {
+				if (gamepad.axes[2] &lt; 0) {
 					return manager._applyDeadzoneMaximize(gamepad.axes[2] * -1);
 				} else {
 					return 0;
@@ -330,7 +419,7 @@ Gamepad.prototype.init = function() {
 			return false;
 	}
 
-	if (typeof(window.requestAnimationFrame) === 'undefined') {
+	if (typeof(window.requestAnimationFrame) === &#x27;undefined&#x27;) {
 		window.requestAnimationFrame = window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame;
 	}
 
@@ -348,7 +437,7 @@ Gamepad.prototype.init = function() {
  * @return {Gamepad} Self
  */
 Gamepad.prototype.bind = function(event, listener) {
-	if (typeof(this.listeners[event]) === 'undefined') {
+	if (typeof(this.listeners[event]) === &#x27;undefined&#x27;) {
 		this.listeners[event] = [];
 	}
 
@@ -369,23 +458,23 @@ Gamepad.prototype.bind = function(event, listener) {
  * @return {Boolean} Was unbinding the listener successful
  */
 Gamepad.prototype.unbind = function(type, listener) {
-	if (typeof(type) === 'undefined') {
+	if (typeof(type) === &#x27;undefined&#x27;) {
 		this.listeners = {};
 
 		return;
 	}
 
-	if (typeof(listener) === 'undefined') {
+	if (typeof(listener) === &#x27;undefined&#x27;) {
 		this.listeners[type] = [];
 
 		return;
 	}
 
-	if (typeof(this.listeners[type]) === 'undefined') {
+	if (typeof(this.listeners[type]) === &#x27;undefined&#x27;) {
 		return false;
 	}
 
-	for (var i = 0; i < this.listeners[type].length; i++) {
+	for (var i = 0; i &lt; this.listeners[type].length; i++) {
 		if (this.listeners[type][i] === listener) {
 			this.listeners[type].splice(i, 1);
 
@@ -415,11 +504,11 @@ Gamepad.prototype.count = function() {
  * @private
  */
 Gamepad.prototype._fire = function(event, data) {
-	if (typeof(this.listeners[event]) === 'undefined') {
+	if (typeof(this.listeners[event]) === &#x27;undefined&#x27;) {
 		return;
 	}
 
-	for (var i = 0; i < this.listeners[event].length; i++) {
+	for (var i = 0; i &lt; this.listeners[event].length; i++) {
 		this.listeners[event][i].apply(this.listeners[event][i], [data]);
 	}
 };
@@ -433,8 +522,8 @@ Gamepad.prototype._fire = function(event, data) {
  */
 Gamepad.prototype._resolvePlatform = function() {
 	if (
-		typeof(window.navigator.webkitGamepads) !== 'undefined'
-		|| typeof(window.navigator.webkitGetGamepads) !== 'undefined'
+		typeof(window.navigator.webkitGamepads) !== &#x27;undefined&#x27;
+		|| typeof(window.navigator.webkitGetGamepads) !== &#x27;undefined&#x27;
 	) {
 		return Gamepad.Platform.WEBKIT;
 	} else {
@@ -459,10 +548,10 @@ Gamepad.prototype._setupWebkit = function() {};
 Gamepad.prototype._setupFirefox = function() {
 	var self = this;
 
-	window.addEventListener('MozGamepadConnected', function(e) {
+	window.addEventListener(&#x27;MozGamepadConnected&#x27;, function(e) {
 		self._connect(e.gamepad);
 	});
-	window.addEventListener('MozGamepadDisconnected', function(e) {
+	window.addEventListener(&#x27;MozGamepadDisconnected&#x27;, function(e) {
 		self._disconnect(e.gamepad);
 	});
 };
@@ -564,12 +653,12 @@ Gamepad.prototype._disconnect = function(gamepad) {
 	var newGamepads = [],
 		i;
 
-	if (typeof(this.gamepads[gamepad.index]) !== 'undefined') {
+	if (typeof(this.gamepads[gamepad.index]) !== &#x27;undefined&#x27;) {
 		delete this.gamepads[gamepad.index];
 	}
 
-	for (i = 0; i < this.gamepads.length; i++) {
-		if (typeof(this.gamepads[i]) !== 'undefined') {
+	for (i = 0; i &lt; this.gamepads.length; i++) {
+		if (typeof(this.gamepads[i]) !== &#x27;undefined&#x27;) {
 			newGamepads[i] = this.gamepads[i];
 		}
 	}
@@ -590,14 +679,14 @@ Gamepad.prototype._disconnect = function(gamepad) {
 Gamepad.prototype._resolveControllerType = function(id) {
 	id = id.toLowerCase();
 
-	if (id.indexOf('playstation') !== -1) {
+	if (id.indexOf(&#x27;playstation&#x27;) !== -1) {
 		return Gamepad.Type.PLAYSTATION;
 	} else if (
-		id.indexOf('logitech') !== -1
-		|| id.indexOf('wireless gamepad') !== -1
+		id.indexOf(&#x27;logitech&#x27;) !== -1
+		|| id.indexOf(&#x27;wireless gamepad&#x27;) !== -1
 	) {
 		return Gamepad.Type.LOGITECH;
-	} else if (id.indexOf('xbox') !== -1 || id.indexOf('360') !== -1) {
+	} else if (id.indexOf(&#x27;xbox&#x27;) !== -1 || id.indexOf(&#x27;360&#x27;) !== -1) {
 		return Gamepad.Type.XBOX;
 	} else {
 		return Gamepad.Type.UNSUPPORTED;
@@ -630,15 +719,15 @@ Gamepad.prototype._update = function() {
 		break;
 	}
 
-	for (i = 0; i < this.gamepads.length; i++) {
-		if (typeof(this.gamepads[i]) === 'undefined') {
+	for (i = 0; i &lt; this.gamepads.length; i++) {
+		if (typeof(this.gamepads[i]) === &#x27;undefined&#x27;) {
 			continue;
 		}
 
 		for (controlName in this.gamepads[i].mapping.buttons) {
 			mapping = this.gamepads[i].mapping.buttons[controlName];
 
-			if (typeof(mapping) === 'function') {
+			if (typeof(mapping) === &#x27;function&#x27;) {
 				value = mapping(
 					this.gamepads[i],
 					this
@@ -647,10 +736,10 @@ Gamepad.prototype._update = function() {
 				value = this.gamepads[i].buttons[mapping];
 			}
 
-			isDown = value > 0.5 ? true : false;
+			isDown = value &gt; 0.5 ? true : false;
 			lastDown = false;
 
-			for (j = 0; j < this.gamepads[i].downButtons.length; j++) {
+			for (j = 0; j &lt; this.gamepads[i].downButtons.length; j++) {
 				if (this.gamepads[i].downButtons[j] === controlName) {
 					lastDown = true;
 					downBtnIndex = i;
@@ -662,7 +751,7 @@ Gamepad.prototype._update = function() {
 			this.gamepads[i].state[controlName] = value;
 
 			if (isDown !== lastDown) {
-				if (value > 0.5) {
+				if (value &gt; 0.5) {
 					this._fire(
 						Gamepad.Event.BUTTON_DOWN,
 						{
@@ -673,7 +762,7 @@ Gamepad.prototype._update = function() {
 					);
 
 					this.gamepads[i].downButtons.push(controlName);
-				} else if (value < 0.5) {
+				} else if (value &lt; 0.5) {
 					this._fire(
 						Gamepad.Event.BUTTON_UP,
 						{
@@ -687,7 +776,7 @@ Gamepad.prototype._update = function() {
 				}
 			}
 
-			if (value !== 0 && value !== 1 && value !== this.gamepads[i].lastState[controlName]) {
+			if (value !== 0 &amp;&amp; value !== 1 &amp;&amp; value !== this.gamepads[i].lastState[controlName]) {
 				this._fire(
 					Gamepad.Event.AXIS_CHANGED,
 					{
@@ -705,7 +794,7 @@ Gamepad.prototype._update = function() {
 		for (controlName in this.gamepads[i].mapping.axes) {
 			mapping = this.gamepads[i].mapping.axes[controlName];
 
-			if (typeof(mapping) === 'function') {
+			if (typeof(mapping) === &#x27;function&#x27;) {
 				value = mapping(
 					this.gamepads[i],
 					this
@@ -734,7 +823,7 @@ Gamepad.prototype._update = function() {
 		}
 	}
 
-	if (this.gamepads.length > 0) {
+	if (this.gamepads.length &gt; 0) {
 		this._fire(Gamepad.Event.TICK, this.gamepads);
 	}
 
@@ -752,9 +841,9 @@ Gamepad.prototype._update = function() {
 Gamepad.prototype._updateWebkit = function() {
 	var gamepads;
 
-	if (typeof(window.navigator.webkitGamepads) === 'object') {
+	if (typeof(window.navigator.webkitGamepads) === &#x27;object&#x27;) {
 		gamepads = window.navigator.webkitGamepads;
-	} else if (typeof(window.navigator.webkitGetGamepads) === 'function') {
+	} else if (typeof(window.navigator.webkitGetGamepads) === &#x27;function&#x27;) {
 		gamepads = window.navigator.webkitGetGamepads();
 	} else {
 		return; // should not happen
@@ -764,23 +853,23 @@ Gamepad.prototype._updateWebkit = function() {
 		var gamepad,
 			i;
 
-		for (i = 0; i < gamepads.length; i++) {
+		for (i = 0; i &lt; gamepads.length; i++) {
 			gamepad = gamepads[i];
 
 			if (
 				gamepad !== null
-				&& typeof(gamepad) !== 'undefined'
-				&& typeof(this.gamepads[gamepad.index]) === 'undefined'
+				&amp;&amp; typeof(gamepad) !== &#x27;undefined&#x27;
+				&amp;&amp; typeof(this.gamepads[gamepad.index]) === &#x27;undefined&#x27;
 			) {
 				this._connect(gamepad);
 			}
 		}
 
-		for (i = 0; i < this.gamepads.length; i++) {
+		for (i = 0; i &lt; this.gamepads.length; i++) {
 			if (
 				this.gamepads[i] !== null
-				&& typeof(this.gamepads[i]) !== 'undefined'
-				&& typeof(gamepads[i]) === 'undefined'
+				&amp;&amp; typeof(this.gamepads[i]) !== &#x27;undefined&#x27;
+				&amp;&amp; typeof(gamepads[i]) === &#x27;undefined&#x27;
 			) {
 				this._disconnect(this.gamepads[i]);
 			}
@@ -812,23 +901,23 @@ Gamepad.prototype._applyDeadzoneMaximize = function(
 	deadzone,
 	maximizeThreshold
 ) {
-	deadzone = typeof(deadzone) !== 'undefined'
+	deadzone = typeof(deadzone) !== &#x27;undefined&#x27;
 		? deadzone
 		: this.deadzone;
-	maximizeThreshold = typeof(maximizeThreshold) !== 'undefined'
+	maximizeThreshold = typeof(maximizeThreshold) !== &#x27;undefined&#x27;
 		? maximizeThreshold
 		: this.maximizeThreshold;
 
-	if (value >= 0) {
-		if (value < deadzone) {
+	if (value &gt;= 0) {
+		if (value &lt; deadzone) {
 			value = 0;
-		} else if (value > maximizeThreshold) {
+		} else if (value &gt; maximizeThreshold) {
 			value = 1;
 		}
 	} else {
-		if (value > -deadzone) {
+		if (value &gt; -deadzone) {
 			value = 0;
-		} else if (value < -maximizeThreshold) {
+		} else if (value &lt; -maximizeThreshold) {
 			value = -1;
 		}
 	}
@@ -839,3 +928,22 @@ Gamepad.prototype._applyDeadzoneMaximize = function(
 window.Gamepad = Gamepad;
 
 })(window);
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>
