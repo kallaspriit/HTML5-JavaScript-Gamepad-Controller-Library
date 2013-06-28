@@ -1,7 +1,11 @@
 YUI.add("yuidoc-meta", function(Y) {
    Y.YUIDoc = { meta: {
     "classes": [
-        "Gamepad"
+        "AnimFrameUpdateStrategy",
+        "FirefoxPlatform",
+        "Gamepad",
+        "ManualUpdateStrategy",
+        "WebKitPlatform"
     ],
     "modules": [
         "Gamepad"
@@ -10,7 +14,7 @@ YUI.add("yuidoc-meta", function(Y) {
         {
             "displayName": "Gamepad",
             "name": "Gamepad",
-            "description": "Provides simple interface and multi-platform support for the gamepad API.\n\nYou can change the deadzone and maximizeThreshold parameters to suit your\ntaste but the defaults should generally work fine."
+            "description": "This strategy uses a timer function to call an update function.\nThe timer (re)start function can be provided or the strategy reverts to\none of the window.*requestAnimationFrame variants."
         }
     ]
 } };

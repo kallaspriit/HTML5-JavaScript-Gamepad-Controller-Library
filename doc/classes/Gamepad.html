@@ -41,7 +41,15 @@
         <div id="api-tabview-panel">
             <ul id="api-classes" class="apis classes">
             
+                <li><a href="../classes/AnimFrameUpdateStrategy.html">AnimFrameUpdateStrategy</a></li>
+            
+                <li><a href="../classes/FirefoxPlatform.html">FirefoxPlatform</a></li>
+            
                 <li><a href="../classes/Gamepad.html">Gamepad</a></li>
+            
+                <li><a href="../classes/ManualUpdateStrategy.html">ManualUpdateStrategy</a></li>
+            
+                <li><a href="../classes/WebKitPlatform.html">WebKitPlatform</a></li>
             
             </ul>
 
@@ -92,7 +100,7 @@
 
     
         <div class="foundat">
-            Defined in: <a href="../files/gamepad.js.html#l27"><code>gamepad.js:27</code></a>
+            Defined in: <a href="../files/gamepad.js.html#l280"><code>gamepad.js:280</code></a>
         </div>
     
 
@@ -121,7 +129,17 @@ taste but the defaults should generally work fine.</p>
     <h3 class="name"><code>Gamepad</code></h3>
 
     
-        <span class="paren">()</span>
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code class="optional">[updateStrategy]</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
     
 
     
@@ -149,7 +167,7 @@ taste but the defaults should generally work fine.</p>
             
         
         
-        <a href="../files/gamepad.js.html#l27"><code>gamepad.js:27</code></a>
+        <a href="../files/gamepad.js.html#l280"><code>gamepad.js:280</code></a>
         
         </p>
 
@@ -163,6 +181,31 @@ taste but the defaults should generally work fine.</p>
         
     </div>
 
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name optional">[updateStrategy]</code>
+                        <span class="type">Object</span>
+                        <span class="flag optional" title="This parameter is optional.">optional</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>an update strategy, defaulting to
+        <a href="../classes/AnimFrameUpdateStrategy.html" class="crosslink">AnimFrameUpdateStrategy</a></p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
     
 
     
@@ -242,42 +285,7 @@ taste but the defaults should generally work fine.</p>
                             </li>
                         
                             <li class="index-item method private">
-                                <a href="#method__resolvePlatform">_resolvePlatform</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item method private">
-                                <a href="#method__setupFirefox">_setupFirefox</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item method private">
-                                <a href="#method__setupWebkit">_setupWebkit</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item method private">
                                 <a href="#method__update">_update</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item method private">
-                                <a href="#method__updateFirefox">_updateFirefox</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item method private">
-                                <a href="#method__updateWebkit">_updateWebkit</a>
 
                                 
                                 
@@ -298,8 +306,26 @@ taste but the defaults should generally work fine.</p>
                             </li>
                         
                             <li class="index-item method">
+                                <a href="#method_getNullPlatform">getNullPlatform</a>
+
+                                
+                                    <span class="flag static">static</span>
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
                                 <a href="#method_init">init</a>
 
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_resolvePlatform">resolvePlatform</a>
+
+                                
+                                    <span class="flag static">static</span>
                                 
                                 
                             </li>
@@ -329,7 +355,7 @@ taste but the defaults should generally work fine.</p>
                             </li>
                         
                             <li class="index-item property">
-                                <a href="#property_Platform">Platform</a>
+                                <a href="#property_PlatformFactories">PlatformFactories</a>
 
                                 
                                 
@@ -337,6 +363,13 @@ taste but the defaults should generally work fine.</p>
                         
                             <li class="index-item property">
                                 <a href="#property_Type">Type</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_UpdateStrategies">UpdateStrategies</a>
 
                                 
                                 
@@ -469,7 +502,7 @@ taste but the defaults should generally work fine.</p>
             
         
         
-        <a href="../files/gamepad.js.html#l793"><code>gamepad.js:793</code></a>
+        <a href="../files/gamepad.js.html#l935"><code>gamepad.js:935</code></a>
         
         </p>
 
@@ -596,7 +629,7 @@ taste but the defaults should generally work fine.</p>
             
         
         
-        <a href="../files/gamepad.js.html#l508"><code>gamepad.js:508</code></a>
+        <a href="../files/gamepad.js.html#l722"><code>gamepad.js:722</code></a>
         
         </p>
 
@@ -698,7 +731,7 @@ taste but the defaults should generally work fine.</p>
             
         
         
-        <a href="../files/gamepad.js.html#l557"><code>gamepad.js:557</code></a>
+        <a href="../files/gamepad.js.html#l771"><code>gamepad.js:771</code></a>
         
         </p>
 
@@ -793,7 +826,7 @@ taste but the defaults should generally work fine.</p>
             
         
         
-        <a href="../files/gamepad.js.html#l410"><code>gamepad.js:410</code></a>
+        <a href="../files/gamepad.js.html#l660"><code>gamepad.js:660</code></a>
         
         </p>
 
@@ -901,7 +934,7 @@ taste but the defaults should generally work fine.</p>
             
         
         
-        <a href="../files/gamepad.js.html#l471"><code>gamepad.js:471</code></a>
+        <a href="../files/gamepad.js.html#l706"><code>gamepad.js:706</code></a>
         
         </p>
 
@@ -1007,7 +1040,7 @@ taste but the defaults should generally work fine.</p>
             
         
         
-        <a href="../files/gamepad.js.html#l583"><code>gamepad.js:583</code></a>
+        <a href="../files/gamepad.js.html#l797"><code>gamepad.js:797</code></a>
         
         </p>
 
@@ -1065,191 +1098,6 @@ taste but the defaults should generally work fine.</p>
 </div>
 
                 
-                    <div id="method__resolvePlatform" class="method item private">
-    <h3 class="name"><code>_resolvePlatform</code></h3>
-
-    
-        <span class="paren">()</span>
-    
-
-    
-        <span class="returns-inline">
-            <span class="type">String</span>
-        </span>
-    
-
-    
-
-    
-        <span class="flag private">private</span>
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/gamepad.js.html#l428"><code>gamepad.js:428</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>Resolves platform.</p>
-    </div>
-
-    
-
-    
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                
-                    
-                        <span class="type">String</span>:
-                    
-                    One of Gamepad.Platform..
-                
-            </div>
-        </div>
-    
-
-    
-</div>
-
-                
-                    <div id="method__setupFirefox" class="method item private">
-    <h3 class="name"><code>_setupFirefox</code></h3>
-
-    
-        <span class="paren">()</span>
-    
-
-    
-
-    
-
-    
-        <span class="flag private">private</span>
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/gamepad.js.html#l454"><code>gamepad.js:454</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>Sets up Firefox platform.</p>
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="method__setupWebkit" class="method item private">
-    <h3 class="name"><code>_setupWebkit</code></h3>
-
-    
-        <span class="paren">()</span>
-    
-
-    
-
-    
-
-    
-        <span class="flag private">private</span>
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/gamepad.js.html#l446"><code>gamepad.js:446</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>Sets up webkit platform.</p>
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
                     <div id="method__update" class="method item private">
     <h3 class="name"><code>_update</code></h3>
 
@@ -1284,7 +1132,7 @@ taste but the defaults should generally work fine.</p>
             
         
         
-        <a href="../files/gamepad.js.html#l607"><code>gamepad.js:607</code></a>
+        <a href="../files/gamepad.js.html#l820"><code>gamepad.js:820</code></a>
         
         </p>
 
@@ -1296,118 +1144,6 @@ taste but the defaults should generally work fine.</p>
 
     <div class="description">
         <p>Updates the controllers, triggering TICK events.</p>
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="method__updateFirefox" class="method item private">
-    <h3 class="name"><code>_updateFirefox</code></h3>
-
-    
-        <span class="paren">()</span>
-    
-
-    
-
-    
-
-    
-        <span class="flag private">private</span>
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/gamepad.js.html#l785"><code>gamepad.js:785</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>Updates firefox platform gamepads.</p>
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="method__updateWebkit" class="method item private">
-    <h3 class="name"><code>_updateWebkit</code></h3>
-
-    
-        <span class="paren">()</span>
-    
-
-    
-
-    
-
-    
-        <span class="flag private">private</span>
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/gamepad.js.html#l742"><code>gamepad.js:742</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>Updates webkit platform gamepads.</p>
     </div>
 
     
@@ -1470,7 +1206,7 @@ taste but the defaults should generally work fine.</p>
             
         
         
-        <a href="../files/gamepad.js.html#l343"><code>gamepad.js:343</code></a>
+        <a href="../files/gamepad.js.html#l593"><code>gamepad.js:593</code></a>
         
         </p>
 
@@ -1579,7 +1315,7 @@ taste but the defaults should generally work fine.</p>
             
         
         
-        <a href="../files/gamepad.js.html#l400"><code>gamepad.js:400</code></a>
+        <a href="../files/gamepad.js.html#l650"><code>gamepad.js:650</code></a>
         
         </p>
 
@@ -1613,6 +1349,79 @@ taste but the defaults should generally work fine.</p>
 </div>
 
                 
+                    <div id="method_getNullPlatform" class="method item">
+    <h3 class="name"><code>getNullPlatform</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">Object</span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+        <span class="flag static">static</span>
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/gamepad.js.html#l678"><code>gamepad.js:678</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">Object</span>:
+                    
+                    a platform that does not support anything
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
                     <div id="method_init" class="method item">
     <h3 class="name"><code>init</code></h3>
 
@@ -1620,6 +1429,10 @@ taste but the defaults should generally work fine.</p>
         <span class="paren">()</span>
     
 
+    
+        <span class="returns-inline">
+            <span class="type">Boolean</span>
+        </span>
     
 
     
@@ -1645,7 +1458,7 @@ taste but the defaults should generally work fine.</p>
             
         
         
-        <a href="../files/gamepad.js.html#l311"><code>gamepad.js:311</code></a>
+        <a href="../files/gamepad.js.html#l573"><code>gamepad.js:573</code></a>
         
         </p>
 
@@ -1663,6 +1476,125 @@ taste but the defaults should generally work fine.</p>
 
     
 
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">Boolean</span>:
+                    
+                    true if a supporting platform was detected, false otherwise.
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_resolvePlatform" class="method item">
+    <h3 class="name"><code>resolvePlatform</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>listener</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">Object</span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+        <span class="flag static">static</span>
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/gamepad.js.html#l687"><code>gamepad.js:687</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Resolves platform.</p>
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">listener</code>
+                        <span class="type">Object</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>the listener to handle _connect() or _disconnect() calls</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">Object</span>:
+                    
+                    A platform instance
+                
+            </div>
+        </div>
     
 
     
@@ -1721,7 +1653,7 @@ taste but the defaults should generally work fine.</p>
             
         
         
-        <a href="../files/gamepad.js.html#l361"><code>gamepad.js:361</code></a>
+        <a href="../files/gamepad.js.html#l611"><code>gamepad.js:611</code></a>
         
         </p>
 
@@ -1830,7 +1762,7 @@ listeners of given type are removed.</p>
             
         
         
-        <a href="../files/gamepad.js.html#l154"><code>gamepad.js:154</code></a>
+        <a href="../files/gamepad.js.html#l416"><code>gamepad.js:416</code></a>
         
         </p>
 
@@ -1855,9 +1787,9 @@ that gets the gamepad as first parameter and the gamepad class as second.</p>
 </div>
 
                 
-                    <div id="property_Platform" class="property item">
-    <h3 class="name"><code>Platform</code></h3>
-    <span class="type">Unknown</span>
+                    <div id="property_PlatformFactories" class="property item">
+    <h3 class="name"><code>PlatformFactories</code></h3>
+    <span class="type">Array</span>
 
     
 
@@ -1878,7 +1810,7 @@ that gets the gamepad as first parameter and the gamepad class as second.</p>
             
         
         
-        <a href="../files/gamepad.js.html#l46"><code>gamepad.js:46</code></a>
+        <a href="../files/gamepad.js.html#l313"><code>gamepad.js:313</code></a>
         
         </p>
 
@@ -1888,58 +1820,15 @@ that gets the gamepad as first parameter and the gamepad class as second.</p>
     </div>
 
     <div class="description">
-        <p>List of supported platforms.</p>
+        <p>List of factories of supported platforms. Currently available platforms:
+<a href="../classes/WebKitPlatform.html" class="crosslink">WebKitPlatform</a>,
+<a href="../classes/FirefoxPlatform.html" class="crosslink">FirefoxPlatform</a>,</p>
     </div>
 
     
 
     
 
-    
-        <h4>Sub-properties:</h4>
-
-        <ul class="params-list">
-            
-            <li class="param">
-                
-                    <code class="param-name">UNSUPPORTED</code>
-                    <span class="type">String</span>
-                
-
-                <div class="param-description">
-                    <p>Unsupported platform</p>
-                </div>
-
-                
-            </li>
-            
-            <li class="param">
-                
-                    <code class="param-name">WEBKIT</code>
-                    <span class="type">String</span>
-                
-
-                <div class="param-description">
-                    <p>Webkit platform</p>
-                </div>
-
-                
-            </li>
-            
-            <li class="param">
-                
-                    <code class="param-name">FIREFOX</code>
-                    <span class="type">String</span>
-                
-
-                <div class="param-description">
-                    <p>Firefox platform</p>
-                </div>
-
-                
-            </li>
-            
-        </ul>
     
 </div>
 
@@ -1967,7 +1856,7 @@ that gets the gamepad as first parameter and the gamepad class as second.</p>
             
         
         
-        <a href="../files/gamepad.js.html#l60"><code>gamepad.js:60</code></a>
+        <a href="../files/gamepad.js.html#l322"><code>gamepad.js:322</code></a>
         
         </p>
 
@@ -2046,6 +1935,82 @@ that gets the gamepad as first parameter and the gamepad class as second.</p>
 </div>
 
                 
+                    <div id="property_UpdateStrategies" class="property item">
+    <h3 class="name"><code>UpdateStrategies</code></h3>
+    <span class="type">Unknown</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/gamepad.js.html#l302"><code>gamepad.js:302</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>The available update strategies</p>
+    </div>
+
+    
+
+    
+
+    
+        <h4>Sub-properties:</h4>
+
+        <ul class="params-list">
+            
+            <li class="param">
+                
+                    <code class="param-name">AnimFrameUpdateStrategy</code>
+                    <span class="type"><a href="../classes/AnimFrameUpdateStrategy.html" class="crosslink">AnimFrameUpdateStrategy</a></span>
+                
+
+                <div class="param-description">
+                     
+                </div>
+
+                
+            </li>
+            
+            <li class="param">
+                
+                    <code class="param-name">ManualUpdateStrategy</code>
+                    <span class="type"><a href="../classes/ManualUpdateStrategy.html" class="crosslink">ManualUpdateStrategy</a></span>
+                
+
+                <div class="param-description">
+                     
+                </div>
+
+                
+            </li>
+            
+        </ul>
+    
+</div>
+
+                
             </div>
         
 
@@ -2079,7 +2044,7 @@ that gets the gamepad as first parameter and the gamepad class as second.</p>
             
         
         
-        <a href="../files/gamepad.js.html#l141"><code>gamepad.js:141</code></a>
+        <a href="../files/gamepad.js.html#l403"><code>gamepad.js:403</code></a>
         
         </p>
 
@@ -2201,7 +2166,7 @@ that gets the gamepad as first parameter and the gamepad class as second.</p>
             
         
         
-        <a href="../files/gamepad.js.html#l119"><code>gamepad.js:119</code></a>
+        <a href="../files/gamepad.js.html#l381"><code>gamepad.js:381</code></a>
         
         </p>
 
@@ -2310,7 +2275,7 @@ that gets the gamepad as first parameter and the gamepad class as second.</p>
             
         
         
-        <a href="../files/gamepad.js.html#l130"><code>gamepad.js:130</code></a>
+        <a href="../files/gamepad.js.html#l392"><code>gamepad.js:392</code></a>
         
         </p>
 
@@ -2419,7 +2384,7 @@ that gets the gamepad as first parameter and the gamepad class as second.</p>
             
         
         
-        <a href="../files/gamepad.js.html#l87"><code>gamepad.js:87</code></a>
+        <a href="../files/gamepad.js.html#l349"><code>gamepad.js:349</code></a>
         
         </p>
 
@@ -2485,7 +2450,7 @@ that gets the gamepad as first parameter and the gamepad class as second.</p>
             
         
         
-        <a href="../files/gamepad.js.html#l103"><code>gamepad.js:103</code></a>
+        <a href="../files/gamepad.js.html#l365"><code>gamepad.js:365</code></a>
         
         </p>
 
@@ -2551,7 +2516,7 @@ that gets the gamepad as first parameter and the gamepad class as second.</p>
             
         
         
-        <a href="../files/gamepad.js.html#l111"><code>gamepad.js:111</code></a>
+        <a href="../files/gamepad.js.html#l373"><code>gamepad.js:373</code></a>
         
         </p>
 
@@ -2617,7 +2582,7 @@ that gets the gamepad as first parameter and the gamepad class as second.</p>
             
         
         
-        <a href="../files/gamepad.js.html#l95"><code>gamepad.js:95</code></a>
+        <a href="../files/gamepad.js.html#l357"><code>gamepad.js:357</code></a>
         
         </p>
 
