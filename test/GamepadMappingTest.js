@@ -8,6 +8,12 @@
 	var PlatformSimulator = require('./PlatformSimulator.js');
 	var GamepadUser = require('./GamepadUser.js');
 
+	/*
+	 * Probes all controls;
+	 * First all buttons (setting their value to 1.0, then reset to 0.0),
+	 * then all axes (first 1.0, then -1.0, then reset to 0.0)
+	 */
+
 	function probeControls(test) {
 		var i;
 		var buttons = test.gamepad.buttons;
@@ -21,11 +27,13 @@
 		for (i = 0; i < axes.length; i++) {
 			axes[i] = 1.0;
 			test.updater.update();
+			axes[i] = -1.0;
+			test.updater.update();
 			axes[i] = 0.0;
 		}
 	}
 
-	/**
+	/*
 	 * Tests the report of BUTTON_DOWN with control names for buttons.
 	 * The method first iterates from 0..N of all gamepad buttons and fires them,
 	 * then does the same for all axes.
@@ -45,7 +53,7 @@
 		assert.equals(result, expected);
 	}
 
-	/**
+	/*
 	 * Tests the report of AXIS_CHANGED with control names for axes.
 	 * The method first iterates from 0..N of all gamepad buttons and fires them,
 	 * then does the same for all axes.
@@ -58,7 +66,7 @@
 		var result = [];
 
 		test.user.onAxisChanged = function(data) {
-			if (data.value > 0.0) {
+			if ((data.value > 0.0) && (result[result.length - 1] !== data.axis)) {
 				result.push(data.axis);
 			}
 		};
@@ -152,7 +160,9 @@
 			},
 
 			'should have all axes mapped': function() {
-				axesTest(this, ['LEFT_STICK_X', 'LEFT_STICK_Y', 'LEFT_TRIGGER', 'RIGHT_STICK_X']);
+				axesTest(this, ['LEFT_STICK_X', 'LEFT_STICK_Y', 'LEFT_TRIGGER', 'RIGHT_TRIGGER',
+					'RIGHT_STICK_X'
+				]);
 			}
 		},
 
