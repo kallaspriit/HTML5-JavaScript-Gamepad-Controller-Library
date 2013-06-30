@@ -15,11 +15,17 @@
 		binder(events.UNSUPPORTED, 'onUnsupported');
 		binder(events.CONNECTED, 'onConnected');
 		binder(events.DISCONNECTED, 'onDisconnected');
+		binder(events.BUTTON_DOWN, 'onButtonDown');
+		binder(events.BUTTON_UP, 'onButtonUp');
+		binder(events.AXIS_CHANGED, 'onAxisChanged');
 	};
 
 	GamepadUser.prototype.onUnsupported = nullFunction;
 	GamepadUser.prototype.onConnected = nullFunction;
 	GamepadUser.prototype.onDisconnected = nullFunction;
+	GamepadUser.prototype.onButtonDown = nullFunction;
+	GamepadUser.prototype.onButtonUp = nullFunction;
+	GamepadUser.prototype.onAxisChanged = nullFunction;
 
 
 	module.exports = GamepadUser;
