@@ -5,7 +5,7 @@ module.exports = function(grunt) {
 		pkg: grunt.file.readJSON('package.json'),
 
 		jsbeautifier: {
-			files: ['Gruntfile.js', 'gamepad.js'],
+			files: ['Gruntfile.js', 'gamepad.js', 'test/**/*.js'],
 			options: grunt.file.readJSON('.jsbeautifyrc')
 		},
 
@@ -14,7 +14,7 @@ module.exports = function(grunt) {
 			options: {
 				jshintrc: './.jshintrc'
 			},
-			all: ['Gruntfile.js', 'gamepad.js']
+			all: ['Gruntfile.js', 'gamepad.js', 'test/**/*.js']
 		},
 
 		// Run js-uglify on the actual library code
@@ -27,6 +27,16 @@ module.exports = function(grunt) {
 					compress: {
 						sequences: false
 					}
+				}
+			}
+		},
+
+		// Run tests using buster
+		buster: {
+			libRaw: {
+				test: {
+					reporter: 'specification',
+					'config-group': 'Library tests raw'
 				}
 			}
 		},
@@ -47,6 +57,7 @@ module.exports = function(grunt) {
 		}
 	});
 
+	grunt.loadNpmTasks('grunt-buster');
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-contrib-yuidoc');
@@ -55,5 +66,6 @@ module.exports = function(grunt) {
 	grunt.registerTask('format', ['jsbeautifier', 'jshint']);
 	grunt.registerTask('compile', ['uglify']);
 	grunt.registerTask('document', ['yuidoc']);
-	grunt.registerTask('default', ['format', 'compile', 'document']);
+	grunt.registerTask('test', ['buster']);
+	grunt.registerTask('default', ['format', 'compile', 'test', 'document']);
 };

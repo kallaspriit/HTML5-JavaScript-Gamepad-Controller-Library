@@ -21,8 +21,261 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-(function(window) {
+(function(exports) {
 	'use strict';
+
+	/**
+	 * A null function - does nothing, returns nothing
+	 */
+	var nullFunction = function() {};
+
+	/**
+	 * The null platform, which doesn't support anything
+	 */
+	var nullPlatform = {
+		isSupported: function() {
+			return false;
+		},
+		update: nullFunction,
+		getMapping: function() {
+			return null;
+		}
+	};
+
+	/**
+	 * This strategy uses a timer function to call an update function.
+	 * The timer (re)start function can be provided or the strategy reverts to
+	 * one of the window.*requestAnimationFrame variants.
+	 *
+	 * @class AnimFrameUpdateStrategy
+	 * @constructor
+	 * @param {Function} [requestAnimationFrame] function to use for timer creation
+	 * @module Gamepad
+	 */
+	var AnimFrameUpdateStrategy = function(requestAnimationFrame) {
+		var that = this;
+		var win = window;
+
+		this.update = nullFunction;
+
+		this.requestAnimationFrame = requestAnimationFrame || win.requestAnimationFrame ||
+			win.webkitRequestAnimationFrame || win.mozRequestAnimationFrame;
+
+		/**
+		 * This method calls the (user) update and restarts itself
+		 * @method tickFunction
+		 */
+		this.tickFunction = function() {
+			that.update();
+			that.startTicker();
+		};
+
+		/**
+		 * (Re)Starts the ticker
+		 * @method startTicker
+		 */
+		this.startTicker = function() {
+			that.requestAnimationFrame.apply(win, [that.tickFunction]);
+		};
+	};
+
+	/**
+	 * Starts the update strategy using the given function
+	 *
+	 * @method start
+	 * @param {Function} updateFunction the function to call at each update
+	 */
+	AnimFrameUpdateStrategy.prototype.start = function(updateFunction) {
+		this.update = updateFunction || nullFunction;
+		this.startTicker();
+	};
+
+	/**
+	 * This strategy gives the user the ability to call the library internal
+	 * update function on request. Use this strategy if you already have a
+	 * timer function running by requestAnimationFrame and you need fine control
+	 * over when the gamepads are updated.
+	 *
+	 * @class ManualUpdateStrategy
+	 * @constructor
+	 * @module Gamepad
+	 */
+	var ManualUpdateStrategy = function() {
+
+	};
+
+	/**
+	 * Calls the update function in the started state. Does nothing otherwise.
+	 * @method update
+	 */
+	ManualUpdateStrategy.prototype.update = nullFunction;
+
+	/**
+	 * Starts the update strategy using the given function
+	 *
+	 * @method start
+	 * @param {Function} updateFunction the function to call at each update
+	 */
+	ManualUpdateStrategy.prototype.start = function(updateFunction) {
+		this.update = updateFunction || nullFunction;
+	};
+
+	/**
+	 * This platform is for webkit based environments that need to be polled
+	 * for updates.
+	 *
+	 * @class WebKitPlatform
+	 * @constructor
+	 * @param {Object} listener the listener to provide _connect and _disconnect callbacks
+	 * @param {Function} gamepadGetter the poll function to return an array of connected gamepads
+	 * @module Gamepad
+	 */
+	var WebKitPlatform = function(listener, gamepadGetter) {
+		this.listener = listener;
+		this.gamepadGetter = gamepadGetter;
+		this.knownGamepads = [];
+	};
+
+	/**
+	 * Provides a platform object that returns true for is isSupported() if valid.
+	 * @method factory
+	 * @static
+	 * @param {Object} listener the listener to use
+	 * @return {Object} a platform object
+	 */
+	WebKitPlatform.factory = function(listener) {
+		var platform = nullPlatform;
+		var navigator = window && window.navigator;
+
+		if (navigator) {
+			if (typeof(navigator.webkitGamepads) !== 'undefined') {
+				platform = new WebKitPlatform(listener, function() {
+					return navigator.webkitGamepads;
+				});
+			} else if (typeof(navigator.webkitGetGamepads) !== 'undefined') {
+				platform = new WebKitPlatform(listener, function() {
+					return navigator.webkitGetGamepads();
+				});
+			}
+		}
+
+		return platform;
+	};
+
+	/**
+	 * @method isSupported
+	 * @return {Boolean} true
+	 */
+	WebKitPlatform.prototype.isSupported = function() {
+		return true;
+	};
+
+	/**
+	 * Queries the currently connected gamepads and reports any changes.
+	 * @method update
+	 */
+	WebKitPlatform.prototype.update = function() {
+		var that = this;
+		var gamepads = Array.prototype.slice.call(this.gamepadGetter(), 0);
+		var gamepad;
+		var i;
+
+		for (i = this.knownGamepads.length - 1; i >= 0; i--) {
+			gamepad = this.knownGamepads[i];
+			if (gamepads.indexOf(gamepad) < 0) {
+				this.knownGamepads.splice(i, 1);
+				this.listener._disconnect(gamepad);
+			}
+		}
+
+		for (i = 0; i < gamepads.length; i++) {
+			gamepad = gamepads[i];
+			if (gamepad && (that.knownGamepads.indexOf(gamepad) < 0)) {
+				that.knownGamepads.push(gamepad);
+				that.listener._connect(gamepad);
+			}
+		}
+	};
+
+	/**
+	 * @method getMapping
+	 * @param {String|null} type identifying the gamepad for which to provide the mapping
+	 * @return {Object} mapping object
+	 */
+	WebKitPlatform.prototype.getMapping = function(type) {
+		if (type === Gamepad.Type.LOGITECH) {
+			return Gamepad.Mapping.LOGITECH_WEBKIT;
+		} else if (type === Gamepad.Type.PLAYSTATION) {
+			return Gamepad.Mapping.PLAYSTATION_WEBKIT;
+		} else {
+			return null;
+		}
+	};
+
+	/**
+	 * This platform is for mozilla based environments that provide gamepad
+	 * updates via events.
+	 *
+	 * @class FirefoxPlatform
+	 * @constructor
+	 * @module Gamepad
+	 */
+	var FirefoxPlatform = function(listener) {
+		this.listener = listener;
+
+		window.addEventListener('MozGamepadConnected', function(e) {
+			listener._connect(e.gamepad);
+		});
+		window.addEventListener('MozGamepadDisconnected', function(e) {
+			listener._disconnect(e.gamepad);
+		});
+	};
+
+	/**
+	 * Provides a platform object that returns true for is isSupported() if valid.
+	 * @method factory
+	 * @static
+	 * @param {Object} listener the listener to use
+	 * @return {Object} a platform object
+	 */
+	FirefoxPlatform.factory = function(listener) {
+		var platform = nullPlatform;
+
+		if (window && (typeof(window.addEventListener) !== 'undefined')) {
+			platform = new FirefoxPlatform(listener);
+		}
+
+		return platform;
+	};
+
+	/**
+	 * @method isSupported
+	 * @return {Boolean} true
+	 */
+	FirefoxPlatform.prototype.isSupported = function() {
+		return true;
+	};
+
+	/**
+	 * Does nothing on the Firefox platform
+	 * @method update
+	 */
+	FirefoxPlatform.prototype.update = nullFunction;
+
+	/**
+	 * @method getMapping
+	 * @param {String|null} type identifying the gamepad for which to provide the mapping
+	 * @return {Object} mapping object
+	 */
+	FirefoxPlatform.prototype.getMapping = function(type) {
+		if (type === Gamepad.Type.LOGITECH) {
+			return Gamepad.Mapping.LOGITECH_FIREFOX;
+		} else if (type === Gamepad.Type.PLAYSTATION) {
+			return Gamepad.Mapping.PLAYSTATION_FIREFOX;
+		} else {
+			return null;
+		}
+	};
 
 	/**
 	 * Provides simple interface and multi-platform support for the gamepad API.
@@ -32,30 +285,39 @@
 	 *
 	 * @class Gamepad
 	 * @constructor
+	 * @param {Object} [updateStrategy] an update strategy, defaulting to
+	 *		{{#crossLink "AnimFrameUpdateStrategy"}}{{/crossLink}}
 	 * @module Gamepad
 	 * @author Priit Kallas <kallaspriit@gmail.com>
 	 */
-	var Gamepad = function() {
+	var Gamepad = function(updateStrategy) {
+		this.updateStrategy = updateStrategy || new AnimFrameUpdateStrategy();
 		this.gamepads = [];
 		this.listeners = {};
-		this.platform = null;
+		this.platform = nullPlatform;
 		this.deadzone = 0.03;
 		this.maximizeThreshold = 0.97;
 	};
 
 	/**
-	 * List of supported platforms.
-	 *
-	 * @property Platform
-	 * @param {String} Platform.UNSUPPORTED Unsupported platform
-	 * @param {String} Platform.WEBKIT Webkit platform
-	 * @param {String} Platform.FIREFOX Firefox platform
+	 * The available update strategies
+	 * @property UpdateStrategies
+	 * @param {AnimFrameUpdateStrategy} AnimFrameUpdateStrategy
+	 * @param {ManualUpdateStrategy} ManualUpdateStrategy
 	 */
-	Gamepad.Platform = {
-		UNSUPPORTED: 'unsupported',
-		WEBKIT: 'webkit',
-		FIREFOX: 'firefox'
+	Gamepad.UpdateStrategies = {
+		AnimFrameUpdateStrategy: AnimFrameUpdateStrategy,
+		ManualUpdateStrategy: ManualUpdateStrategy
 	};
+
+	/**
+	 * List of factories of supported platforms. Currently available platforms:
+	 * {{#crossLink "WebKitPlatform"}}{{/crossLink}},
+	 * {{#crossLink "FirefoxPlatform"}}{{/crossLink}},
+	 * @property PlatformFactories
+	 * @type {Array}
+	 */
+	Gamepad.PlatformFactories = [WebKitPlatform.factory, FirefoxPlatform.factory];
 
 	/**
 	 * List of supported controller types.
@@ -314,30 +576,18 @@
 	 * You usually want to bind to the events first and then initialize it.
 	 *
 	 * @method init
+	 * @return {Boolean} true if a supporting platform was detected, false otherwise.
 	 */
 	Gamepad.prototype.init = function() {
-		this.platform = this._resolvePlatform();
+		var platform = Gamepad.resolvePlatform(this);
+		var that = this;
 
-		switch (this.platform) {
-			case Gamepad.Platform.WEBKIT:
-				this._setupWebkit();
-				break;
+		this.platform = platform;
+		this.updateStrategy.start(function() {
+			that._update();
+		});
 
-			case Gamepad.Platform.FIREFOX:
-				this._setupFirefox();
-				break;
-
-			case Gamepad.Platform.UNSUPPORTED:
-				return false;
-		}
-
-		if (typeof(window.requestAnimationFrame) === 'undefined') {
-			window.requestAnimationFrame = window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame;
-		}
-
-		this._update();
-
-		return true;
+		return platform.isSupported();
 	};
 
 	/**
@@ -426,46 +676,31 @@
 	};
 
 	/**
-	 * Resolves platform.
-	 *
-	 * @method _resolvePlatform
-	 * @return {String} One of Gamepad.Platform..
-	 * @private
+	 * @method getNullPlatform
+	 * @static
+	 * @return {Object} a platform that does not support anything
 	 */
-	Gamepad.prototype._resolvePlatform = function() {
-		if (
-			typeof(window.navigator.webkitGamepads) !== 'undefined' || typeof(window.navigator.webkitGetGamepads) !==
-			'undefined'
-		) {
-			return Gamepad.Platform.WEBKIT;
-		} else {
-			return Gamepad.Platform.FIREFOX;
-		}
+	Gamepad.getNullPlatform = function() {
+		return Object.create(nullPlatform);
 	};
 
 	/**
-	 * Sets up webkit platform.
+	 * Resolves platform.
 	 *
-	 * @method _setupWebkit
-	 * @private
+	 * @method resolvePlatform
+	 * @static
+	 * @param listener {Object} the listener to handle _connect() or _disconnect() calls
+	 * @return {Object} A platform instance
 	 */
-	Gamepad.prototype._setupWebkit = function() {};
+	Gamepad.resolvePlatform = function(listener) {
+		var platform = nullPlatform;
+		var i;
 
-	/**
-	 * Sets up Firefox platform.
-	 *
-	 * @method _setupFirefox
-	 * @private
-	 */
-	Gamepad.prototype._setupFirefox = function() {
-		var self = this;
+		for (i = 0; !platform.isSupported() && (i < Gamepad.PlatformFactories.length); i++) {
+			platform = Gamepad.PlatformFactories[i](listener);
+		}
 
-		window.addEventListener('MozGamepadConnected', function(e) {
-			self._connect(e.gamepad);
-		});
-		window.addEventListener('MozGamepadDisconnected', function(e) {
-			self._disconnect(e.gamepad);
-		});
+		return platform;
 	};
 
 	/**
@@ -477,32 +712,11 @@
 	 * @private
 	 */
 	Gamepad.prototype._getMapping = function(type) {
-		switch (type) {
-			case Gamepad.Type.PLAYSTATION:
-				if (this.platform === Gamepad.Platform.FIREFOX) {
-					return Gamepad.Mapping.PLAYSTATION_FIREFOX;
-				} else if (this.platform === Gamepad.Platform.WEBKIT) {
-					return Gamepad.Mapping.PLAYSTATION_WEBKIT;
-				} else {
-					return null;
-				}
-				break;
-
-			case Gamepad.Type.LOGITECH:
-				if (this.platform === Gamepad.Platform.FIREFOX) {
-					return Gamepad.Mapping.LOGITECH_FIREFOX;
-				} else if (this.platform === Gamepad.Platform.WEBKIT) {
-					return Gamepad.Mapping.LOGITECH_WEBKIT;
-				} else {
-					return null;
-				}
-				break;
-
-			case Gamepad.Type.XBOX:
-				return Gamepad.Mapping.XBOX;
+		if (type === Gamepad.Type.XBOX) {
+			return Gamepad.Mapping.XBOX;
+		} else {
+			return this.platform.getMapping(type);
 		}
-
-		return null;
 	};
 
 	/**
@@ -594,8 +808,7 @@
 		if (id.indexOf('playstation') !== -1) {
 			return Gamepad.Type.PLAYSTATION;
 		} else if (
-			id.indexOf('logitech') !== -1 || id.indexOf('wireless gamepad') !== -1
-		) {
+			id.indexOf('logitech') !== -1 || id.indexOf('wireless gamepad') !== -1) {
 			return Gamepad.Type.LOGITECH;
 		} else if (id.indexOf('xbox') !== -1 || id.indexOf('360') !== -1) {
 			return Gamepad.Type.XBOX;
@@ -611,8 +824,7 @@
 	 * @private
 	 */
 	Gamepad.prototype._update = function() {
-		var self = this,
-			controlName,
+		var controlName,
 			isDown,
 			lastDown,
 			downBtnIndex,
@@ -620,15 +832,7 @@
 			value,
 			i, j;
 
-		switch (this.platform) {
-			case Gamepad.Platform.WEBKIT:
-				this._updateWebkit();
-				break;
-
-			case Gamepad.Platform.FIREFOX:
-				this._updateFirefox();
-				break;
-		}
+		this.platform.update();
 
 		for (i = 0; i < this.gamepads.length; i++) {
 			if (typeof(this.gamepads[i]) === 'undefined') {
@@ -641,8 +845,7 @@
 				if (typeof(mapping) === 'function') {
 					value = mapping(
 						this.gamepads[i],
-						this
-					);
+						this);
 				} else {
 					value = this.gamepads[i].buttons[mapping];
 				}
@@ -668,8 +871,7 @@
 								gamepad: this.gamepads[i],
 								mapping: mapping,
 								control: controlName
-							}
-						);
+							});
 
 						this.gamepads[i].downButtons.push(controlName);
 					} else if (value < 0.5) {
@@ -678,8 +880,7 @@
 								gamepad: this.gamepads[i],
 								mapping: mapping,
 								control: controlName
-							}
-						);
+							});
 
 						this.gamepads[i].downButtons.splice(downBtnIndex, 1);
 					}
@@ -692,8 +893,7 @@
 							mapping: mapping,
 							axis: controlName,
 							value: value
-						}
-					);
+						});
 				}
 
 				this.gamepads[i].lastState[controlName] = value;
@@ -705,12 +905,10 @@
 				if (typeof(mapping) === 'function') {
 					value = mapping(
 						this.gamepads[i],
-						this
-					);
+						this);
 				} else {
 					value = this._applyDeadzoneMaximize(
-						this.gamepads[i].axes[mapping]
-					);
+						this.gamepads[i].axes[mapping]);
 				}
 
 				this.gamepads[i].state[controlName] = value;
@@ -722,8 +920,7 @@
 							mapping: mapping,
 							axis: controlName,
 							value: value
-						}
-					);
+						});
 				}
 
 				this.gamepads[i].lastState[controlName] = value;
@@ -733,62 +930,7 @@
 		if (this.gamepads.length > 0) {
 			this._fire(Gamepad.Event.TICK, this.gamepads);
 		}
-
-		window.requestAnimationFrame(function() {
-			self._update();
-		});
 	};
-
-	/**
-	 * Updates webkit platform gamepads.
-	 *
-	 * @method _updateWebkit
-	 * @private
-	 */
-	Gamepad.prototype._updateWebkit = function() {
-		var gamepads;
-
-		if (typeof(window.navigator.webkitGamepads) === 'object') {
-			gamepads = window.navigator.webkitGamepads;
-		} else if (typeof(window.navigator.webkitGetGamepads) === 'function') {
-			gamepads = window.navigator.webkitGetGamepads();
-		} else {
-			return; // should not happen
-		}
-
-		if (gamepads.length !== this.gamepads.length) {
-			var gamepad,
-				i;
-
-			for (i = 0; i < gamepads.length; i++) {
-				gamepad = gamepads[i];
-
-				if (
-					gamepad !== null && typeof(gamepad) !== 'undefined' && typeof(this.gamepads[gamepad.index]) ===
-					'undefined'
-				) {
-					this._connect(gamepad);
-				}
-			}
-
-			for (i = 0; i < this.gamepads.length; i++) {
-				if (
-					this.gamepads[i] !== null && typeof(this.gamepads[i]) !== 'undefined' && typeof(gamepads[i]) ===
-					'undefined'
-				) {
-					this._disconnect(this.gamepads[i]);
-				}
-			}
-		}
-	};
-
-	/**
-	 * Updates firefox platform gamepads.
-	 *
-	 * @method _updateFirefox
-	 * @private
-	 */
-	Gamepad.prototype._updateFirefox = function() {};
 
 	/**
 	 * Applies deadzone and maximization.
@@ -804,8 +946,7 @@
 	Gamepad.prototype._applyDeadzoneMaximize = function(
 		value,
 		deadzone,
-		maximizeThreshold
-	) {
+		maximizeThreshold) {
 		deadzone = typeof(deadzone) !== 'undefined' ? deadzone : this.deadzone;
 		maximizeThreshold = typeof(maximizeThreshold) !== 'undefined' ? maximizeThreshold : this.maximizeThreshold;
 
@@ -826,6 +967,6 @@
 		return value;
 	};
 
-	window.Gamepad = Gamepad;
+	exports.Gamepad = Gamepad;
 
-})(window);
+})(((typeof(module) !== 'undefined') && module.exports) || window);

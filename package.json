@@ -10,7 +10,9 @@
 	},
 	"dependencies": {},
 	"devDependencies": {
+		"buster": "~0.6.12",
 		"grunt": "~0.4.1",
+		"grunt-buster": "git://github.com/busterjs/grunt-buster.git",
 		"grunt-contrib-jshint": "~0.4.3",
 		"grunt-contrib-yuidoc": "~0.4.0",
 		"grunt-jsbeautifier": "~0.1.9",
