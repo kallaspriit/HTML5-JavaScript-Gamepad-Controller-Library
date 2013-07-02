@@ -37,15 +37,6 @@
 			this.Gamepad.PlatformFactories = this.PlatformFactories;
 		},
 
-		'should cause UNSUPPORTED event when unknown type added': function() {
-			var spy = this.spy(this.user, 'onUnsupported');
-			var gamepad = this.gamepadSimulator.addGamepad(0, 'Unknown Gamepad');
-
-			this.platform.listener._connect(gamepad);
-
-			assert.calledWith(spy, gamepad);
-		},
-
 		'should cause CONNECTED event when XBOX type added': function() {
 			var spy = this.spy(this.user, 'onConnected');
 			var gamepad = this.gamepadSimulator.addGamepad(0, 'xbox gamepad identificaiton');
@@ -53,15 +44,6 @@
 			this.platform.listener._connect(gamepad);
 
 			assert.calledWith(spy, gamepad);
-		},
-
-		'should ask mapping from platform when platform specific type added': function() {
-			var spy = this.spy(this.platform, 'getMapping');
-			var gamepad = this.gamepadSimulator.addGamepad(0, 'Logitech Thingie');
-
-			this.platform.listener._connect(gamepad);
-
-			assert.calledWith(spy, this.Gamepad.Type.LOGITECH);
 		},
 
 		'should case CONNECTED event when platform resolves mapping': function() {

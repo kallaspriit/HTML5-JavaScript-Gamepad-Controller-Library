@@ -100,7 +100,7 @@
 
     
         <div class="foundat">
-            Defined in: <a href="../files/gamepad.js.html#l280"><code>gamepad.js:280</code></a>
+            Defined in: <a href="../files/gamepad.js.html#l284"><code>gamepad.js:284</code></a>
         </div>
     
 
@@ -167,7 +167,7 @@ taste but the defaults should generally work fine.</p>
             
         
         
-        <a href="../files/gamepad.js.html#l280"><code>gamepad.js:280</code></a>
+        <a href="../files/gamepad.js.html#l284"><code>gamepad.js:284</code></a>
         
         </p>
 
@@ -243,6 +243,20 @@ taste but the defaults should generally work fine.</p>
                     <ul class="index-list methods">
                         
                             <li class="index-item method private">
+                                <a href="#method__addAxisUpdater">_addAxisUpdater</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method private">
+                                <a href="#method__addButtonUpdater">_addButtonUpdater</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method private">
                                 <a href="#method__applyDeadzoneMaximize">_applyDeadzoneMaximize</a>
 
                                 
@@ -251,6 +265,20 @@ taste but the defaults should generally work fine.</p>
                         
                             <li class="index-item method private">
                                 <a href="#method__connect">_connect</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method private">
+                                <a href="#method__createAxisGetter">_createAxisGetter</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method private">
+                                <a href="#method__createButtonGetter">_createButtonGetter</a>
 
                                 
                                 
@@ -271,7 +299,7 @@ taste but the defaults should generally work fine.</p>
                             </li>
                         
                             <li class="index-item method private">
-                                <a href="#method__getMapping">_getMapping</a>
+                                <a href="#method__fireAxisChangedEvent">_fireAxisChangedEvent</a>
 
                                 
                                 
@@ -279,6 +307,13 @@ taste but the defaults should generally work fine.</p>
                         
                             <li class="index-item method private">
                                 <a href="#method__resolveControllerType">_resolveControllerType</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method private">
+                                <a href="#method__resolveMapping">_resolveMapping</a>
 
                                 
                                 
@@ -301,6 +336,15 @@ taste but the defaults should generally work fine.</p>
                             <li class="index-item method">
                                 <a href="#method_count">count</a>
 
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_envMatchesFilter">envMatchesFilter</a>
+
+                                
+                                    <span class="flag static">static</span>
                                 
                                 
                             </li>
@@ -348,7 +392,7 @@ taste but the defaults should generally work fine.</p>
                     <ul class="index-list properties">
                         
                             <li class="index-item property">
-                                <a href="#property_Mapping">Mapping</a>
+                                <a href="#property_Mappings">Mappings</a>
 
                                 
                                 
@@ -356,6 +400,27 @@ taste but the defaults should generally work fine.</p>
                         
                             <li class="index-item property">
                                 <a href="#property_PlatformFactories">PlatformFactories</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_StandardAxes">StandardAxes</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_StandardButtons">StandardButtons</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_StandardMapping">StandardMapping</a>
 
                                 
                                 
@@ -429,10 +494,12 @@ taste but the defaults should generally work fine.</p>
                                 
                             </li>
                         
-                            <li class="index-item event">
+                            <li class="index-item event deprecated">
                                 <a href="#event_unsupported">unsupported</a>
 
                                 
+                                
+                                    <span class="flag deprecated">deprecated</span>
                                 
                             </li>
                         
@@ -444,6 +511,268 @@ taste but the defaults should generally work fine.</p>
         
             <div id="methods" class="api-class-tabpanel">
                 <h2 class="off-left">Methods</h2>
+
+                
+                    <div id="method__addAxisUpdater" class="method item private">
+    <h3 class="name"><code>_addAxisUpdater</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>gamepad</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>mapping</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>index</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+        <span class="flag private">private</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/gamepad.js.html#l729"><code>gamepad.js:729</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Adds an updater for an axis control</p>
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">gamepad</code>
+                        <span class="type">Object</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>the gamepad for which to create the updater</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">mapping</code>
+                        <span class="type">Object</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>the mapping on which to work on</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">index</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>axis index</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method__addButtonUpdater" class="method item private">
+    <h3 class="name"><code>_addButtonUpdater</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>gamepad</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>mapping</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>index</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+        <span class="flag private">private</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/gamepad.js.html#l683"><code>gamepad.js:683</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Adds an updater for a button control</p>
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">gamepad</code>
+                        <span class="type">Object</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>the gamepad for which to create the updater</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">mapping</code>
+                        <span class="type">Object</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>the mapping on which to work on</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">index</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>button index</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
 
                 
                     <div id="method__applyDeadzoneMaximize" class="method item private">
@@ -502,7 +831,7 @@ taste but the defaults should generally work fine.</p>
             
         
         
-        <a href="../files/gamepad.js.html#l935"><code>gamepad.js:935</code></a>
+        <a href="../files/gamepad.js.html#l1014"><code>gamepad.js:1014</code></a>
         
         </p>
 
@@ -599,10 +928,6 @@ taste but the defaults should generally work fine.</p>
     
 
     
-        <span class="returns-inline">
-            <span class="type">Boolean</span>
-        </span>
-    
 
     
 
@@ -629,7 +954,7 @@ taste but the defaults should generally work fine.</p>
             
         
         
-        <a href="../files/gamepad.js.html#l722"><code>gamepad.js:722</code></a>
+        <a href="../files/gamepad.js.html#l651"><code>gamepad.js:651</code></a>
         
         </p>
 
@@ -669,15 +994,305 @@ taste but the defaults should generally work fine.</p>
     
 
     
+
+    
+</div>
+
+                
+                    <div id="method__createAxisGetter" class="method item private">
+    <h3 class="name"><code>_createAxisGetter</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>gamepad</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>axes</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>index</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">Function</span>
+        </span>
+    
+
+    
+
+    
+        <span class="flag private">private</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/gamepad.js.html#l859"><code>gamepad.js:859</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Creates a getter according to the mapping entry for the specific index.
+Currently supported entries:</p>
+
+<p>axes.byAxis[index]: Number := Index into gamepad.axes; -1 ignored</p>
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">gamepad</code>
+                        <span class="type">Object</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>the gamepad for which to create a getter</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">axes</code>
+                        <span class="type">Object</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>the mappings entry for the axes</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">index</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>the specific axis entry</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
         <div class="returns">
             <h4>Returns:</h4>
 
             <div class="returns-description">
                 
                     
-                        <span class="type">Boolean</span>:
+                        <span class="type">Function</span>:
                     
-                    Was connecting the gamepad successful
+                    a getter returning the value for the requested axis
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method__createButtonGetter" class="method item private">
+    <h3 class="name"><code>_createButtonGetter</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>gamepad</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>buttons</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>index</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">Function</span>
+        </span>
+    
+
+    
+
+    
+        <span class="flag private">private</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/gamepad.js.html#l781"><code>gamepad.js:781</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Creates a getter according to the mapping entry for the specific index.
+Currently supported entries:</p>
+
+<p>buttons.byButton[index]: Number := Index into gamepad.buttons; -1 tests byAxis
+buttons.byAxis[index]: Array := [Index into gamepad.axes; Zero Value, One Value]</p>
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">gamepad</code>
+                        <span class="type">Object</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>the gamepad for which to create a getter</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">buttons</code>
+                        <span class="type">Object</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>the mappings entry for the buttons</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">index</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>the specific button entry</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">Function</span>:
+                    
+                    a getter returning the value for the requested button
                 
             </div>
         </div>
@@ -731,7 +1346,7 @@ taste but the defaults should generally work fine.</p>
             
         
         
-        <a href="../files/gamepad.js.html#l771"><code>gamepad.js:771</code></a>
+        <a href="../files/gamepad.js.html#l897"><code>gamepad.js:897</code></a>
         
         </p>
 
@@ -826,7 +1441,7 @@ taste but the defaults should generally work fine.</p>
             
         
         
-        <a href="../files/gamepad.js.html#l660"><code>gamepad.js:660</code></a>
+        <a href="../files/gamepad.js.html#l605"><code>gamepad.js:605</code></a>
         
         </p>
 
@@ -886,8 +1501,8 @@ taste but the defaults should generally work fine.</p>
 </div>
 
                 
-                    <div id="method__getMapping" class="method item private">
-    <h3 class="name"><code>_getMapping</code></h3>
+                    <div id="method__fireAxisChangedEvent" class="method item private">
+    <h3 class="name"><code>_fireAxisChangedEvent</code></h3>
 
     
         <div class="args">
@@ -895,7 +1510,19 @@ taste but the defaults should generally work fine.</p>
             
                 <li class="arg">
                     
-                        <code>type</code>
+                        <code>gamepad</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>controlName</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>value</code>
                     
                 </li>
             
@@ -903,10 +1530,6 @@ taste but the defaults should generally work fine.</p>
         </div>
     
 
-    
-        <span class="returns-inline">
-            <span class="type">Object | Null</span>
-        </span>
     
 
     
@@ -934,7 +1557,7 @@ taste but the defaults should generally work fine.</p>
             
         
         
-        <a href="../files/gamepad.js.html#l706"><code>gamepad.js:706</code></a>
+        <a href="../files/gamepad.js.html#l763"><code>gamepad.js:763</code></a>
         
         </p>
 
@@ -945,7 +1568,7 @@ taste but the defaults should generally work fine.</p>
     </div>
 
     <div class="description">
-        <p>Returns mapping for given type.</p>
+        <p>Fires an AXIS_CHANGED event</p>
     </div>
 
     
@@ -956,14 +1579,44 @@ taste but the defaults should generally work fine.</p>
             
                 <li class="param">
                     
-                        <code class="param-name">type</code>
+                        <code class="param-name">gamepad</code>
+                        <span class="type">Object</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>the gamepad to notify for</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">controlName</code>
                         <span class="type">String</span>
                     
 
                     
 
                     <div class="param-description">
-                        <p>One of Gamepad.Type..</p>
+                        <p>name of the control that changes its value</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">value</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>the new value</p>
                     </div>
 
                     
@@ -973,19 +1626,6 @@ taste but the defaults should generally work fine.</p>
         </div>
     
 
-    
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                
-                    
-                        <span class="type">Object | Null</span>:
-                    
-                    Mapping or null if not supported
-                
-            </div>
-        </div>
     
 
     
@@ -1040,7 +1680,7 @@ taste but the defaults should generally work fine.</p>
             
         
         
-        <a href="../files/gamepad.js.html#l797"><code>gamepad.js:797</code></a>
+        <a href="../files/gamepad.js.html#l923"><code>gamepad.js:923</code></a>
         
         </p>
 
@@ -1098,6 +1738,112 @@ taste but the defaults should generally work fine.</p>
 </div>
 
                 
+                    <div id="method__resolveMapping" class="method item private">
+    <h3 class="name"><code>_resolveMapping</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>gamepad</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">Object</span>
+        </span>
+    
+
+    
+
+    
+        <span class="flag private">private</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/gamepad.js.html#l946"><code>gamepad.js:946</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">gamepad</code>
+                        <span class="type">Object</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>the gamepad for which to resolve the mapping</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">Object</span>:
+                    
+                    a mapping object for the given gamepad
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
                     <div id="method__update" class="method item private">
     <h3 class="name"><code>_update</code></h3>
 
@@ -1132,7 +1878,7 @@ taste but the defaults should generally work fine.</p>
             
         
         
-        <a href="../files/gamepad.js.html#l820"><code>gamepad.js:820</code></a>
+        <a href="../files/gamepad.js.html#l992"><code>gamepad.js:992</code></a>
         
         </p>
 
@@ -1206,7 +1952,7 @@ taste but the defaults should generally work fine.</p>
             
         
         
-        <a href="../files/gamepad.js.html#l593"><code>gamepad.js:593</code></a>
+        <a href="../files/gamepad.js.html#l538"><code>gamepad.js:538</code></a>
         
         </p>
 
@@ -1315,7 +2061,7 @@ taste but the defaults should generally work fine.</p>
             
         
         
-        <a href="../files/gamepad.js.html#l650"><code>gamepad.js:650</code></a>
+        <a href="../files/gamepad.js.html#l595"><code>gamepad.js:595</code></a>
         
         </p>
 
@@ -1340,6 +2086,133 @@ taste but the defaults should generally work fine.</p>
                     
                         <span class="type">Number</span>:
                     
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_envMatchesFilter" class="method item">
+    <h3 class="name"><code>envMatchesFilter</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>filter</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>env</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">Boolean</span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+        <span class="flag static">static</span>
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/gamepad.js.html#l972"><code>gamepad.js:972</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">filter</code>
+                        <span class="type">Object</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>the filter object describing properties to match</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">env</code>
+                        <span class="type">Object</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>the environment object that is matched against filter</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">Boolean</span>:
+                    
+                    true if env is covered by filter
                 
             </div>
         </div>
@@ -1387,7 +2260,7 @@ taste but the defaults should generally work fine.</p>
             
         
         
-        <a href="../files/gamepad.js.html#l678"><code>gamepad.js:678</code></a>
+        <a href="../files/gamepad.js.html#l623"><code>gamepad.js:623</code></a>
         
         </p>
 
@@ -1458,7 +2331,7 @@ taste but the defaults should generally work fine.</p>
             
         
         
-        <a href="../files/gamepad.js.html#l573"><code>gamepad.js:573</code></a>
+        <a href="../files/gamepad.js.html#l518"><code>gamepad.js:518</code></a>
         
         </p>
 
@@ -1543,7 +2416,7 @@ taste but the defaults should generally work fine.</p>
             
         
         
-        <a href="../files/gamepad.js.html#l687"><code>gamepad.js:687</code></a>
+        <a href="../files/gamepad.js.html#l632"><code>gamepad.js:632</code></a>
         
         </p>
 
@@ -1653,7 +2526,7 @@ taste but the defaults should generally work fine.</p>
             
         
         
-        <a href="../files/gamepad.js.html#l611"><code>gamepad.js:611</code></a>
+        <a href="../files/gamepad.js.html#l556"><code>gamepad.js:556</code></a>
         
         </p>
 
@@ -1739,8 +2612,8 @@ listeners of given type are removed.</p>
                 <h2 class="off-left">Properties</h2>
 
                 
-                    <div id="property_Mapping" class="property item">
-    <h3 class="name"><code>Mapping</code></h3>
+                    <div id="property_Mappings" class="property item">
+    <h3 class="name"><code>Mappings</code></h3>
     <span class="type">Unknown</span>
 
     
@@ -1762,7 +2635,7 @@ listeners of given type are removed.</p>
             
         
         
-        <a href="../files/gamepad.js.html#l416"><code>gamepad.js:416</code></a>
+        <a href="../files/gamepad.js.html#l460"><code>gamepad.js:460</code></a>
         
         </p>
 
@@ -1772,11 +2645,15 @@ listeners of given type are removed.</p>
     </div>
 
     <div class="description">
-        <p>Mapping of various gamepads on different platforms too unify their buttons
-and axes.</p>
+        <p>Mapping of various gamepads that differ from the standard mapping on
+different platforms too unify their buttons and axes.</p>
 
-<p>The mapping can be either a simple number of the button/axes or a function
-that gets the gamepad as first parameter and the gamepad class as second.</p>
+<p>Each mapping should have an 'env' object, which describes the environment
+in which the mapping is active. The more entries such an environment has,
+the more specific it is.</p>
+
+<p>Mappings are expressed for both buttons and axes. Buttons might refer to
+axes if they are notified as such.</p>
     </div>
 
     
@@ -1810,7 +2687,7 @@ that gets the gamepad as first parameter and the gamepad class as second.</p>
             
         
         
-        <a href="../files/gamepad.js.html#l313"><code>gamepad.js:313</code></a>
+        <a href="../files/gamepad.js.html#l317"><code>gamepad.js:317</code></a>
         
         </p>
 
@@ -1823,6 +2700,141 @@ that gets the gamepad as first parameter and the gamepad class as second.</p>
         <p>List of factories of supported platforms. Currently available platforms:
 <a href="../classes/WebKitPlatform.html" class="crosslink">WebKitPlatform</a>,
 <a href="../classes/FirefoxPlatform.html" class="crosslink">FirefoxPlatform</a>,</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_StandardAxes" class="property item">
+    <h3 class="name"><code>StandardAxes</code></h3>
+    <span class="type">Unknown</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/gamepad.js.html#l432"><code>gamepad.js:432</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>List of standard axis names. The index is the according standard axis
+index as per standard.</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_StandardButtons" class="property item">
+    <h3 class="name"><code>StandardButtons</code></h3>
+    <span class="type">Unknown</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/gamepad.js.html#l418"><code>gamepad.js:418</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>List of standard button names. The index is the according standard button
+index as per standard.</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_StandardMapping" class="property item">
+    <h3 class="name"><code>StandardMapping</code></h3>
+    <span class="type">Unknown</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/gamepad.js.html#l444"><code>gamepad.js:444</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>The standard mapping that represents the mapping as per definition.
+Each button and axis map to the same index.</p>
     </div>
 
     
@@ -1856,7 +2868,7 @@ that gets the gamepad as first parameter and the gamepad class as second.</p>
             
         
         
-        <a href="../files/gamepad.js.html#l322"><code>gamepad.js:322</code></a>
+        <a href="../files/gamepad.js.html#l326"><code>gamepad.js:326</code></a>
         
         </p>
 
@@ -1919,12 +2931,12 @@ that gets the gamepad as first parameter and the gamepad class as second.</p>
             
             <li class="param">
                 
-                    <code class="param-name">UNSUPPORTED</code>
+                    <code class="param-name">UNKNOWN</code>
                     <span class="type">String</span>
                 
 
                 <div class="param-description">
-                    <p>Unsupported controller</p>
+                    <p>Unknown controller</p>
                 </div>
 
                 
@@ -1958,7 +2970,7 @@ that gets the gamepad as first parameter and the gamepad class as second.</p>
             
         
         
-        <a href="../files/gamepad.js.html#l302"><code>gamepad.js:302</code></a>
+        <a href="../files/gamepad.js.html#l306"><code>gamepad.js:306</code></a>
         
         </p>
 
@@ -2044,7 +3056,7 @@ that gets the gamepad as first parameter and the gamepad class as second.</p>
             
         
         
-        <a href="../files/gamepad.js.html#l403"><code>gamepad.js:403</code></a>
+        <a href="../files/gamepad.js.html#l406"><code>gamepad.js:406</code></a>
         
         </p>
 
@@ -2086,19 +3098,6 @@ that gets the gamepad as first parameter and the gamepad class as second.</p>
 
                                 <div class="param-description">
                                     <p>The gamepad object</p>
-                                </div>
-
-                                
-                            </li>
-                            
-                            <li class="param">
-                                
-                                    <code class="param-name">mapping</code>
-                                    <span class="type">Object</span>
-                                
-
-                                <div class="param-description">
-                                    <p>Gamepad mapping</p>
                                 </div>
 
                                 
@@ -2166,7 +3165,7 @@ that gets the gamepad as first parameter and the gamepad class as second.</p>
             
         
         
-        <a href="../files/gamepad.js.html#l381"><code>gamepad.js:381</code></a>
+        <a href="../files/gamepad.js.html#l386"><code>gamepad.js:386</code></a>
         
         </p>
 
@@ -2208,19 +3207,6 @@ that gets the gamepad as first parameter and the gamepad class as second.</p>
 
                                 <div class="param-description">
                                     <p>The gamepad object</p>
-                                </div>
-
-                                
-                            </li>
-                            
-                            <li class="param">
-                                
-                                    <code class="param-name">mapping</code>
-                                    <span class="type">Object</span>
-                                
-
-                                <div class="param-description">
-                                    <p>Gamepad mapping</p>
                                 </div>
 
                                 
@@ -2275,7 +3261,7 @@ that gets the gamepad as first parameter and the gamepad class as second.</p>
             
         
         
-        <a href="../files/gamepad.js.html#l392"><code>gamepad.js:392</code></a>
+        <a href="../files/gamepad.js.html#l396"><code>gamepad.js:396</code></a>
         
         </p>
 
@@ -2317,19 +3303,6 @@ that gets the gamepad as first parameter and the gamepad class as second.</p>
 
                                 <div class="param-description">
                                     <p>The gamepad object</p>
-                                </div>
-
-                                
-                            </li>
-                            
-                            <li class="param">
-                                
-                                    <code class="param-name">mapping</code>
-                                    <span class="type">Object</span>
-                                
-
-                                <div class="param-description">
-                                    <p>Gamepad mapping</p>
                                 </div>
 
                                 
@@ -2384,7 +3357,7 @@ that gets the gamepad as first parameter and the gamepad class as second.</p>
             
         
         
-        <a href="../files/gamepad.js.html#l349"><code>gamepad.js:349</code></a>
+        <a href="../files/gamepad.js.html#l353"><code>gamepad.js:353</code></a>
         
         </p>
 
@@ -2450,7 +3423,7 @@ that gets the gamepad as first parameter and the gamepad class as second.</p>
             
         
         
-        <a href="../files/gamepad.js.html#l365"><code>gamepad.js:365</code></a>
+        <a href="../files/gamepad.js.html#l370"><code>gamepad.js:370</code></a>
         
         </p>
 
@@ -2516,7 +3489,7 @@ that gets the gamepad as first parameter and the gamepad class as second.</p>
             
         
         
-        <a href="../files/gamepad.js.html#l373"><code>gamepad.js:373</code></a>
+        <a href="../files/gamepad.js.html#l378"><code>gamepad.js:378</code></a>
         
         </p>
 
@@ -2559,10 +3532,12 @@ that gets the gamepad as first parameter and the gamepad class as second.</p>
 </div>
 
                 
-                    <div id="event_unsupported" class="events item">
+                    <div id="event_unsupported" class="events item deprecated">
     <h3 class="name"><code>unsupported</code></h3>
     <span class="type"></span>
 
+    
+        <span class="flag deprecated" title="not used anymore. Any controller is supported.">deprecated</span>
     
 
     
@@ -2582,10 +3557,12 @@ that gets the gamepad as first parameter and the gamepad class as second.</p>
             
         
         
-        <a href="../files/gamepad.js.html#l357"><code>gamepad.js:357</code></a>
+        <a href="../files/gamepad.js.html#l361"><code>gamepad.js:361</code></a>
         
         </p>
 
+        
+            <p>Deprecated: not used anymore. Any controller is supported.</p>
         
 
         

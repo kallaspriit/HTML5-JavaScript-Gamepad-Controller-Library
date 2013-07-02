@@ -33,13 +33,13 @@
 	 * The null platform, which doesn't support anything
 	 */
 	var nullPlatform = {
+		getType: function() {
+			return 'null';
+		},
 		isSupported: function() {
 			return false;
 		},
-		update: nullFunction,
-		getMapping: function() {
-			return null;
-		}
+		update: nullFunction
 	};
 
 	/**
@@ -163,6 +163,23 @@
 	};
 
 	/**
+	 * @method getType()
+	 * @static
+	 * @return {String} 'WebKit'
+	 */
+	WebKitPlatform.getType = function() {
+		return 'WebKit';
+	},
+
+	/**
+	 * @method getType()
+	 * @return {String} 'WebKit'
+	 */
+	WebKitPlatform.prototype.getType = function() {
+		return WebKitPlatform.getType();
+	},
+
+	/**
 	 * @method isSupported
 	 * @return {Boolean} true
 	 */
@@ -194,21 +211,6 @@
 				that.knownGamepads.push(gamepad);
 				that.listener._connect(gamepad);
 			}
-		}
-	};
-
-	/**
-	 * @method getMapping
-	 * @param {String|null} type identifying the gamepad for which to provide the mapping
-	 * @return {Object} mapping object
-	 */
-	WebKitPlatform.prototype.getMapping = function(type) {
-		if (type === Gamepad.Type.LOGITECH) {
-			return Gamepad.Mapping.LOGITECH_WEBKIT;
-		} else if (type === Gamepad.Type.PLAYSTATION) {
-			return Gamepad.Mapping.PLAYSTATION_WEBKIT;
-		} else {
-			return null;
 		}
 	};
 
@@ -249,6 +251,23 @@
 	};
 
 	/**
+	 * @method getType()
+	 * @static
+	 * @return {String} 'Firefox'
+	 */
+	FirefoxPlatform.getType = function() {
+		return 'Firefox';
+	},
+
+	/**
+	 * @method getType()
+	 * @return {String} 'Firefox'
+	 */
+	FirefoxPlatform.prototype.getType = function() {
+		return FirefoxPlatform.getType();
+	},
+
+	/**
 	 * @method isSupported
 	 * @return {Boolean} true
 	 */
@@ -261,21 +280,6 @@
 	 * @method update
 	 */
 	FirefoxPlatform.prototype.update = nullFunction;
-
-	/**
-	 * @method getMapping
-	 * @param {String|null} type identifying the gamepad for which to provide the mapping
-	 * @return {Object} mapping object
-	 */
-	FirefoxPlatform.prototype.getMapping = function(type) {
-		if (type === Gamepad.Type.LOGITECH) {
-			return Gamepad.Mapping.LOGITECH_FIREFOX;
-		} else if (type === Gamepad.Type.PLAYSTATION) {
-			return Gamepad.Mapping.PLAYSTATION_FIREFOX;
-		} else {
-			return null;
-		}
-	};
 
 	/**
 	 * Provides simple interface and multi-platform support for the gamepad API.
@@ -326,13 +330,13 @@
 	 * @param {String} Type.PLAYSTATION Playstation controller
 	 * @param {String} Type.LOGITECH Logitech controller
 	 * @param {String} Type.XBOX XBOX controller
-	 * @param {String} Type.UNSUPPORTED Unsupported controller
+	 * @param {String} Type.UNKNOWN Unknown controller
 	 */
 	Gamepad.Type = {
 		PLAYSTATION: 'playstation',
 		LOGITECH: 'logitech',
 		XBOX: 'xbox',
-		UNSUPPORTED: 'unsupported' // replace this with 'xbox' or 'logitech' to default to some configuration
+		UNKNOWN: 'unknown'
 	};
 
 	/*
@@ -359,6 +363,7 @@
 		 *
 		 * @event unsupported
 		 * @param {Object} device
+		 * @deprecated not used anymore. Any controller is supported.
 		 */
 		UNSUPPORTED: 'unsupported',
 
@@ -384,7 +389,6 @@
 		 * @event button-down
 		 * @param {Object} event
 		 * @param {Object} event.gamepad The gamepad object
-		 * @param {Object} event.mapping Gamepad mapping
 		 * @param {String} event.control Control name
 		 */
 		BUTTON_DOWN: 'button-down',
@@ -395,7 +399,6 @@
 		 * @event button-up
 		 * @param {Object} event
 		 * @param {Object} event.gamepad The gamepad object
-		 * @param {Object} event.mapping Gamepad mapping
 		 * @param {String} event.control Control name
 		 */
 		BUTTON_UP: 'button-up',
@@ -406,7 +409,6 @@
 		 * @event axis-changed
 		 * @param {Object} event
 		 * @param {Object} event.gamepad The gamepad object
-		 * @param {Object} event.mapping Gamepad mapping
 		 * @param {String} event.axis Axis name
 		 * @param {Number} event.value New axis value
 		 */
@@ -414,161 +416,104 @@
 	};
 
 	/**
-	 * Mapping of various gamepads on different platforms too unify their buttons
-	 * and axes.
+	 * List of standard button names. The index is the according standard button
+	 * index as per standard.
 	 *
-	 * The mapping can be either a simple number of the button/axes or a function
-	 * that gets the gamepad as first parameter and the gamepad class as second.
-	 *
-	 * @property Mapping
+	 * @property StandardButtons
 	 */
-	Gamepad.Mapping = {
-		PLAYSTATION_FIREFOX: {
-			buttons: {
-				CROSS: 14,
-				CIRCLE: 13,
-				SQUARE: 15,
-				TRIANGLE: 12,
-				LB1: 10,
-				RB1: 11,
-				LEFT_STICK: 1,
-				RIGHT_STICK: 2,
-				START: 3,
-				SELECT: 0,
-				HOME: 16,
-				DPAD_UP: 4,
-				DPAD_DOWN: 6,
-				DPAD_LEFT: 7,
-				DPAD_RIGHT: 5
-			},
-			axes: {
-				LEFT_STICK_X: 0,
-				LEFT_STICK_Y: 1,
-				RIGHT_STICK_X: 2,
-				RIGHT_STICK_Y: 3
-			}
+	Gamepad.StandardButtons = [
+		'FACE_1', 'FACE_2', 'FACE_3', 'FACE_4',
+		'LEFT_TOP_SHOULDER', 'RIGHT_TOP_SHOULDER', 'LEFT_BOTTOM_SHOULDER', 'RIGHT_BOTTOM_SHOULDER',
+		'SELECT_BACK', 'START_FORWARD', 'LEFT_STICK', 'RIGHT_STICK',
+		'DPAD_UP', 'DPAD_DOWN', 'DPAD_LEFT', 'DPAD_RIGHT',
+		'HOME'
+	];
+
+	/**
+	 * List of standard axis names. The index is the according standard axis
+	 * index as per standard.
+	 *
+	 * @property StandardAxes
+	 */
+	Gamepad.StandardAxes = ['LEFT_STICK_X', 'LEFT_STICK_Y', 'RIGHT_STICK_X', 'RIGHT_STICK_Y'];
+
+	var getControlName = function(names, index, extraPrefix) {
+		return (index < names.length) ? names[index] : extraPrefix + (index - names.length + 1);
+	};
+
+	/**
+	 * The standard mapping that represents the mapping as per definition.
+	 * Each button and axis map to the same index.
+	 *
+	 * @property StandardMapping
+	 */
+	Gamepad.StandardMapping = {
+		env: {},
+		buttons: {
+			byButton: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
 		},
-		PLAYSTATION_WEBKIT: {
-			buttons: {
-				CROSS: 0,
-				CIRCLE: 1,
-				SQUARE: 2,
-				TRIANGLE: 3,
-				LB1: 4,
-				RB1: 5,
-				LB2: 6,
-				RB2: 7,
-				LEFT_STICK: 10,
-				RIGHT_STICK: 11,
-				START: 9,
-				SELECT: 8,
-				HOME: 16,
-				DPAD_UP: 12,
-				DPAD_DOWN: 13,
-				DPAD_LEFT: 14,
-				DPAD_RIGHT: 15
-			},
-			axes: {
-				LEFT_STICK_X: 0,
-				LEFT_STICK_Y: 1,
-				RIGHT_STICK_X: 2,
-				RIGHT_STICK_Y: 3
-			}
-		},
-		LOGITECH_FIREFOX: {
-			buttons: {
-				A: 0,
-				B: 1,
-				X: 2,
-				Y: 3,
-				LB: 4,
-				RB: 5,
-				LEFT_STICK: 8,
-				RIGHT_STICK: 9,
-				START: 7,
-				BACK: 6,
-				HOME: 10,
-				DPAD_UP: 11,
-				DPAD_DOWN: 12,
-				DPAD_LEFT: 13,
-				DPAD_RIGHT: 14
-			},
-			axes: {
-				LEFT_STICK_X: 0,
-				LEFT_STICK_Y: 1,
-				RIGHT_STICK_X: 3,
-				RIGHT_STICK_Y: 4,
-				LEFT_TRIGGER: function(gamepad, manager) {
-					if (gamepad.axes[2] > 0) {
-						return manager._applyDeadzoneMaximize(gamepad.axes[2]);
-					} else {
-						return 0;
-					}
-				},
-				RIGHT_TRIGGER: function(gamepad, manager) {
-					if (gamepad.axes[2] < 0) {
-						return manager._applyDeadzoneMaximize(gamepad.axes[2] * -1);
-					} else {
-						return 0;
-					}
-				}
-			}
-		},
-		LOGITECH_WEBKIT: {
-			buttons: {
-				A: 1,
-				B: 2,
-				X: 0,
-				Y: 3,
-				LB: 4,
-				RB: 5,
-				LEFT_TRIGGER: 6,
-				RIGHT_TRIGGER: 7,
-				LEFT_STICK: 10,
-				RIGHT_STICK: 11,
-				START: 9,
-				BACK: 8,
-				HOME: 10,
-				DPAD_UP: 11,
-				DPAD_DOWN: 12,
-				DPAD_LEFT: 13,
-				DPAD_RIGHT: 14
-			},
-			axes: {
-				LEFT_STICK_X: 0,
-				LEFT_STICK_Y: 1,
-				RIGHT_STICK_X: 2,
-				RIGHT_STICK_Y: 3
-			}
-		},
-		XBOX: {
-			buttons: {
-				A: 0,
-				B: 1,
-				X: 2,
-				Y: 3,
-				LB: 4,
-				RB: 5,
-				LEFT_TRIGGER: 6,
-				RIGHT_TRIGGER: 7,
-				LEFT_STICK: 10,
-				RIGHT_STICK: 11,
-				START: 9,
-				BACK: 8,
-				DPAD_UP: 12,
-				DPAD_DOWN: 13,
-				DPAD_LEFT: 14,
-				DPAD_RIGHT: 15,
-				HOME: 16
-			},
-			axes: {
-				LEFT_STICK_X: 0,
-				LEFT_STICK_Y: 1,
-				RIGHT_STICK_X: 2,
-				RIGHT_STICK_Y: 3
-			}
+		axes: {
+			byAxis: [0, 1, 2, 3]
 		}
 	};
+
+	/**
+	 * Mapping of various gamepads that differ from the standard mapping on
+	 * different platforms too unify their buttons and axes.
+	 *
+	 * Each mapping should have an 'env' object, which describes the environment
+	 * in which the mapping is active. The more entries such an environment has,
+	 * the more specific it is.
+	 *
+	 * Mappings are expressed for both buttons and axes. Buttons might refer to
+	 * axes if they are notified as such.
+	 *
+	 * @property Mappings
+	 */
+	Gamepad.Mappings = [
+		// PS3 controller on Firefox
+		{
+			env: {
+				platform: FirefoxPlatform.getType(),
+				type: Gamepad.Type.PLAYSTATION
+			},
+			buttons: {
+				byButton: [14, 13, 15, 12, 10, 11, 8, 9, 0, 3, 1, 2, 4, 6, 7, 5, 16]
+			},
+			axes: {
+				byAxis: [0, 1, 2, 3]
+			}
+		},
+		// Logitech gamepad on WebKit
+		{
+			env: {
+				platform: WebKitPlatform.getType(),
+				type: Gamepad.Type.LOGITECH
+			},
+			buttons: { // TODO: This can't be right - LEFT/RIGHT_STICK have same mappings as HOME/DPAD_UP
+				byButton: [1, 2, 0, 3, 4, 5, 6, 7, 8, 9, 10, 11, 11, 12, 13, 14, 10]
+			},
+			axes: {
+				byAxis: [0, 1, 2, 3]
+			}
+		},
+		// Logitech gamepad on Firefox
+		{
+			env: {
+				platform: FirefoxPlatform.getType(),
+				type: Gamepad.Type.LOGITECH
+			},
+			buttons: {
+				byButton: [0, 1, 2, 3, 4, 5, -1, -1, 6, 7, 8, 9, 11, 12, 13, 14, 10],
+				byAxis: [-1, -1, -1, -1, -1, -1, [2, 0, 1],
+					[2, 0, -1]
+				]
+			},
+			axes: {
+				byAxis: [0, 1, 3, 4]
+			}
+		}
+	];
 
 	/**
 	 * Initializes the gamepad.
@@ -704,69 +649,250 @@
 	};
 
 	/**
-	 * Returns mapping for given type.
-	 *
-	 * @method _getMapping
-	 * @param {String} type One of Gamepad.Type..
-	 * @return {Object|null} Mapping or null if not supported
-	 * @private
-	 */
-	Gamepad.prototype._getMapping = function(type) {
-		if (type === Gamepad.Type.XBOX) {
-			return Gamepad.Mapping.XBOX;
-		} else {
-			return this.platform.getMapping(type);
-		}
-	};
-
-	/**
 	 * Registers given gamepad.
 	 *
 	 * @method _connect
 	 * @param {Object} gamepad Gamepad to connect to
-	 * @return {Boolean} Was connecting the gamepad successful
 	 * @private
 	 */
 	Gamepad.prototype._connect = function(gamepad) {
-		gamepad.type = this._resolveControllerType(gamepad.id);
+		var mapping = this._resolveMapping(gamepad);
+		var count;
+		var i;
 
-		if (gamepad.type === Gamepad.Type.UNSUPPORTED) {
-			this._fire(Gamepad.Event.UNSUPPORTED, gamepad);
-
-			return false;
-		}
-
-		gamepad.mapping = this._getMapping(gamepad.type);
-
-		if (gamepad.mapping === null) {
-			this._fire(Gamepad.Event.UNSUPPORTED, gamepad);
-
-			return false;
-		}
-
+		//gamepad.mapping = this._resolveMapping(gamepad);
 		gamepad.state = {};
 		gamepad.lastState = {};
-		gamepad.downButtons = [];
+		gamepad.updater = [];
 
-		var key,
-			axis;
-
-		for (key in gamepad.mapping.buttons) {
-			gamepad.state[key] = 0;
-			gamepad.lastState[key] = 0;
+		count = mapping.buttons.byButton.length;
+		for (i = 0; i < count; i++) {
+			this._addButtonUpdater(gamepad, mapping, i);
 		}
 
-		for (axis in gamepad.mapping.axes) {
-			gamepad.state[axis] = 0;
-			gamepad.lastState[axis] = 0;
+		count = mapping.axes.byAxis.length;
+		for (i = 0; i < count; i++) {
+			this._addAxisUpdater(gamepad, mapping, i);
 		}
 
 		this.gamepads[gamepad.index] = gamepad;
 
 		this._fire(Gamepad.Event.CONNECTED, gamepad);
-
-		return true;
 	};
+
+	/**
+	 * Adds an updater for a button control
+	 *
+	 * @method _addButtonUpdater
+	 * @private
+	 * @param {Object} gamepad the gamepad for which to create the updater
+	 * @param {Object} mapping the mapping on which to work on
+	 * @param {Number} index button index
+	 */
+	Gamepad.prototype._addButtonUpdater = function(gamepad, mapping, index) {
+		var updater = nullFunction;
+		var controlName = getControlName(Gamepad.StandardButtons, index, 'EXTRA_BUTTON_');
+		var getter = this._createButtonGetter(gamepad, mapping.buttons, index);
+		var that = this;
+		var buttonEventData = {
+			gamepad: gamepad,
+			control: controlName
+		};
+
+		gamepad.state[controlName] = 0;
+		gamepad.lastState[controlName] = 0;
+
+		updater = function() {
+			var value = getter();
+			var lastValue = gamepad.lastState[controlName];
+			var isDown = value > 0.5;
+			var wasDown = lastValue > 0.5;
+
+			gamepad.state[controlName] = value;
+
+			if (isDown && !wasDown) {
+				that._fire(Gamepad.Event.BUTTON_DOWN, Object.create(buttonEventData));
+			} else if (!isDown && wasDown) {
+				that._fire(Gamepad.Event.BUTTON_UP, Object.create(buttonEventData));
+			}
+
+			if ((value !== 0) && (value !== 1) && (value !== lastValue)) {
+				that._fireAxisChangedEvent(gamepad, controlName, value);
+			}
+
+			gamepad.lastState[controlName] = value;
+		};
+
+		gamepad.updater.push(updater);
+	};
+
+	/**
+	 * Adds an updater for an axis control
+	 *
+	 * @method _addAxisUpdater
+	 * @private
+	 * @param {Object} gamepad the gamepad for which to create the updater
+	 * @param {Object} mapping the mapping on which to work on
+	 * @param {Number} index axis index
+	 */
+	Gamepad.prototype._addAxisUpdater = function(gamepad, mapping, index) {
+		var updater = nullFunction;
+		var controlName = getControlName(Gamepad.StandardAxes, index, 'EXTRA_AXIS_');
+		var getter = this._createAxisGetter(gamepad, mapping.axes, index);
+		var that = this;
+
+		gamepad.state[controlName] = 0;
+		gamepad.lastState[controlName] = 0;
+
+		updater = function() {
+			var value = getter();
+			var lastValue = gamepad.lastState[controlName];
+
+			gamepad.state[controlName] = value;
+
+			if ((value !== lastValue)) {
+				that._fireAxisChangedEvent(gamepad, controlName, value);
+			}
+
+			gamepad.lastState[controlName] = value;
+		};
+
+		gamepad.updater.push(updater);
+	};
+
+	/**
+	 * Fires an AXIS_CHANGED event
+	 * @method _fireAxisChangedEvent
+	 * @private
+	 * @param {Object} gamepad the gamepad to notify for
+	 * @param {String} controlName name of the control that changes its value
+	 * @param {Number} value the new value
+	 */
+	Gamepad.prototype._fireAxisChangedEvent = function(gamepad, controlName, value) {
+		var eventData = {
+			gamepad: gamepad,
+			axis: controlName,
+			value: value
+		};
+
+		this._fire(Gamepad.Event.AXIS_CHANGED, eventData);
+	};
+
+	/**
+	 * Creates a getter according to the mapping entry for the specific index.
+	 * Currently supported entries:
+	 *
+	 * buttons.byButton[index]: Number := Index into gamepad.buttons; -1 tests byAxis
+	 * buttons.byAxis[index]: Array := [Index into gamepad.axes; Zero Value, One Value]
+	 *
+	 * @method _createButtonGetter
+	 * @private
+	 * @param {Object} gamepad the gamepad for which to create a getter
+	 * @param {Object} buttons the mappings entry for the buttons
+	 * @param {Number} index the specific button entry
+	 * @return {Function} a getter returning the value for the requested button
+	 */
+	Gamepad.prototype._createButtonGetter = (function() {
+		var nullGetter = function() {
+			return 0;
+		};
+
+		var createRangeGetter = function(valueGetter, from, to) {
+			var getter = nullGetter;
+
+			if (from < to) {
+				getter = function() {
+					var range = to - from;
+					var value = valueGetter();
+
+					value = (value - from) / range;
+
+					return (value < 0) ? 0 : value;
+				};
+			} else if (to < from) {
+				getter = function() {
+					var range = from - to;
+					var value = valueGetter();
+
+					value = (value - to) / range;
+
+					return (value > 1) ? 0 : (1 - value);
+				};
+			}
+
+			return getter;
+		};
+
+		var isArray = function(thing) {
+			return Object.prototype.toString.call(thing) === '[object Array]';
+		};
+
+		return function(gamepad, buttons, index) {
+			var getter = nullGetter;
+			var entry;
+			var that = this;
+
+			entry = buttons.byButton[index];
+			if (entry !== -1) {
+				if ((typeof(entry) === 'number') && (entry < gamepad.buttons.length)) {
+					getter = function() {
+						return gamepad.buttons[entry];
+					};
+				}
+			} else if (buttons.byAxis && (index < buttons.byAxis.length)) {
+				entry = buttons.byAxis[index];
+				if (isArray(entry) && (entry.length == 3) && (entry[0] < gamepad.axes.length)) {
+					getter = function() {
+						var value = gamepad.axes[entry[0]];
+
+						return that._applyDeadzoneMaximize(value);
+					};
+
+					getter = createRangeGetter(getter, entry[1], entry[2]);
+				}
+			}
+
+			return getter;
+		};
+	})();
+
+	/**
+	 * Creates a getter according to the mapping entry for the specific index.
+	 * Currently supported entries:
+	 *
+	 * axes.byAxis[index]: Number := Index into gamepad.axes; -1 ignored
+	 *
+	 * @method _createAxisGetter
+	 * @private
+	 * @param {Object} gamepad the gamepad for which to create a getter
+	 * @param {Object} axes the mappings entry for the axes
+	 * @param {Number} index the specific axis entry
+	 * @return {Function} a getter returning the value for the requested axis
+	 */
+	Gamepad.prototype._createAxisGetter = (function() {
+		var nullGetter = function() {
+			return 0;
+		};
+
+		return function(gamepad, axes, index) {
+			var getter = nullGetter;
+			var entry;
+			var that = this;
+
+			entry = axes.byAxis[index];
+			if (entry !== -1) {
+				if ((typeof(entry) === 'number') && (entry < gamepad.axes.length)) {
+					getter = function() {
+						var value = gamepad.axes[entry];
+
+						return that._applyDeadzoneMaximize(value);
+					};
+				}
+			}
+
+			return getter;
+		};
+	})();
 
 	/**
 	 * Disconnects from given gamepad.
@@ -813,8 +939,54 @@
 		} else if (id.indexOf('xbox') !== -1 || id.indexOf('360') !== -1) {
 			return Gamepad.Type.XBOX;
 		} else {
-			return Gamepad.Type.UNSUPPORTED;
+			return Gamepad.Type.UNKNOWN;
 		}
+	};
+
+	/**
+	 * @method _resolveMapping
+	 * @private
+	 * @param {Object} gamepad the gamepad for which to resolve the mapping
+	 * @return {Object} a mapping object for the given gamepad
+	 */
+	Gamepad.prototype._resolveMapping = function(gamepad) {
+		var mappings = Gamepad.Mappings;
+		var mapping = null;
+		var env = {
+			platform: this.platform.getType(),
+			type: this._resolveControllerType(gamepad.id)
+		};
+		var i;
+		var test;
+
+		for (i = 0; !mapping && (i < mappings.length); i++) {
+			test = mappings[i];
+			if (Gamepad.envMatchesFilter(test.env, env)) {
+				mapping = test;
+			}
+		}
+
+		return mapping || Gamepad.StandardMapping;
+	};
+
+	/**
+	 * @method envMatchesFilter
+	 * @static
+	 * @param {Object} filter the filter object describing properties to match
+	 * @param {Object} env the environment object that is matched against filter
+	 * @return {Boolean} true if env is covered by filter
+	 */
+	Gamepad.envMatchesFilter = function(filter, env) {
+		var result = true;
+		var field;
+
+		for (field in filter) {
+			if (filter[field] !== env[field]) {
+				result = false;
+			}
+		}
+
+		return result;
 	};
 
 	/**
@@ -824,113 +996,20 @@
 	 * @private
 	 */
 	Gamepad.prototype._update = function() {
-		var controlName,
-			isDown,
-			lastDown,
-			downBtnIndex,
-			mapping,
-			value,
-			i, j;
-
 		this.platform.update();
 
-		for (i = 0; i < this.gamepads.length; i++) {
-			if (typeof(this.gamepads[i]) === 'undefined') {
-				continue;
+		this.gamepads.forEach(function(gamepad) {
+			if (gamepad) {
+				gamepad.updater.forEach(function(updater) {
+					updater();
+				});
 			}
-
-			for (controlName in this.gamepads[i].mapping.buttons) {
-				mapping = this.gamepads[i].mapping.buttons[controlName];
-
-				if (typeof(mapping) === 'function') {
-					value = mapping(
-						this.gamepads[i],
-						this);
-				} else {
-					value = this.gamepads[i].buttons[mapping];
-				}
-
-				isDown = value > 0.5 ? true : false;
-				lastDown = false;
-
-				for (j = 0; j < this.gamepads[i].downButtons.length; j++) {
-					if (this.gamepads[i].downButtons[j] === controlName) {
-						lastDown = true;
-						downBtnIndex = i;
-
-						break;
-					}
-				}
-
-				this.gamepads[i].state[controlName] = value;
-
-				if (isDown !== lastDown) {
-					if (value > 0.5) {
-						this._fire(
-							Gamepad.Event.BUTTON_DOWN, {
-								gamepad: this.gamepads[i],
-								mapping: mapping,
-								control: controlName
-							});
-
-						this.gamepads[i].downButtons.push(controlName);
-					} else if (value < 0.5) {
-						this._fire(
-							Gamepad.Event.BUTTON_UP, {
-								gamepad: this.gamepads[i],
-								mapping: mapping,
-								control: controlName
-							});
-
-						this.gamepads[i].downButtons.splice(downBtnIndex, 1);
-					}
-				}
-
-				if (value !== 0 && value !== 1 && value !== this.gamepads[i].lastState[controlName]) {
-					this._fire(
-						Gamepad.Event.AXIS_CHANGED, {
-							gamepad: this.gamepads[i],
-							mapping: mapping,
-							axis: controlName,
-							value: value
-						});
-				}
-
-				this.gamepads[i].lastState[controlName] = value;
-			}
-
-			for (controlName in this.gamepads[i].mapping.axes) {
-				mapping = this.gamepads[i].mapping.axes[controlName];
-
-				if (typeof(mapping) === 'function') {
-					value = mapping(
-						this.gamepads[i],
-						this);
-				} else {
-					value = this._applyDeadzoneMaximize(
-						this.gamepads[i].axes[mapping]);
-				}
-
-				this.gamepads[i].state[controlName] = value;
-
-				if (value !== this.gamepads[i].lastState[controlName]) {
-					this._fire(
-						Gamepad.Event.AXIS_CHANGED, {
-							gamepad: this.gamepads[i],
-							mapping: mapping,
-							axis: controlName,
-							value: value
-						});
-				}
-
-				this.gamepads[i].lastState[controlName] = value;
-			}
-		}
+		});
 
 		if (this.gamepads.length > 0) {
 			this._fire(Gamepad.Event.TICK, this.gamepads);
 		}
-	};
+	},
 
 	/**
 	 * Applies deadzone and maximization.
