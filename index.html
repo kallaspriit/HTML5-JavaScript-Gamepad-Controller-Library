@@ -23,7 +23,8 @@
 				statesWrap,
 				logWrap,
 				control,
-				value;
+				value,
+				i;
 			
 			mainWrap.append('<strong>State</strong><ul id="states-' + device.index + '"></ul>');
 			mainWrap.append('<strong>Events</strong><ul id="log-' + device.index + '"></ul>');
@@ -35,6 +36,14 @@
 				value = device.state[control];
 				
 				statesWrap.append('<li>' + control + ': <span id="state-' + device.index + '-' + control + '">' + value + '</span></li>');
+			}
+			for (i = 0; i < device.buttons.length; i++) {
+				value = device.buttons[i];
+				statesWrap.append('<li>Raw Button ' + i + ': <span id="button-' + device.index + '-' + i + '">' + value + '</span></li>');
+			}
+			for (i = 0; i < device.axes.length; i++) {
+				value = device.axes[i];
+				statesWrap.append('<li>Raw Axis ' + i + ': <span id="axis-' + device.index + '-' + i + '">' + value + '</span></li>');
 			}
 			
 			$('#connect-notice').hide();
@@ -58,7 +67,8 @@
 			var wrap,
 				control,
 				value,
-				i;
+				i,
+				j;
 			
 			for (i = 0; i < gamepads.length; i++) {
 				wrap = $('#gamepad-' + i);
@@ -67,6 +77,16 @@
 					value = gamepads[i].state[control];
 
 					$('#state-' + gamepads[i].index + '-' + control + '').html(value);
+				}
+				for (j = 0; j < gamepads[i].buttons.length; j++) {
+					value = gamepads[i].buttons[j];
+
+					$('#button-' + gamepads[i].index + '-' + j + '').html(value);
+				}
+				for (j = 0; j < gamepads[i].axes.length; j++) {
+					value = gamepads[i].axes[j];
+
+					$('#axis-' + gamepads[i].index + '-' + j + '').html(value);
 				}
 			}
 		});
