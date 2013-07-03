@@ -95,16 +95,10 @@
 			assert.calledTwice(spy);
 		},
 
-		'should provide mapping for Logitech gamepads': function() {
-			var mapping = this.platform.getMapping(this.Gamepad.Type.LOGITECH);
+		'should have type "WebKit"': function() {
+			var result = this.platform.getType();
 
-			assert.same(mapping, this.Gamepad.Mapping.LOGITECH_WEBKIT);
-		},
-
-		'should provide mapping for Playstation gamepads': function() {
-			var mapping = this.platform.getMapping(this.Gamepad.Type.PLAYSTATION);
-
-			assert.same(mapping, this.Gamepad.Mapping.PLAYSTATION_WEBKIT);
+			assert.equals(result, 'WebKit');
 		}
 
 	});
