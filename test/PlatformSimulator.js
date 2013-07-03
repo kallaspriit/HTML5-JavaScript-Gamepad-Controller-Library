@@ -3,7 +3,12 @@
 
 	var PlatformSimulator = function(listener) {
 		this.listener = listener;
+		this.type = 'Simulator';
 		this.mapping = null;
+	};
+
+	PlatformSimulator.prototype.getType = function() {
+		return this.type;
 	};
 
 	PlatformSimulator.prototype.isSupported = function() {
@@ -12,10 +17,6 @@
 
 	PlatformSimulator.prototype.update = function() {
 
-	};
-
-	PlatformSimulator.prototype.getMapping = function() {
-		return this.mapping;
 	};
 
 	module.exports = PlatformSimulator;

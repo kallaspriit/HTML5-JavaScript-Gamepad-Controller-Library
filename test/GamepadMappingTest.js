@@ -113,8 +113,10 @@
 			},
 
 			'should have all buttons mapped': function() {
-				buttonsTest(this, ['A', 'B', 'X', 'Y', 'LB', 'RB', 'LEFT_TRIGGER', 'RIGHT_TRIGGER',
-					'BACK', 'START', 'LEFT_STICK', 'RIGHT_STICK',
+				buttonsTest(this, ['FACE_1', 'FACE_2', 'FACE_3', 'FACE_4', 'LEFT_TOP_SHOULDER',
+					'RIGHT_TOP_SHOULDER',
+					'LEFT_BOTTOM_SHOULDER', 'RIGHT_BOTTOM_SHOULDER',
+					'SELECT_BACK', 'START_FORWARD', 'LEFT_STICK', 'RIGHT_STICK',
 					'DPAD_UP', 'DPAD_DOWN', 'DPAD_LEFT', 'DPAD_RIGHT',
 					'HOME'
 				]);
@@ -128,15 +130,15 @@
 		'Logitech controller on WebKit': {
 			setUp: function() {
 				this.gamepad = this.gamepadSimulator.addGamepad(0, 'logitech gamepad');
-				this.platform.mapping = this.Gamepad.Mapping.LOGITECH_WEBKIT;
+				this.platform.type = 'WebKit';
 				this.platform.listener._connect(this.gamepad);
 			},
 
 			'should have all buttons mapped': function() {
-				// TODO: This can't be right - LEFT/RIGHT_STICK have same mappings as HOME/DPAD_UP
-				buttonsTest(this, ['X', 'A', 'B', 'Y', 'LB', 'RB', 'LEFT_TRIGGER', 'RIGHT_TRIGGER',
-					'BACK', 'START', 'LEFT_STICK', 'HOME', 'RIGHT_STICK', 'DPAD_UP', 'DPAD_DOWN', 'DPAD_LEFT',
-					'DPAD_RIGHT'
+				buttonsTest(this, ['FACE_3', 'FACE_1', 'FACE_2', 'FACE_4',
+					'LEFT_TOP_SHOULDER', 'RIGHT_TOP_SHOULDER', 'LEFT_BOTTOM_SHOULDER', 'RIGHT_BOTTOM_SHOULDER',
+					'SELECT_BACK', 'START_FORWARD', 'LEFT_STICK', 'HOME', 'RIGHT_STICK',
+					'DPAD_UP', 'DPAD_DOWN', 'DPAD_LEFT', 'DPAD_RIGHT'
 				]);
 			},
 
@@ -147,35 +149,37 @@
 
 		'Logitech controller on Firefox': {
 			setUp: function() {
-				this.gamepad = this.gamepadSimulator.addGamepad(0, 'logitech gamepad');
-				this.platform.mapping = this.Gamepad.Mapping.LOGITECH_FIREFOX;
+				this.gamepad = this.gamepadSimulator.addGamepad(0, 'logitech gamepad', 15, 5);
+				this.platform.type = 'Firefox';
 				this.platform.listener._connect(this.gamepad);
 			},
 
 			'should have all buttons mapped': function() {
-				buttonsTest(this, ['A', 'B', 'X', 'Y', 'LB', 'RB',
-					'BACK', 'START', 'LEFT_STICK', 'RIGHT_STICK', 'HOME',
-					'DPAD_UP', 'DPAD_DOWN', 'DPAD_LEFT', 'DPAD_RIGHT'
+				buttonsTest(this, ['FACE_1', 'FACE_2', 'FACE_3', 'FACE_4',
+					'LEFT_TOP_SHOULDER', 'RIGHT_TOP_SHOULDER',
+					'SELECT_BACK', 'START_FORWARD', 'LEFT_STICK', 'RIGHT_STICK', 'HOME',
+					'DPAD_UP', 'DPAD_DOWN', 'DPAD_LEFT', 'DPAD_RIGHT',
+					'LEFT_BOTTOM_SHOULDER', 'RIGHT_BOTTOM_SHOULDER'
 				]);
 			},
 
 			'should have all axes mapped': function() {
-				axesTest(this, ['LEFT_STICK_X', 'LEFT_STICK_Y', 'LEFT_TRIGGER', 'RIGHT_TRIGGER',
-					'RIGHT_STICK_X'
-				]);
+				axesTest(this, ['LEFT_STICK_X', 'LEFT_STICK_Y', 'RIGHT_STICK_X', 'RIGHT_STICK_Y']);
 			}
 		},
 
 		'Playstation controller on WebKit': {
 			setUp: function() {
 				this.gamepad = this.gamepadSimulator.addGamepad(0, 'playstation gamepad', 17);
-				this.platform.mapping = this.Gamepad.Mapping.PLAYSTATION_WEBKIT;
+				this.platform.type = 'WebKit';
 				this.platform.listener._connect(this.gamepad);
 			},
 
 			'should have all buttons mapped': function() {
-				buttonsTest(this, ['CROSS', 'CIRCLE', 'SQUARE', 'TRIANGLE', 'LB1', 'RB1', 'LB2', 'RB2',
-					'SELECT', 'START', 'LEFT_STICK', 'RIGHT_STICK',
+				buttonsTest(this, ['FACE_1', 'FACE_2', 'FACE_3', 'FACE_4', 'LEFT_TOP_SHOULDER',
+					'RIGHT_TOP_SHOULDER',
+					'LEFT_BOTTOM_SHOULDER', 'RIGHT_BOTTOM_SHOULDER',
+					'SELECT_BACK', 'START_FORWARD', 'LEFT_STICK', 'RIGHT_STICK',
 					'DPAD_UP', 'DPAD_DOWN', 'DPAD_LEFT', 'DPAD_RIGHT',
 					'HOME'
 				]);
@@ -189,15 +193,15 @@
 		'Playstation controller on Firefox': {
 			setUp: function() {
 				this.gamepad = this.gamepadSimulator.addGamepad(0, 'playstation gamepad');
-				this.platform.mapping = this.Gamepad.Mapping.PLAYSTATION_FIREFOX;
+				this.platform.type = 'Firefox';
 				this.platform.listener._connect(this.gamepad);
 			},
 
 			'should have all buttons mapped': function() {
-				buttonsTest(this, ['SELECT', 'LEFT_STICK', 'RIGHT_STICK', 'START',
+				buttonsTest(this, ['SELECT_BACK', 'LEFT_STICK', 'RIGHT_STICK', 'START_FORWARD',
 					'DPAD_UP', 'DPAD_RIGHT', 'DPAD_DOWN', 'DPAD_LEFT',
-					'LB1', 'RB1',
-					'TRIANGLE', 'CIRCLE', 'CROSS', 'SQUARE'
+					'LEFT_BOTTOM_SHOULDER', 'RIGHT_BOTTOM_SHOULDER', 'LEFT_TOP_SHOULDER', 'RIGHT_TOP_SHOULDER',
+					'FACE_4', 'FACE_2', 'FACE_1', 'FACE_3'
 				]);
 			},
 
