@@ -323,10 +323,10 @@
 	var FirefoxPlatform = function(listener) {
 		this.listener = listener;
 
-		window.addEventListener(&#x27;MozGamepadConnected&#x27;, function(e) {
+		window.addEventListener(&#x27;gamepadconnected&#x27;, function(e) {
 			listener._connect(e.gamepad);
 		});
-		window.addEventListener(&#x27;MozGamepadDisconnected&#x27;, function(e) {
+		window.addEventListener(&#x27;gamepaddisconnected&#x27;, function(e) {
 			listener._disconnect(e.gamepad);
 		});
 	};
