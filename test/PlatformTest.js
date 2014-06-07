@@ -83,7 +83,9 @@
 			'should provide platform for polling window.navigator.getGamepads() function': function() {
 				global.window = {
 					navigator: {
-						getGamepads: function() { return ['game1']; }
+						getGamepads: function() {
+							return ['game1'];
+						}
 					}
 				};
 
@@ -96,7 +98,9 @@
 			'should provide platform for polling window.navigator.webkitGamepads() function': function() {
 				global.window = {
 					navigator: {
-						webkitGamepads: function() { return ['game1']; }
+						webkitGamepads: function() {
+							return ['game1'];
+						}
 					}
 				};
 
@@ -109,7 +113,9 @@
 			'should provide platform for polling window.navigator.webkitGetGamepads() function': function() {
 				global.window = {
 					navigator: {
-						webkitGetGamepads: function() { return ['game1']; }
+						webkitGetGamepads: function() {
+							return ['game1'];
+						}
 					}
 				};
 

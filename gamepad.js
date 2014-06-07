@@ -840,7 +840,12 @@
 			if (entry !== -1) {
 				if ((typeof(entry) === 'number') && (entry < gamepad.buttons.length)) {
 					getter = function() {
-						return gamepad.buttons[entry];
+						var button = gamepad.buttons[entry];
+						if (typeof button === 'object' && typeof button.value !== 'undefined') {
+							// It's a GamepadButton object.
+							button = button.value;
+						}
+						return button;
 					};
 				}
 			} else if (buttons.byAxis && (index < buttons.byAxis.length)) {

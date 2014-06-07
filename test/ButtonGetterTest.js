@@ -15,8 +15,6 @@
 
 		'value by button': {
 			setUp: function() {
-				global.window = {};
-
 				var buttons = {
 					byButton: [0]
 				};
@@ -51,6 +49,15 @@
 				var result = this.getter();
 
 				assert.equals(result, 0.25);
+			},
+
+			'should read GamepadButton objects if available': function() {
+				function GamepadButton(value) { this.value = value; }
+				this.gamepad.buttons[0] = new GamepadButton(1);
+
+				var result = this.getter();
+
+				assert.equals(result, 1);
 			}
 		},
 
