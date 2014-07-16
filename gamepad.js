@@ -148,7 +148,11 @@
 		var navigator = window && window.navigator;
 
 		if (navigator) {
-			if (typeof(navigator.webkitGamepads) !== 'undefined') {
+			if (typeof(navigator.getGamepads) !== 'undefined') {
+				platform = new WebKitPlatform(listener, function() {
+					return navigator.getGamepads;
+				});
+			} else if (typeof(navigator.webkitGamepads) !== 'undefined') {
 				platform = new WebKitPlatform(listener, function() {
 					return navigator.webkitGamepads;
 				});
