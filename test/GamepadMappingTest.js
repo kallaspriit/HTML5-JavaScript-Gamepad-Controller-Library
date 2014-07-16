@@ -208,7 +208,48 @@
 			'should have all axes mapped': function() {
 				axesTest(this, ['LEFT_STICK_X', 'LEFT_STICK_Y', 'RIGHT_STICK_X', 'RIGHT_STICK_Y']);
 			}
-		}
+		},
 
+		'Retrolink N64 controller on Firefox': {
+			setUp: function() {
+				this.gamepad = this.gamepadSimulator.addGamepad(0,
+					'79-6-Generic   USB  Joystick  ');
+				this.platform.type = 'Firefox';
+				this.platform.listener._connect(this.gamepad);
+			},
+
+			'should have all buttons mapped': function() {
+				buttonsTest(this, ['FACE_4', 'FACE_2', 'FACE_1', 'FACE_3',
+					'LEFT_TOP_SHOULDER', 'RIGHT_TOP_SHOULDER', 'SELECT_BACK',
+					'START_FORWARD', 'DPAD_UP', 'DPAD_DOWN', 'DPAD_LEFT',
+					'DPAD_RIGHT'
+				]);
+			},
+
+			'should have all axes mapped': function() {
+				axesTest(this, ['LEFT_STICK_X', 'LEFT_STICK_Y']);
+			}
+		},
+
+		'Retrolink N64 controller on WebKit': {
+			setUp: function() {
+				this.gamepad = this.gamepadSimulator.addGamepad(0,
+					'Generic   USB  Joystick   (STANDARD GAMEPAD Vendor: 0079 Product: 0006)');
+				this.platform.type = 'WebKit';
+				this.platform.listener._connect(this.gamepad);
+			},
+
+			'should have all buttons mapped': function() {
+				buttonsTest(this, ['FACE_4', 'FACE_2', 'FACE_1', 'FACE_3',
+					'LEFT_TOP_SHOULDER', 'RIGHT_TOP_SHOULDER', 'SELECT_BACK',
+					'START_FORWARD', 'DPAD_UP', 'DPAD_DOWN', 'DPAD_LEFT',
+					'DPAD_RIGHT'
+				]);
+			},
+
+			'should have all axes mapped': function() {
+				axesTest(this, ['LEFT_STICK_X', 'LEFT_STICK_Y']);
+			}
+		}
 	});
 })();
