@@ -15,6 +15,8 @@
 
 		'value by button': {
 			setUp: function() {
+				global.window = {};
+
 				var buttons = {
 					byButton: [0]
 				};

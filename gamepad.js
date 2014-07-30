@@ -150,11 +150,11 @@
 		if (navigator) {
 			if (typeof(navigator.getGamepads) !== 'undefined') {
 				platform = new WebKitPlatform(listener, function() {
-					return navigator.getGamepads;
+					return navigator.getGamepads();
 				});
 			} else if (typeof(navigator.webkitGamepads) !== 'undefined') {
 				platform = new WebKitPlatform(listener, function() {
-					return navigator.webkitGamepads;
+					return navigator.webkitGamepads();
 				});
 			} else if (typeof(navigator.webkitGetGamepads) !== 'undefined') {
 				platform = new WebKitPlatform(listener, function() {
