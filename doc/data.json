@@ -37,7 +37,7 @@
             "namespaces": {},
             "tag": "module",
             "file": "gamepad.js",
-            "line": 284,
+            "line": 289,
             "description": "This strategy uses a timer function to call an update function.\nThe timer (re)start function can be provided or the strategy reverts to\none of the window.*requestAnimationFrame variants."
         }
     },
@@ -117,7 +117,7 @@
             "module": "Gamepad",
             "namespace": "",
             "file": "gamepad.js",
-            "line": 217,
+            "line": 221,
             "description": "This platform is for mozilla based environments that provide gamepad\nupdates via events.",
             "is_constructor": 1
         },
@@ -132,7 +132,7 @@
             "module": "Gamepad",
             "namespace": "",
             "file": "gamepad.js",
-            "line": 284,
+            "line": 289,
             "description": "Provides simple interface and multi-platform support for the gamepad API.\n\nYou can change the deadzone and maximizeThreshold parameters to suit your\ntaste but the defaults should generally work fine.",
             "is_constructor": 1,
             "params": [
@@ -221,7 +221,7 @@
         {
             "file": "gamepad.js",
             "line": 139,
-            "description": "Provides a platform object that returns true for is isSupported() if valid.",
+            "description": "Provides a platform object that returns true for isSupported() if valid.",
             "itemtype": "method",
             "name": "factory",
             "static": 1,
@@ -241,7 +241,7 @@
         },
         {
             "file": "gamepad.js",
-            "line": 165,
+            "line": 169,
             "itemtype": "method",
             "name": "getType()",
             "static": 1,
@@ -254,7 +254,7 @@
         },
         {
             "file": "gamepad.js",
-            "line": 174,
+            "line": 178,
             "itemtype": "method",
             "name": "getType()",
             "return": {
@@ -266,7 +266,7 @@
         },
         {
             "file": "gamepad.js",
-            "line": 182,
+            "line": 186,
             "itemtype": "method",
             "name": "isSupported",
             "return": {
@@ -278,7 +278,7 @@
         },
         {
             "file": "gamepad.js",
-            "line": 190,
+            "line": 194,
             "description": "Queries the currently connected gamepads and reports any changes.",
             "itemtype": "method",
             "name": "update",
@@ -287,8 +287,8 @@
         },
         {
             "file": "gamepad.js",
-            "line": 236,
-            "description": "Provides a platform object that returns true for is isSupported() if valid.",
+            "line": 240,
+            "description": "Provides a platform object that returns true for isSupported() if valid.",
             "itemtype": "method",
             "name": "factory",
             "static": 1,
@@ -308,7 +308,7 @@
         },
         {
             "file": "gamepad.js",
-            "line": 253,
+            "line": 257,
             "itemtype": "method",
             "name": "getType()",
             "static": 1,
@@ -321,7 +321,7 @@
         },
         {
             "file": "gamepad.js",
-            "line": 262,
+            "line": 266,
             "itemtype": "method",
             "name": "getType()",
             "return": {
@@ -333,7 +333,7 @@
         },
         {
             "file": "gamepad.js",
-            "line": 270,
+            "line": 274,
             "itemtype": "method",
             "name": "isSupported",
             "return": {
@@ -345,7 +345,7 @@
         },
         {
             "file": "gamepad.js",
-            "line": 278,
+            "line": 283,
             "description": "Does nothing on the Firefox platform",
             "itemtype": "method",
             "name": "update",
@@ -354,7 +354,7 @@
         },
         {
             "file": "gamepad.js",
-            "line": 306,
+            "line": 311,
             "description": "The available update strategies",
             "itemtype": "property",
             "name": "UpdateStrategies",
@@ -375,7 +375,7 @@
         },
         {
             "file": "gamepad.js",
-            "line": 317,
+            "line": 322,
             "description": "List of factories of supported platforms. Currently available platforms:\n{{#crossLink \"WebKitPlatform\"}}{{/crossLink}},\n{{#crossLink \"FirefoxPlatform\"}}{{/crossLink}},",
             "itemtype": "property",
             "name": "PlatformFactories",
@@ -385,7 +385,7 @@
         },
         {
             "file": "gamepad.js",
-            "line": 326,
+            "line": 331,
             "description": "List of supported controller types.",
             "itemtype": "property",
             "name": "Type",
@@ -416,7 +416,7 @@
         },
         {
             "file": "gamepad.js",
-            "line": 353,
+            "line": 358,
             "description": "Triggered when a new controller connects.",
             "itemtype": "event",
             "name": "connected",
@@ -432,7 +432,7 @@
         },
         {
             "file": "gamepad.js",
-            "line": 361,
+            "line": 366,
             "description": "Called when an unsupported controller connects.",
             "itemtype": "event",
             "name": "unsupported",
@@ -450,7 +450,7 @@
         },
         {
             "file": "gamepad.js",
-            "line": 370,
+            "line": 375,
             "description": "Triggered when a controller disconnects.",
             "itemtype": "event",
             "name": "disconnected",
@@ -466,7 +466,7 @@
         },
         {
             "file": "gamepad.js",
-            "line": 378,
+            "line": 383,
             "description": "Called regularly with the latest controllers info.",
             "itemtype": "event",
             "name": "tick",
@@ -482,7 +482,7 @@
         },
         {
             "file": "gamepad.js",
-            "line": 386,
+            "line": 391,
             "description": "Called when a gamepad button is pressed down.",
             "itemtype": "event",
             "name": "button-down",
@@ -510,7 +510,7 @@
         },
         {
             "file": "gamepad.js",
-            "line": 396,
+            "line": 401,
             "description": "Called when a gamepad button is released.",
             "itemtype": "event",
             "name": "button-up",
@@ -538,7 +538,7 @@
         },
         {
             "file": "gamepad.js",
-            "line": 406,
+            "line": 411,
             "description": "Called when gamepad axis value changed.",
             "itemtype": "event",
             "name": "axis-changed",
@@ -571,7 +571,7 @@
         },
         {
             "file": "gamepad.js",
-            "line": 418,
+            "line": 423,
             "description": "List of standard button names. The index is the according standard button\nindex as per standard.",
             "itemtype": "property",
             "name": "StandardButtons",
@@ -580,7 +580,7 @@
         },
         {
             "file": "gamepad.js",
-            "line": 432,
+            "line": 437,
             "description": "List of standard axis names. The index is the according standard axis\nindex as per standard.",
             "itemtype": "property",
             "name": "StandardAxes",
@@ -589,7 +589,7 @@
         },
         {
             "file": "gamepad.js",
-            "line": 444,
+            "line": 449,
             "description": "The standard mapping that represents the mapping as per definition.\nEach button and axis map to the same index.",
             "itemtype": "property",
             "name": "StandardMapping",
@@ -598,7 +598,7 @@
         },
         {
             "file": "gamepad.js",
-            "line": 460,
+            "line": 465,
             "description": "Mapping of various gamepads that differ from the standard mapping on\ndifferent platforms too unify their buttons and axes.\n\nEach mapping should have an 'env' object, which describes the environment\nin which the mapping is active. The more entries such an environment has,\nthe more specific it is.\n\nMappings are expressed for both buttons and axes. Buttons might refer to\naxes if they are notified as such.",
             "itemtype": "property",
             "name": "Mappings",
@@ -607,7 +607,7 @@
         },
         {
             "file": "gamepad.js",
-            "line": 518,
+            "line": 536,
             "description": "Initializes the gamepad.\n\nYou usually want to bind to the events first and then initialize it.",
             "itemtype": "method",
             "name": "init",
@@ -620,7 +620,7 @@
         },
         {
             "file": "gamepad.js",
-            "line": 538,
+            "line": 556,
             "description": "Binds a listener to a gamepad event.",
             "itemtype": "method",
             "name": "bind",
@@ -645,7 +645,7 @@
         },
         {
             "file": "gamepad.js",
-            "line": 556,
+            "line": 574,
             "description": "Removes listener of given type.\n\nIf no type is given, all listeners are removed. If no listener is given, all\nlisteners of given type are removed.",
             "itemtype": "method",
             "name": "unbind",
@@ -672,7 +672,7 @@
         },
         {
             "file": "gamepad.js",
-            "line": 595,
+            "line": 613,
             "description": "Returns the number of connected gamepads.",
             "itemtype": "method",
             "name": "count",
@@ -685,7 +685,7 @@
         },
         {
             "file": "gamepad.js",
-            "line": 605,
+            "line": 623,
             "description": "Fires an internal event with given data.",
             "itemtype": "method",
             "name": "_fire",
@@ -708,7 +708,7 @@
         },
         {
             "file": "gamepad.js",
-            "line": 623,
+            "line": 641,
             "itemtype": "method",
             "name": "getNullPlatform",
             "static": 1,
@@ -721,7 +721,7 @@
         },
         {
             "file": "gamepad.js",
-            "line": 632,
+            "line": 650,
             "description": "Resolves platform.",
             "itemtype": "method",
             "name": "resolvePlatform",
@@ -742,7 +742,7 @@
         },
         {
             "file": "gamepad.js",
-            "line": 651,
+            "line": 669,
             "description": "Registers given gamepad.",
             "itemtype": "method",
             "name": "_connect",
@@ -760,7 +760,7 @@
         },
         {
             "file": "gamepad.js",
-            "line": 683,
+            "line": 701,
             "description": "Adds an updater for a button control",
             "itemtype": "method",
             "name": "_addButtonUpdater",
@@ -788,7 +788,7 @@
         },
         {
             "file": "gamepad.js",
-            "line": 729,
+            "line": 747,
             "description": "Adds an updater for an axis control",
             "itemtype": "method",
             "name": "_addAxisUpdater",
@@ -816,7 +816,7 @@
         },
         {
             "file": "gamepad.js",
-            "line": 763,
+            "line": 781,
             "description": "Fires an AXIS_CHANGED event",
             "itemtype": "method",
             "name": "_fireAxisChangedEvent",
@@ -844,7 +844,7 @@
         },
         {
             "file": "gamepad.js",
-            "line": 781,
+            "line": 799,
             "description": "Creates a getter according to the mapping entry for the specific index.\nCurrently supported entries:\n\nbuttons.byButton[index]: Number := Index into gamepad.buttons; -1 tests byAxis\nbuttons.byAxis[index]: Array := [Index into gamepad.axes; Zero Value, One Value]",
             "itemtype": "method",
             "name": "_createButtonGetter",
@@ -876,7 +876,7 @@
         },
         {
             "file": "gamepad.js",
-            "line": 859,
+            "line": 884,
             "description": "Creates a getter according to the mapping entry for the specific index.\nCurrently supported entries:\n\naxes.byAxis[index]: Number := Index into gamepad.axes; -1 ignored",
             "itemtype": "method",
             "name": "_createAxisGetter",
@@ -908,7 +908,7 @@
         },
         {
             "file": "gamepad.js",
-            "line": 897,
+            "line": 922,
             "description": "Disconnects from given gamepad.",
             "itemtype": "method",
             "name": "_disconnect",
@@ -926,7 +926,7 @@
         },
         {
             "file": "gamepad.js",
-            "line": 923,
+            "line": 948,
             "description": "Resolves controller type from its id.",
             "itemtype": "method",
             "name": "_resolveControllerType",
@@ -948,7 +948,7 @@
         },
         {
             "file": "gamepad.js",
-            "line": 946,
+            "line": 971,
             "itemtype": "method",
             "name": "_resolveMapping",
             "access": "private",
@@ -969,7 +969,7 @@
         },
         {
             "file": "gamepad.js",
-            "line": 972,
+            "line": 997,
             "itemtype": "method",
             "name": "envMatchesFilter",
             "static": 1,
@@ -994,7 +994,7 @@
         },
         {
             "file": "gamepad.js",
-            "line": 992,
+            "line": 1017,
             "description": "Updates the controllers, triggering TICK events.",
             "itemtype": "method",
             "name": "_update",
@@ -1005,7 +1005,7 @@
         },
         {
             "file": "gamepad.js",
-            "line": 1014,
+            "line": 1039,
             "description": "Applies deadzone and maximization.\n\nYou can change the thresholds via deadzone and maximizeThreshold members.",
             "itemtype": "method",
             "name": "_applyDeadzoneMaximize",
