@@ -14,7 +14,10 @@
 
 			this.simulator = simulator;
 			global.window = {
-				addEventListener: nullFunction
+				addEventListener: nullFunction,
+				navigator: {
+					userAgent: 'Firefox'
+				}
 			};
 
 			this.listener = {

@@ -94,7 +94,10 @@
 
 			'should provide platform for Firefox': function() {
 				global.window = {
-					addEventListener: function() {}
+					addEventListener: function() {},
+					navigator: {
+						userAgent: 'Firefox'
+					}
 				};
 
 				var platform = this.Gamepad.resolvePlatform();

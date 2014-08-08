@@ -235,7 +235,7 @@
 	};
 
 	/**
-	 * Provides a platform object that returns true for is isSupported() if valid.
+	 * Provides a platform object that returns true for isSupported() if valid.
 	 * @method factory
 	 * @static
 	 * @param {Object} listener the listener to use
@@ -246,7 +246,11 @@
 		var navigator = window &amp;&amp; window.navigator;
 
 		if (navigator) {
-			if (typeof(navigator.webkitGamepads) !== &#x27;undefined&#x27;) {
+			if (typeof(navigator.getGamepads) !== &#x27;undefined&#x27;) {
+				platform = new WebKitPlatform(listener, function() {
+					return navigator.getGamepads();
+				});
+			} else if (typeof(navigator.webkitGamepads) !== &#x27;undefined&#x27;) {
 				platform = new WebKitPlatform(listener, function() {
 					return navigator.webkitGamepads;
 				});
@@ -332,7 +336,7 @@
 	};
 
 	/**
-	 * Provides a platform object that returns true for is isSupported() if valid.
+	 * Provides a platform object that returns true for isSupported() if valid.
 	 * @method factory
 	 * @static
 	 * @param {Object} listener the listener to use
@@ -370,7 +374,8 @@
 	 * @return {Boolean} true
 	 */
 	FirefoxPlatform.prototype.isSupported = function() {
-		return true;
+		var navigator = window &amp;&amp; window.navigator;
+		return navigator.userAgent.indexOf(&#x27;Firefox&#x27;) !== -1;
 	};
 
 	/**
@@ -419,7 +424,7 @@
 	 * @property PlatformFactories
 	 * @type {Array}
 	 */
-	Gamepad.PlatformFactories = [WebKitPlatform.factory, FirefoxPlatform.factory];
+	Gamepad.PlatformFactories = [FirefoxPlatform.factory, WebKitPlatform.factory];
 
 	/**
 	 * List of supported controller types.
@@ -569,6 +574,19 @@
 	 * @property Mappings
 	 */
 	Gamepad.Mappings = [
+		// XBOX360 controller on Firefox
+		{
+			env: {
+				platform: FirefoxPlatform.getType(),
+				type: Gamepad.Type.XBOX
+			},
+			buttons: {
+				byButton: [0, 1, 2, 3, 4, 5, 15, 16, 9, 8, 6, 7, 11, 12, 13, 14, 10]
+			},
+			axes: {
+				byAxis: [0, 1, 2, 3]
+			}
+		},
 		// PS3 controller on Firefox
 		{
 			env: {
@@ -934,7 +952,14 @@
 			if (entry !== -1) {
 				if ((typeof(entry) === &#x27;number&#x27;) &amp;&amp; (entry &lt; gamepad.buttons.length)) {
 					getter = function() {
-						return gamepad.buttons[entry];
+						var value = gamepad.buttons[entry];
+						if (typeof value === &#x27;number&#x27;) {
+							return value;
+						}
+						if (typeof value.value === &#x27;number&#x27;) {
+							return value.value;
+						}
+						return 0;
 					};
 				}
 			} else if (buttons.byAxis &amp;&amp; (index &lt; buttons.byAxis.length)) {
