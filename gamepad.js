@@ -137,7 +137,7 @@
 	};
 
 	/**
-	 * Provides a platform object that returns true for is isSupported() if valid.
+	 * Provides a platform object that returns true for isSupported() if valid.
 	 * @method factory
 	 * @static
 	 * @param {Object} listener the listener to use
@@ -238,7 +238,7 @@
 	};
 
 	/**
-	 * Provides a platform object that returns true for is isSupported() if valid.
+	 * Provides a platform object that returns true for isSupported() if valid.
 	 * @method factory
 	 * @static
 	 * @param {Object} listener the listener to use
@@ -276,7 +276,8 @@
 	 * @return {Boolean} true
 	 */
 	FirefoxPlatform.prototype.isSupported = function() {
-		return true;
+		var navigator = window && window.navigator;
+		return navigator.userAgent.indexOf('Firefox') !== -1;
 	};
 
 	/**
@@ -325,7 +326,7 @@
 	 * @property PlatformFactories
 	 * @type {Array}
 	 */
-	Gamepad.PlatformFactories = [WebKitPlatform.factory, FirefoxPlatform.factory];
+	Gamepad.PlatformFactories = [FirefoxPlatform.factory, WebKitPlatform.factory];
 
 	/**
 	 * List of supported controller types.
@@ -475,6 +476,19 @@
 	 * @property Mappings
 	 */
 	Gamepad.Mappings = [
+		// XBOX360 controller on Firefox
+		{
+			env: {
+				platform: FirefoxPlatform.getType(),
+				type: Gamepad.Type.XBOX
+			},
+			buttons: {
+				byButton: [0, 1, 2, 3, 4, 5, 15, 16, 9, 8, 6, 7, 11, 12, 13, 14, 10]
+			},
+			axes: {
+				byAxis: [0, 1, 2, 3]
+			}
+		},
 		// PS3 controller on Firefox
 		{
 			env: {
@@ -840,7 +854,14 @@
 			if (entry !== -1) {
 				if ((typeof(entry) === 'number') && (entry < gamepad.buttons.length)) {
 					getter = function() {
-						return gamepad.buttons[entry];
+						var value = gamepad.buttons[entry];
+						if (typeof value === 'number') {
+							return value;
+						}
+						if (typeof value.value === 'number') {
+							return value.value;
+						}
+						return 0;
 					};
 				}
 			} else if (buttons.byAxis && (index < buttons.byAxis.length)) {
