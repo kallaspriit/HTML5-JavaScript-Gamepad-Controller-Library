@@ -17,5 +17,8 @@
 		"grunt-contrib-yuidoc": "~0.4.0",
 		"grunt-jsbeautifier": "~0.1.9",
 		"grunt-contrib-uglify": "~0.2.2"
+	},
+	"scripts": {
+		"grunt": "node -e \"require('grunt').tasks();\""
 	}
 }
