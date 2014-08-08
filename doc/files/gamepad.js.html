@@ -252,7 +252,7 @@
 				});
 			} else if (typeof(navigator.webkitGamepads) !== &#x27;undefined&#x27;) {
 				platform = new WebKitPlatform(listener, function() {
-					return navigator.webkitGamepads;
+					return navigator.webkitGamepads();
 				});
 			} else if (typeof(navigator.webkitGetGamepads) !== &#x27;undefined&#x27;) {
 				platform = new WebKitPlatform(listener, function() {
@@ -953,12 +953,15 @@
 				if ((typeof(entry) === &#x27;number&#x27;) &amp;&amp; (entry &lt; gamepad.buttons.length)) {
 					getter = function() {
 						var value = gamepad.buttons[entry];
+
 						if (typeof value === &#x27;number&#x27;) {
 							return value;
 						}
+
 						if (typeof value.value === &#x27;number&#x27;) {
 							return value.value;
 						}
+
 						return 0;
 					};
 				}
