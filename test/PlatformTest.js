@@ -80,16 +80,49 @@
 				assert(platform.isSupported());
 			},
 
-			'should provide platform for polling window.navigator.webkitGetGamepads() function': function() {
+			'should provide platform for polling window.navigator.getGamepads() function': function() {
 				global.window = {
 					navigator: {
-						webkitGetGamepads: function() {}
+						getGamepads: function() {
+							return ['game1'];
+						}
 					}
 				};
 
 				var platform = this.Gamepad.resolvePlatform();
 
 				assert(platform.isSupported());
+				assert(platform.gamepadGetter()[0] === 'game1');
+			},
+
+			'should provide platform for polling window.navigator.webkitGamepads() function': function() {
+				global.window = {
+					navigator: {
+						webkitGamepads: function() {
+							return ['game1'];
+						}
+					}
+				};
+
+				var platform = this.Gamepad.resolvePlatform();
+
+				assert(platform.isSupported());
+				assert(platform.gamepadGetter()[0] === 'game1');
+			},
+
+			'should provide platform for polling window.navigator.webkitGetGamepads() function': function() {
+				global.window = {
+					navigator: {
+						webkitGetGamepads: function() {
+							return ['game1'];
+						}
+					}
+				};
+
+				var platform = this.Gamepad.resolvePlatform();
+
+				assert(platform.isSupported());
+				assert(platform.gamepadGetter()[0] === 'game1');
 			},
 
 			'should provide platform for Firefox': function() {

@@ -46,7 +46,7 @@
 			assert.calledWith(spy, gamepad);
 		},
 
-		'should case CONNECTED event when platform resolves mapping': function() {
+		'should cause CONNECTED event when platform resolves mapping': function() {
 			var spy = this.spy(this.user, 'onConnected');
 			var gamepad = this.gamepadSimulator.addGamepad(0, 'playstation thingie');
 
