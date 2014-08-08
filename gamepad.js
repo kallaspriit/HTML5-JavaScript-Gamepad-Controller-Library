@@ -332,12 +332,14 @@
 	 * List of supported controller types.
 	 *
 	 * @property Type
+	 * @param {String} Type.N64 Retrolink N64 controller
 	 * @param {String} Type.PLAYSTATION Playstation controller
 	 * @param {String} Type.LOGITECH Logitech controller
 	 * @param {String} Type.XBOX XBOX controller
 	 * @param {String} Type.UNKNOWN Unknown controller
 	 */
 	Gamepad.Type = {
+		N64: 'n64',
 		PLAYSTATION: 'playstation',
 		LOGITECH: 'logitech',
 		XBOX: 'xbox',
@@ -476,6 +478,80 @@
 	 * @property Mappings
 	 */
 	Gamepad.Mappings = [
+		// Retrolink N64 controller on Firefox
+		{
+			env: {
+				platform: FirefoxPlatform.getType(),
+				type: Gamepad.Type.N64
+			},
+			buttons: {
+				byButton: [
+					// TODO: Figure out which buttons to map A and Z buttons to.
+					2, // FACE_1 -- C-down button
+					1, // FACE_2 -- C-right button
+					3, // FACE_3 -- C-left button
+					0, // FACE_4 -- C-down button
+					4, // LEFT_TOP_SHOULDER -- L button
+					5, // RIGHT_TOP_SHOULDER -- R button
+					-1, // LEFT_BOTTOM_SHOULDER -- missing on controller
+					-1, // RIGHT_BOTTOM_SHOULDER -- missing on controller
+					8, // SELECT_BACK -- B button (is this right?)
+					9, // START_FORWARD -- START button
+					-1, // LEFT_STICK -- missing on controller
+					-1, // RIGHT_STICK -- missing on controller
+					12, // DPAD_UP -- not supported by API (but may eventually)
+					13, // DPAD_DOWN -- not supported by API (but may eventually)
+					14, // DPAD_LEFT -- not supported by API (but may eventually)
+					15, // DPAD_RIGHT -- not supported by API (but may eventually)
+					-1 // HOME -- missing on controller (could be START/B?)
+				]
+			},
+			axes: {
+				byAxis: [
+					1, // LEFT_STICK_X
+					2, // LEFT_STICK_Y
+					-1, // RIGHT_STICK_X
+					-1 // RIGHT_STICK_Y
+				]
+			}
+		},
+		// Retrolink N64 controller on WebKit
+		{
+			env: {
+				platform: WebKitPlatform.getType(),
+				type: Gamepad.Type.N64
+			},
+			buttons: {
+				byButton: [
+					// TODO: Figure out which buttons to map A and Z buttons to.
+					2, // FACE_1 -- C-down button
+					1, // FACE_2 -- C-right button
+					3, // FACE_3 -- C-left button
+					0, // FACE_4 -- C-down button
+					4, // LEFT_TOP_SHOULDER -- L button
+					5, // RIGHT_TOP_SHOULDER -- R button
+					-1, // LEFT_BOTTOM_SHOULDER -- missing on controller
+					-1, // RIGHT_BOTTOM_SHOULDER -- missing on controller
+					8, // SELECT_BACK -- B button (is this right?)
+					9, // START_FORWARD -- START button
+					-1, // LEFT_STICK -- missing on controller
+					-1, // RIGHT_STICK -- missing on controller
+					12, // DPAD_UP -- D-Pad-up button
+					13, // DPAD_DOWN -- D-Pad-down button
+					14, // DPAD_LEFT -- D-Pad-left button
+					15, // DPAD_RIGHT -- D-Pad-right button
+					-1 // HOME -- missing on controller (could be START/B?)
+				]
+			},
+			axes: {
+				byAxis: [
+					0, // LEFT_STICK_X
+					1, // LEFT_STICK_Y
+					-1, // RIGHT_STICK_X
+					-1 // RIGHT_STICK_Y
+				]
+			}
+		},
 		// XBOX360 controller on Firefox
 		{
 			env: {
@@ -957,7 +1033,8 @@
 	 * @private
 	 */
 	Gamepad.prototype._resolveControllerType = function(id) {
-		id = id.toLowerCase();
+		// Lowercase and strip all extra whitespace.
+		id = id.toLowerCase().replace(/\s+/g, ' ').replace(/^\s+|\s+$/g, '');
 
 		if (id.indexOf('playstation') !== -1) {
 			return Gamepad.Type.PLAYSTATION;
@@ -966,6 +1043,10 @@
 			return Gamepad.Type.LOGITECH;
 		} else if (id.indexOf('xbox') !== -1 || id.indexOf('360') !== -1) {
 			return Gamepad.Type.XBOX;
+		} else if ((id.indexOf('79-6-generic') !== -1 && id.indexOf('joystick') !== -1) ||
+			(id.indexOf('vendor: 0079 product: 0006') !== -1 &&
+				id.indexOf('generic usb joystick') !== -1)) {
+			return Gamepad.Type.N64;
 		} else {
 			return Gamepad.Type.UNKNOWN;
 		}
