@@ -881,7 +881,7 @@
         },
         {
             "file": "gamepad.js",
-            "line": 960,
+            "line": 963,
             "description": "Creates a getter according to the mapping entry for the specific index.\nCurrently supported entries:\n\naxes.byAxis[index]: Number := Index into gamepad.axes; -1 ignored",
             "itemtype": "method",
             "name": "_createAxisGetter",
@@ -913,7 +913,7 @@
         },
         {
             "file": "gamepad.js",
-            "line": 998,
+            "line": 1001,
             "description": "Disconnects from given gamepad.",
             "itemtype": "method",
             "name": "_disconnect",
@@ -931,7 +931,7 @@
         },
         {
             "file": "gamepad.js",
-            "line": 1024,
+            "line": 1027,
             "description": "Resolves controller type from its id.",
             "itemtype": "method",
             "name": "_resolveControllerType",
@@ -953,7 +953,7 @@
         },
         {
             "file": "gamepad.js",
-            "line": 1052,
+            "line": 1055,
             "itemtype": "method",
             "name": "_resolveMapping",
             "access": "private",
@@ -974,7 +974,7 @@
         },
         {
             "file": "gamepad.js",
-            "line": 1078,
+            "line": 1081,
             "itemtype": "method",
             "name": "envMatchesFilter",
             "static": 1,
@@ -999,7 +999,7 @@
         },
         {
             "file": "gamepad.js",
-            "line": 1098,
+            "line": 1101,
             "description": "Updates the controllers, triggering TICK events.",
             "itemtype": "method",
             "name": "_update",
@@ -1010,7 +1010,7 @@
         },
         {
             "file": "gamepad.js",
-            "line": 1120,
+            "line": 1123,
             "description": "Applies deadzone and maximization.\n\nYou can change the thresholds via deadzone and maximizeThreshold members.",
             "itemtype": "method",
             "name": "_applyDeadzoneMaximize",

@@ -154,7 +154,7 @@
 				});
 			} else if (typeof(navigator.webkitGamepads) !== 'undefined') {
 				platform = new WebKitPlatform(listener, function() {
-					return navigator.webkitGamepads;
+					return navigator.webkitGamepads();
 				});
 			} else if (typeof(navigator.webkitGetGamepads) !== 'undefined') {
 				platform = new WebKitPlatform(listener, function() {
@@ -931,12 +931,15 @@
 				if ((typeof(entry) === 'number') && (entry < gamepad.buttons.length)) {
 					getter = function() {
 						var value = gamepad.buttons[entry];
+
 						if (typeof value === 'number') {
 							return value;
 						}
+
 						if (typeof value.value === 'number') {
 							return value.value;
 						}
+
 						return 0;
 					};
 				}
